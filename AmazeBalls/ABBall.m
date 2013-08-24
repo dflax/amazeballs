@@ -29,7 +29,7 @@
 	}
 	switch (activeBall) {
 		case 2000:
-			ballNameString = @"amazeball.png";
+			ballNameString = @"amazeball";
 			break;
 		case 2001:
 			ballNameString = @"baseball.png";

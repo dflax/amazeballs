@@ -29,7 +29,13 @@
 // Configure the base contents for the scene
 - (void)createSceneContents {
 	// Set the background color and scale mode for the scene
-	self.backgroundColor = [SKColor blueColor];
+//	self.backgroundColor = [SKColor blueColor];
+
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"brickwall_ipad"]];
+	} else {
+		self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"brickwall_iphone4.png"]];
+	}
 	self.scaleMode = SKSceneScaleModeAspectFit;
 
 	// Update the physics for the world
@@ -155,5 +161,6 @@
     }
 */
 }
+
 
 @end
