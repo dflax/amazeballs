@@ -28,14 +28,20 @@
 
 // Configure the base contents for the scene
 - (void)createSceneContents {
-	// Set the background color and scale mode for the scene
-//	self.backgroundColor = [SKColor blueColor];
 
+	// Set the background Brick Wall image via a spritenode
+	NSString * backgroundImageName;
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-		self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"brickwall_ipad"]];
+		backgroundImageName = @"brickwall_ipad";
 	} else {
-		self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"brickwall_iphone4.png"]];
+		backgroundImageName = @"brickwall_iphone4";
 	}
+	
+	SKSpriteNode * backgroundWallNode = [[SKSpriteNode alloc] initWithImageNamed:backgroundImageName];
+	CGRect fullScreen = [[UIScreen mainScreen] bounds];
+	backgroundWallNode.position = CGPointMake(fullScreen.size.height / 2.0, fullScreen.size.width /2.0);
+	[self addChild:backgroundWallNode];
+
 	self.scaleMode = SKSceneScaleModeAspectFit;
 
 	// Update the physics for the world

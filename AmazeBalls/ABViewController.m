@@ -16,15 +16,15 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	
+
 	// Load the view and cast it as an SKView
 	SKView * ballView = (SKView *)self.view;
-	
+
 	// Set the debugging settings
 	ballView.showsNodeCount = YES;
 	ballView.showsDrawCount = YES;
 	ballView.showsFPS       = YES;
-	
+
 	// Calculate the size for the view - need to use the MIN/MAX technique to ensure a landscape view is created
 	CGSize boundrySize = CGSizeMake(MAX(ballView.frame.size.height, ballView.frame.size.width), MIN(ballView.frame.size.height, ballView.frame.size.width));
 	

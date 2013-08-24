@@ -32,22 +32,22 @@
 			ballNameString = @"amazeball";
 			break;
 		case 2001:
-			ballNameString = @"baseball.png";
+			ballNameString = @"baseball";
 			break;
 		case 2002:
-			ballNameString = @"basketball.png";
+			ballNameString = @"basketball";
 			break;
 		case 2003:
-			ballNameString = @"football.png";
+			ballNameString = @"football";
 			break;
 		case 2004:
-			ballNameString = @"pumpkin.png";
+			ballNameString = @"pumpkin";
 			break;
 		case 2005:
-			ballNameString = @"soccer1.png";
+			ballNameString = @"soccer1";
 			break;
 		case 2006:
-			ballNameString = @"soccer2.png";
+			ballNameString = @"soccer2";
 			break;
 		default:
 			break;
