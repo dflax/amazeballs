@@ -23,7 +23,16 @@
 		wallSize = CGSizeMake(548.0, 10.0);
 		wallOrigin = CGPointMake(284.0, 30.0);
 	}
-	ABWall * wall = [[ABWall alloc] initWithColor:[SKColor redColor] size:wallSize];
+//	ABWall * wall = [[ABWall alloc] initWithColor:[SKColor redColor] size:wallSize];
+	// Set the background Brick Wall image via a spritenode
+	NSString * floorImageName;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		floorImageName = @"floor_ipad";
+	} else {
+		floorImageName = @"floor_iphone4";
+	}
+
+	ABWall * wall = [[ABWall alloc] initWithImageNamed:floorImageName];
 
 	// Set the physics body properties for the wall
 	wall.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(wall.frame.size.width, wall.frame.size.height)];
