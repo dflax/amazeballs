@@ -140,7 +140,6 @@
 	 ];
 }
 
-
 #pragma mark - Handle Contact Between Nodes
 - (void)didBeginContact:(SKPhysicsContact *)contact {
 /*	NSLog(@"Contact detected");
