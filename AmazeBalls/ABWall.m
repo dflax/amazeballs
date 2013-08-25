@@ -15,21 +15,23 @@
 // may enhance this at some point to actually provide multiple locations
 + (instancetype)newWallAtLocation:(int)location withRotation:(CGFloat)rotation {
 	CGSize wallSize;
-	CGPoint wallOrigin;
-	if ([self isPad]) {
-		wallSize = CGSizeMake(1004.0, 10.0);
-		wallOrigin = CGPointMake(512.0, 30.0);
-	} else {
-		wallSize = CGSizeMake(548.0, 10.0);
-		wallOrigin = CGPointMake(284.0, 30.0);
-	}
-//	ABWall * wall = [[ABWall alloc] initWithColor:[SKColor redColor] size:wallSize];
+	BOOL isPad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+	CGRect screenSize = [[UIScreen mainScreen] bounds];
+	CGPoint wallOrigin = CGPointMake(screenSize.size.height / 2.0, 30.0);
+
 	// Set the background Brick Wall image via a spritenode
 	NSString * floorImageName;
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+	if (isPad) {
+		wallSize = CGSizeMake(1004.0, 10.0);
 		floorImageName = @"floor_ipad";
 	} else {
-		floorImageName = @"floor_iphone4";
+		if (screenSize.size.height > 500.0) {
+			wallSize = CGSizeMake(548.0, 10.0);
+			floorImageName = @"floor_iphone4";
+		} else {
+			wallSize = CGSizeMake(460.0, 10.0);
+			floorImageName = @"floor_iphone35";
+		}
 	}
 
 	ABWall * wall = [[ABWall alloc] initWithImageNamed:floorImageName];
@@ -48,14 +50,6 @@
 	wall.physicsBody.contactTestBitMask = ballCategory | wallCategory | edgeCategory;
 
 	return wall;
-}
-
-// Utility method to determine if working on an iPad or not
-+ (BOOL)isPad {
-#ifdef UI_USER_INTERFACE_IDIOM
-	return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-#endif
-	return NO;
 }
 
 @end
