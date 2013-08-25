@@ -5,6 +5,30 @@
 //  Created by Daniel Flax on 6/15/13.
 //  Copyright (c) 2013 Piece of Cake Adventures, LLC. All rights reserved.
 //
+//
+// The MIT License (MIT)
+//
+// Copyright (c) 2013 Daniel Flax
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
 
 #import "ABBall.h"
 #import "ABBallScene.h"
@@ -15,7 +39,7 @@
 + (instancetype)newBallNodeAtLocation:(CGPoint)location {
 	// Deal with the coordinate system transformations
 	CGFloat offset;
-	if ([ABBall isPad]) {
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		offset = 768.0;
 	} else {
 		offset = 320.0;
@@ -109,14 +133,5 @@
 
 	[self.physicsBody applyImpulse:movementVector];
 }
-
-// Utility method to tell whether you're working on an iPad or not
-+ (BOOL)isPad {
-#ifdef UI_USER_INTERFACE_IDIOM
-	return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
-#endif
-	return NO;
-}
-
 
 @end

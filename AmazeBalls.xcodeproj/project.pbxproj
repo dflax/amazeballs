@@ -70,6 +70,8 @@
 		FE31C51417AA148500CB2EA5 /* ABWall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABWall.h; sourceTree = "<group>"; };
 		FE31C51517AA148500CB2EA5 /* ABWall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABWall.m; sourceTree = "<group>"; };
 		FE63016C17C93E4300B2114E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FE99EBE617CA2E8C005D50B9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
+		FE99EBE717CA2E8C005D50B9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		FEC803BB17C8270D002D12ED /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -140,10 +142,10 @@
 				FE31C4E017AA0E5100CB2EA5 /* ABAppDelegate.m */,
 				FE31C4E817AA0E5100CB2EA5 /* ABViewController.h */,
 				FE31C4E917AA0E5100CB2EA5 /* ABViewController.m */,
-				FE31C50E17AA148500CB2EA5 /* ABBall.h */,
-				FE31C50F17AA148500CB2EA5 /* ABBall.m */,
 				FE31C51017AA148500CB2EA5 /* ABBallScene.h */,
 				FE31C51117AA148500CB2EA5 /* ABBallScene.m */,
+				FE31C50E17AA148500CB2EA5 /* ABBall.h */,
+				FE31C50F17AA148500CB2EA5 /* ABBall.m */,
 				FE31C51217AA148500CB2EA5 /* ABSettingsViewController.h */,
 				FE31C51317AA148500CB2EA5 /* ABSettingsViewController.m */,
 				FE31C51417AA148500CB2EA5 /* ABWall.h */,
@@ -158,6 +160,8 @@
 		FE31C4D717AA0E5100CB2EA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FE99EBE617CA2E8C005D50B9 /* LICENSE */,
+				FE99EBE717CA2E8C005D50B9 /* README.md */,
 				FE31C4D817AA0E5100CB2EA5 /* AmazeBalls-Info.plist */,
 				FE31C4D917AA0E5100CB2EA5 /* InfoPlist.strings */,
 				FE31C4DC17AA0E5100CB2EA5 /* main.m */,
