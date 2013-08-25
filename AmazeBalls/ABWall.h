@@ -37,6 +37,7 @@
 
 @interface ABWall : SKSpriteNode
 
-+ (instancetype)newWallAtLocation:(int)location withRotation:(CGFloat)rotation;
+// Method to create a new wall
++ (instancetype)newWall;
 
 @end

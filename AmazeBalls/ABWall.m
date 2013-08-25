@@ -35,20 +35,23 @@
 
 @implementation ABWall
 
-// Create the wall - originally meant to have ability for a wall in multiple locations
-// may enhance this at some point to actually provide multiple locations
-+ (instancetype)newWallAtLocation:(int)location withRotation:(CGFloat)rotation {
+// Create the wall
++ (instancetype)newWall {
+
+	// Determine the device type to load the appropriate wall image
 	CGSize wallSize;
 	BOOL isPad = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
 	CGRect screenSize = [[UIScreen mainScreen] bounds];
 	CGPoint wallOrigin = CGPointMake(screenSize.size.height / 2.0, 30.0);
 
-	// Set the background Brick Wall image via a spritenode
+	// Set the wall image name depending on device type
 	NSString * floorImageName;
 	if (isPad) {
 		wallSize = CGSizeMake(1004.0, 10.0);
 		floorImageName = @"floor_ipad";
 	} else {
+
+		// Use the right image for 3.5" vs. 4" iPhone / iPod Touch
 		if (screenSize.size.height > 500.0) {
 			wallSize = CGSizeMake(548.0, 10.0);
 			floorImageName = @"floor_iphone4";
@@ -58,6 +61,7 @@
 		}
 	}
 
+	// Create the new wall object
 	ABWall * wall = [[ABWall alloc] initWithImageNamed:floorImageName];
 
 	// Set the physics body properties for the wall
@@ -65,7 +69,6 @@
 	wall.physicsBody.affectedByGravity = NO;
 	wall.physicsBody.dynamic           = NO;
 
-	wall.zRotation = rotation;
 	wall.position = wallOrigin;
 
 	// Set the category bit masks for collision, etc.

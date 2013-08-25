@@ -40,6 +40,8 @@
 
 @interface ABBall : SKSpriteNode
 
-+ (instancetype)newBallNodeAtLocation:(CGPoint)location;
+// Method to drop in a new ball where the user taps the screen
+// of the type the user currently has specified.
++ (instancetype)newBallNodeAtLocation:(CGPoint)location ofType:(int)ballType withBouncyness:(CGFloat)bouncyness;
 
 @end

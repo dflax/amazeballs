@@ -37,7 +37,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-// To track the accelerometer, a Core Motion Manager is necessary
+// To track the accelerometer, a Core Motion Manager is necessary - 
 // this will provide a single instance for the app to use throughout all objects.
 @property (readonly) CMMotionManager * motionManager;
 

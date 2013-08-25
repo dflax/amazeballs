@@ -38,6 +38,8 @@
 #import <UIKit/UIKit.h>
 @class ABSettingsViewController;
 
+// Declare a delegate protocol to send back the settings values the user selects
+// and to handle cancellation
 @protocol ABSettingsDelegate <NSObject>
 - (void)ABSettingsViewController:(ABSettingsViewController *)settingsViewController didCancelSettings:(BOOL)cancelled;
 - (void)ABSettingsViewController:(ABSettingsViewController *)settingsViewController
@@ -50,12 +52,13 @@
 
 @interface ABSettingsViewController : UIViewController
 
+// UI Widgets to grab their values
 @property (nonatomic, strong) IBOutlet UISlider * gravitySlider;
 @property (nonatomic, strong) IBOutlet UISlider * bouncynessSlider;
 @property (nonatomic, strong) IBOutlet UISwitch * boundingSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch * accelerometerSwitch;
 
-// Buttons for ball types
+// Buttons for ball type selections
 @property (nonatomic, strong) IBOutlet UIButton * buttonAmazeBall;
 @property (nonatomic, strong) IBOutlet UIButton * buttonBaseball;
 @property (nonatomic, strong) IBOutlet UIButton * buttonBasketball;
@@ -67,6 +70,7 @@
 
 @property (nonatomic, strong) id<ABSettingsDelegate> delegate;
 
+// Actions for saving, cancelling and selecting one of the ball types
 - (IBAction)cancelSettingsView:(id)sender;
 - (IBAction)saveSettings:(id)sender;
 - (IBAction)selectBallType:(id)sender;

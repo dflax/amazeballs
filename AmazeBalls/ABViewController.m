@@ -44,30 +44,34 @@
 	// Load the view and cast it as an SKView
 	SKView * ballView = (SKView *)self.view;
 
-	// Set the debugging settings
-	ballView.showsNodeCount = YES;
-	ballView.showsDrawCount = YES;
-	ballView.showsFPS       = YES;
+	// Set the debugging settings - useful when developing, turned off for release.
+	ballView.showsNodeCount = NO;
+	ballView.showsDrawCount = NO;
+	ballView.showsFPS       = NO;
 
-	// Calculate the size for the view - need to use the MIN/MAX technique to ensure a landscape view is created
+	// Calculate the size for the view
+	// Use the MIN/MAX to ensure a landscape view is created
 	CGSize boundrySize = CGSizeMake(MAX(ballView.frame.size.height, ballView.frame.size.width), MIN(ballView.frame.size.height, ballView.frame.size.width));
-	
-	// Configure the view's frame to use this new size
+
+	// Set the view's frame to use this new size
 	self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, boundrySize.width, boundrySize.height);
-	
+
 	// Create the scene at the right size and present it
 	ballScene = [[ABBallScene alloc] initWithSize:boundrySize];
 	[ballView presentScene:ballScene];
 }
+
 - (void)viewWillAppear:(BOOL)animated {
-	// Whenever the view is going to appear (initially or after changing settings), refresh the phyiscs settings
+	// Whenever the view is going to appear (initially or after settings), refresh the phyiscs settings
 	[ballScene updateWorldPhysicsSettings];
 }
+
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
 	// Leveraging a Storyboard segue to bring up the settings view, must set the delegate correctly
 	if ([segue.identifier isEqualToString:@"settingsSegue"]) {
 		ABSettingsViewController * settingsView = segue.destinationViewController;
@@ -75,22 +79,23 @@
 	}
 }
 
-#pragma mark - Don't Rotate
+#pragma mark - Disable rotation. This is a portrait app
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 
-#pragma mark - ABSettingsDelegate
+#pragma mark - ABSettingsDelegate methods
 - (void)ABSettingsViewController:(ABSettingsViewController *)settingsViewController didCancelSettings:(BOOL)cancelled {
 	// If the user cancels the settings view, simply dismiss the modal view controller for settings
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (void)ABSettingsViewController:(ABSettingsViewController *)settingsViewController didSaveGravity:(CGFloat)gravitySetting andBouncyness:(CGFloat)bouncySetting andBoundingWall:(BOOL)boundingWallSetting andAccelerometer:(BOOL)accelerometerSetting andActiveBall:(int)activeBall{
-	// When the user taps save, the delegate will call this method, sending back all of the data values from the settings panel
-	
+	// When the user taps save, the delegate calls this method, sending back all of the data values from the settings panel
+
 	// Ceate a handle for the Standard User Defaults
 	NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-	
+
 	// Store values for the various settings in User Defaults
 	[userDefaults setFloat:gravitySetting * -40.0 forKey:@"gravityValue"];
 	[userDefaults setFloat:bouncySetting forKey:@"bouncyness"];

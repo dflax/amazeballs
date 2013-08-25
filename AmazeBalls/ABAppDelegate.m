@@ -37,6 +37,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 	// Instantiate the instance of the Core Motion Manager for the whole app to use
+	// in this case, only used when the setting for accelerometer is in effect
 	_motionManager = [[CMMotionManager alloc] init];
 
 	return YES;

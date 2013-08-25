@@ -39,7 +39,6 @@
 
 @implementation ABSettingsViewController
 
-// The default initializer
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
@@ -47,20 +46,21 @@
 	return self;
 }
 
-// When loading the view, retrieve the prevously set values for the settings and update the switches and sliders
+// When loading the view, retrieve the prevously set values for the settings
+// and update the switches and sliders accordingly
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
 	// Set the initial state for the view's value controls
 	NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
 
-	_gravitySlider.value    = [userDefaults floatForKey:@"gravityValue"]         ? [userDefaults floatForKey:@"gravityValue"] / -40.0 : -9.8 / -40.0;
-	_bouncynessSlider.value = [userDefaults floatForKey:@"bouncyness"]           ? [userDefaults floatForKey:@"bouncyness"]           :  0.5;
-	_boundingSwitch.on      = [userDefaults boolForKey:@"boundingWallSetting"]   ? [userDefaults boolForKey:@"boundingWallSetting"]          :  NO;
-	_accelerometerSwitch.on = [userDefaults boolForKey:@"accelerometerSetting"]  ? [userDefaults boolForKey:@"accelerometerSetting"]          :  NO;
+	_gravitySlider.value    = [userDefaults floatForKey:@"gravityValue"]        ? [userDefaults floatForKey:@"gravityValue"] / -40.0 : -9.8 / -40.0;
+	_bouncynessSlider.value = [userDefaults floatForKey:@"bouncyness"]          ? [userDefaults floatForKey:@"bouncyness"]           :  0.5;
+	_boundingSwitch.on      = [userDefaults boolForKey:@"boundingWallSetting"]  ? [userDefaults boolForKey:@"boundingWallSetting"]   :  NO;
+	_accelerometerSwitch.on = [userDefaults boolForKey:@"accelerometerSetting"] ? [userDefaults boolForKey:@"accelerometerSetting"]  :  NO;
+	_activeBall             = [userDefaults integerForKey:@"activeBall"]        ? [userDefaults integerForKey:@"activeBall"]         :  2000;
 
-	// Grab the value for the active ball
-	_activeBall = [userDefaults integerForKey:@"activeBall"]  ? [userDefaults integerForKey:@"activeBall"]          :  2000;
+	// Visually show which ball is currently active
 	UIButton * currentBall = (UIButton *)[self.view viewWithTag:_activeBall];
 	currentBall.layer.borderColor = [[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor];
 	currentBall.layer.borderWidth = 1.0;
@@ -70,7 +70,7 @@
 	[super didReceiveMemoryWarning];
 }
 
-// If the user taps cancel, call the delegate method to cancel (dismiss the settings view controller)
+// If the user taps cancel, call the delegate method to cancel (dismissing the settings view controller)
 - (IBAction)cancelSettingsView:(id)sender {
 	[_delegate ABSettingsViewController:self didCancelSettings:YES];
 }
@@ -85,13 +85,8 @@
 						  andActiveBall:_activeBall];
 }
 
-- (void)configureBallOptionButtons {
-	NSLog(@"confiugring for ball: %d", _activeBall);
-
-	// Select the button that's currently active
-
-}
-
+// When user taps on a ball type, clear all selections and update UI to demonstrate which one's been
+// selected, also update the _activeBall value.
 - (IBAction)selectBallType:(id)sender {
 	_buttonAmazeBall.layer.borderWidth     = 0.0;
 	_buttonBaseball.layer.borderWidth      = 0.0;

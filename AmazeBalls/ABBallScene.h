@@ -44,6 +44,7 @@ static const uint32_t edgeCategory =  0x1 << 2;
 
 @interface ABBallScene : SKScene <SKPhysicsContactDelegate>
 
+// Method for updating the physics after the user changes settings
 - (void)updateWorldPhysicsSettings;
 
 @end

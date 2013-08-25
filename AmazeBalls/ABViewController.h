@@ -42,6 +42,8 @@
 #import "ABBallScene.h"
 
 @interface ABViewController : UIViewController <ABSettingsDelegate> {
+
+	// The main SpriteKit scene where all SpriteKit nodes will be placed
 	ABBallScene * ballScene;
 }
 
