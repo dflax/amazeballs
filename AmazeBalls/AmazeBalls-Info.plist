@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.pieceofcakenyc.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>9N4HA7TLU8.com.pieceofcakenyc.amazeballs</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
