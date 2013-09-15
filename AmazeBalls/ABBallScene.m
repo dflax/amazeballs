@@ -147,7 +147,7 @@
 
 	// If no Accelerometer, set the simple gravity for the world
 	if (!accelerometerSetting) {
-		self.physicsWorld.gravity = CGPointMake(0.0, _currentGravity);
+		self.physicsWorld.gravity = CGVectorMake(0.0, _currentGravity);
 
 		// In case it's on, turn off the accelerometer
 		[self.motionManager stopAccelerometerUpdates];
@@ -198,7 +198,7 @@
 			 // Take the x and y acceleration vectors and multiply by the gravity values to come up with a full gravity vector
 			 CGFloat xGravity = (data.acceleration.x) * _currentGravity;
 			 CGFloat yGravity = (data.acceleration.y) * -_currentGravity;
-			 self.physicsWorld.gravity = CGPointMake(yGravity, xGravity);
+			 self.physicsWorld.gravity = CGVectorMake(yGravity, xGravity);
 		 });
 	 }
 	 ];
