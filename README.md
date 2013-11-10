@@ -1,6 +1,9 @@
 amazeballs
 ==========
 
+Update: November 10, 2013
+Test cases needed. Goal is to leverage XCtest class.
+
 AmazeBalls iOS App
 
 This is a simple example app to demonstrate some of the capabilities of SpriteKit.
