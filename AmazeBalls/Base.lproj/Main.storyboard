@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,7 +17,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Z0-LC-hPm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="brickwall" translatesAutoresizingMaskIntoConstraints="NO" id="ZOX-AE-oMf">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Z0-LC-hPm">
                                 <rect key="frame" x="562" y="558" width="22" height="22"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -25,11 +29,18 @@
                                     <segue destination="bIE-KI-Keh" kind="show" id="Mko-eo-swk"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="brickwall_ipad" translatesAutoresizingMaskIntoConstraints="NO" id="ZOX-AE-oMf">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ZOX-AE-oMf" secondAttribute="centerX" id="CJO-hM-NHi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZOX-AE-oMf" secondAttribute="trailing" constant="-16" id="Ef6-34-Plb"/>
+                            <constraint firstItem="ZOX-AE-oMf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="J0a-WH-goU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9Z0-LC-hPm" secondAttribute="bottom" constant="20" id="cfa-wE-6uE"/>
+                            <constraint firstAttribute="centerY" secondItem="ZOX-AE-oMf" secondAttribute="centerY" id="dBD-dz-fCt"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZOX-AE-oMf" secondAttribute="bottom" id="h0e-eR-0ab"/>
+                            <constraint firstItem="ZOX-AE-oMf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="nX4-2N-4sq"/>
+                            <constraint firstItem="9Z0-LC-hPm" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="uPF-3i-xdu"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -46,6 +57,14 @@
                     <view key="view" contentMode="scaleToFill" id="6vC-bM-yjb">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0E-WI-OWs">
+                                <rect key="frame" x="222" y="144" width="63" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
@@ -55,6 +74,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="brickwall_ipad" width="1024" height="768"/>
+        <image name="brickwall" width="1024" height="768"/>
     </resources>
 </document>
