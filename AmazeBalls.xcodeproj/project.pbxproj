@@ -10,9 +10,9 @@
 		FE3AD7581B0A7A7900F8650E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */; };
 		FE3AD75A1B0A7A7900F8650E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD7591B0A7A7900F8650E /* ViewController.swift */; };
 		FE3AD75D1B0A7A7900F8650E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE3AD75B1B0A7A7900F8650E /* Main.storyboard */; };
-		FE3AD75F1B0A7A7900F8650E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE3AD75E1B0A7A7900F8650E /* Images.xcassets */; };
 		FE3AD7621B0A7A7900F8650E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */; };
 		FE3AD76E1B0A7A7900F8650E /* amazeballsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD76D1B0A7A7900F8650E /* amazeballsTests.swift */; };
+		FE475E0F1B0A7B4400F25DA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,11 +31,11 @@
 		FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE3AD7591B0A7A7900F8650E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FE3AD75C1B0A7A7900F8650E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FE3AD75E1B0A7A7900F8650E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FE3AD7611B0A7A7900F8650E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		FE3AD7671B0A7A7900F8650E /* amazeballsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = amazeballsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE3AD76C1B0A7A7900F8650E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE3AD76D1B0A7A7900F8650E /* amazeballsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = amazeballsTests.swift; sourceTree = "<group>"; };
+		FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +80,7 @@
 				FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */,
 				FE3AD7591B0A7A7900F8650E /* ViewController.swift */,
 				FE3AD75B1B0A7A7900F8650E /* Main.storyboard */,
-				FE3AD75E1B0A7A7900F8650E /* Images.xcassets */,
+				FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */,
 				FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */,
 				FE3AD7551B0A7A7900F8650E /* Supporting Files */,
 			);
@@ -193,8 +193,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE3AD75D1B0A7A7900F8650E /* Main.storyboard in Resources */,
+				FE475E0F1B0A7B4400F25DA5 /* Images.xcassets in Resources */,
 				FE3AD7621B0A7A7900F8650E /* LaunchScreen.xib in Resources */,
-				FE3AD75F1B0A7A7900F8650E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +411,7 @@
 				FE3AD7731B0A7A7900F8650E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FE3AD7741B0A7A7900F8650E /* Build configuration list for PBXNativeTarget "amazeballsTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +420,7 @@
 				FE3AD7761B0A7A7900F8650E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
