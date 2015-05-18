@@ -13,6 +13,7 @@
 		FE3AD7621B0A7A7900F8650E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */; };
 		FE3AD76E1B0A7A7900F8650E /* amazeballsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD76D1B0A7A7900F8650E /* amazeballsTests.swift */; };
 		FE475E0F1B0A7B4400F25DA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */; };
+		FEE3F3741B0A8F9000496130 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE3F3731B0A8F9000496130 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		FE3AD76C1B0A7A7900F8650E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE3AD76D1B0A7A7900F8650E /* amazeballsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = amazeballsTests.swift; sourceTree = "<group>"; };
 		FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FEE3F3731B0A8F9000496130 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = AmazeBalls/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */,
 				FE3AD7591B0A7A7900F8650E /* ViewController.swift */,
+				FEE3F3731B0A8F9000496130 /* SettingsViewController.swift */,
 				FE3AD75B1B0A7A7900F8650E /* Main.storyboard */,
 				FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */,
 				FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */,
@@ -168,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FE3AD74D1B0A7A7900F8650E /* Build configuration list for PBXProject "amazeballs" */;
+			buildConfigurationList = FE3AD74D1B0A7A7900F8650E /* Build configuration list for PBXProject "AmazeBalls" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -214,6 +217,7 @@
 			files = (
 				FE3AD75A1B0A7A7900F8650E /* ViewController.swift in Sources */,
 				FE3AD7581B0A7A7900F8650E /* AppDelegate.swift in Sources */,
+				FEE3F3741B0A8F9000496130 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FE3AD74D1B0A7A7900F8650E /* Build configuration list for PBXProject "amazeballs" */ = {
+		FE3AD74D1B0A7A7900F8650E /* Build configuration list for PBXProject "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FE3AD76F1B0A7A7900F8650E /* Debug */,
