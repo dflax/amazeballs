@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import SpriteKit
 
 // Declare a delegate protocol to send back the settings values the user selects and to handle cancellation
 protocol SettingsDelegateProtocol {
-//	func SettingsViewController(settingsViewController: SettingsViewController, cancelled: Bool)
-//	func SettingsViewController(settingsViewController: SettingsViewController, gravitySetting: CGFloat, bouncySetting: CGFloat, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int)
+	func settingsViewController(viewController: SettingsViewController, cancelled: Bool)
+	func settingsViewController(viewController: SettingsViewController, gravitySetting: CGFloat, bouncySetting: CGFloat, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int)
 }
 
-class SettingsViewController: UIViewController, Printable {
+class SettingsViewController:UIViewController, Printable {
 
 	// UI Widgets to grab their values
 	@IBOutlet weak var gravitySlider:       UISlider!
@@ -86,40 +87,22 @@ class SettingsViewController: UIViewController, Printable {
 		currentBallButton.layer.borderWidth = 1.0
 	}
 
+	// If the user taps cancel, call the delegate method to cancel (dismissing the settings view controller)
+	@IBAction func cancelSettingsView() {
+		delegate?.settingsViewController(self, cancelled: true)
+	}
 
+	// If the user taps save, call the delegate method to save - with all of the widget values
+	@IBAction func saveSetting() {
+		delegate?.settingsViewController(self, gravitySetting: gravitySlider.value.f, bouncySetting: bouncynessSlider.value.f, boundingWallSetting: boundingSwitch.on, accelerometerSetting: accelerometerSwitch.on, activeBall: activeBall)
+	}
 
-
-	/*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 
 
 /*
-
-
-// If the user taps cancel, call the delegate method to cancel (dismissing the settings view controller)
-- (IBAction)cancelSettingsView:(id)sender {
-[_delegate ABSettingsViewController:self didCancelSettings:YES];
-}
-
-// If the user taps save, call the delegate method to save - with all of the widget values
-- (IBAction)saveSettings:(id)sender {
-[_delegate ABSettingsViewController:self
-didSaveGravity:_gravitySlider.value
-andBouncyness:_bouncynessSlider.value
-andBoundingWall:_boundingSwitch.on
-andAccelerometer:_accelerometerSwitch.on
-andActiveBall:_activeBall];
-}
 
 // When user taps on a ball type, clear all selections and update UI to demonstrate which one's been
 // selected, also update the _activeBall value.

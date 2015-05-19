@@ -38,4 +38,14 @@ struct CollisionCategories{
 	static let EdgeBody: UInt32 = 0x1 << 2
 }
 
+// Extensions to enable CGFloat casting
+extension Int {
+	var f: CGFloat { return CGFloat(self) }
+}
+extension Float {
+	var f: CGFloat { return CGFloat(self) }
+}
+extension Double {
+	var f: CGFloat { return CGFloat(self) }
+}
 

@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  amazeballs
+//  Amazeballs
 //
-//  Created by Daniel Flax on 5/18/15.
+//  Created by Daniel Flax on 5/19/15.
 //  Copyright (c) 2015 Daniel Flax. All rights reserved.
 //
 
