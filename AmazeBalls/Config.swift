@@ -40,12 +40,15 @@ struct CollisionCategories{
 
 // Extensions to enable CGFloat casting
 extension Int {
-	var f: CGFloat { return CGFloat(self) }
+	var cf: CGFloat { return CGFloat(self) }
+	var f:  Float   { return Float(self) }
 }
 extension Float {
-	var f: CGFloat { return CGFloat(self) }
+	var cf: CGFloat { return CGFloat(self) }
+	var f:  Float   { return Float(self) }
 }
 extension Double {
-	var f: CGFloat { return CGFloat(self) }
+	var cf: CGFloat { return CGFloat(self) }
+	var f:  Float   { return Float(self) }
 }
 

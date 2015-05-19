@@ -94,7 +94,7 @@ class SettingsViewController:UIViewController, Printable {
 
 	// If the user taps save, call the delegate method to save - with all of the widget values
 	@IBAction func saveSetting() {
-		delegate?.settingsViewController(self, gravitySetting: gravitySlider.value.f, bouncySetting: bouncynessSlider.value.f, boundingWallSetting: boundingSwitch.on, accelerometerSetting: accelerometerSwitch.on, activeBall: activeBall)
+		delegate?.settingsViewController(self, gravitySetting: gravitySlider.value.cf, bouncySetting: bouncynessSlider.value.cf, boundingWallSetting: boundingSwitch.on, accelerometerSetting: accelerometerSwitch.on, activeBall: activeBall)
 	}
 
 

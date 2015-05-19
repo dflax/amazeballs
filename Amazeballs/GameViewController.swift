@@ -106,6 +106,22 @@ println("settingsSegue triggered")
 	func settingsViewController(viewController: SettingsViewController, gravitySetting: CGFloat, bouncySetting: CGFloat, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int) {
 		println("Save content")
 
+		// Ceate a handle for the Standard User Defaults
+		let userDefaults = NSUserDefaults.standardUserDefaults()
+
+		let cgFloatGrav = gravitySetting * -40.0
+		let cgFloatBounce =
+		// Store values for the various settings in User Defaults
+		userDefaults.setFloat(cgFloatGrav.f, forKey:"gravityValue")
+		userDefaults.setFloat(bouncySetting.f forKey:"bouncyness")
+		userDefaults.setBool(boundingWallSetting forKey:"boundingWallSetting")
+		userDefaults.setBool(accelerometerSetting forKey:"accelerometerSetting")
+		userDefaults.setInteger(activeBall forKey:"activeBall")
+		
+		// With the new physics now stored in NSUserDefaults, update the Physics for the scene
+		[ballScene updateWorldPhysicsSettings];
+		
+		// Now dismiss the modal view controller
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 
@@ -114,6 +130,7 @@ println("settingsSegue triggered")
 		println("Cancelled")
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
+
 }
 
 
