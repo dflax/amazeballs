@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE1A17931B0B804100F2C28C /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A17921B0B804100F2C28C /* Ball.swift */; };
+		FE1A17951B0B8E8300F2C28C /* BallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A17941B0B8E8300F2C28C /* BallScene.swift */; };
+		FE1A17971B0B8EB800F2C28C /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A17961B0B8EB800F2C28C /* Floor.swift */; };
+		FE1A179C1B0B93DD00F2C28C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1A179B1B0B93DD00F2C28C /* Config.swift */; };
 		FE3AD7581B0A7A7900F8650E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */; };
 		FE3AD75A1B0A7A7900F8650E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3AD7591B0A7A7900F8650E /* ViewController.swift */; };
 		FE3AD75D1B0A7A7900F8650E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE3AD75B1B0A7A7900F8650E /* Main.storyboard */; };
@@ -27,6 +31,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE1A17921B0B804100F2C28C /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Ball.swift; path = AmazeBalls/Ball.swift; sourceTree = SOURCE_ROOT; };
+		FE1A17941B0B8E8300F2C28C /* BallScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BallScene.swift; path = AmazeBalls/BallScene.swift; sourceTree = SOURCE_ROOT; };
+		FE1A17961B0B8EB800F2C28C /* Floor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Floor.swift; path = AmazeBalls/Floor.swift; sourceTree = SOURCE_ROOT; };
+		FE1A179B1B0B93DD00F2C28C /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = AmazeBalls/Config.swift; sourceTree = SOURCE_ROOT; };
 		FE3AD7521B0A7A7900F8650E /* amazeballs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = amazeballs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE3AD7561B0A7A7900F8650E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +66,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE1A17981B0B8F2300F2C28C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */,
+				FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */,
+				FE3AD75B1B0A7A7900F8650E /* Main.storyboard */,
+				FE1A17941B0B8E8300F2C28C /* BallScene.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FE1A17991B0B8F3800F2C28C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FE1A17961B0B8EB800F2C28C /* Floor.swift */,
+				FE1A17921B0B804100F2C28C /* Ball.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FE1A179A1B0B8F4700F2C28C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */,
+				FE3AD7591B0A7A7900F8650E /* ViewController.swift */,
+				FEE3F3731B0A8F9000496130 /* SettingsViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		FE3AD7491B0A7A7900F8650E = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +117,10 @@
 		FE3AD7541B0A7A7900F8650E /* amazeballs */ = {
 			isa = PBXGroup;
 			children = (
-				FE3AD7571B0A7A7900F8650E /* AppDelegate.swift */,
-				FE3AD7591B0A7A7900F8650E /* ViewController.swift */,
-				FEE3F3731B0A8F9000496130 /* SettingsViewController.swift */,
-				FE3AD75B1B0A7A7900F8650E /* Main.storyboard */,
-				FE475E0E1B0A7B4400F25DA5 /* Images.xcassets */,
-				FE3AD7601B0A7A7900F8650E /* LaunchScreen.xib */,
+				FE1A179B1B0B93DD00F2C28C /* Config.swift */,
+				FE1A17991B0B8F3800F2C28C /* Models */,
+				FE1A17981B0B8F2300F2C28C /* Views */,
+				FE1A179A1B0B8F4700F2C28C /* Controllers */,
 				FE3AD7551B0A7A7900F8650E /* Supporting Files */,
 			);
 			path = amazeballs;
@@ -215,9 +251,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE1A17971B0B8EB800F2C28C /* Floor.swift in Sources */,
+				FE1A17931B0B804100F2C28C /* Ball.swift in Sources */,
 				FE3AD75A1B0A7A7900F8650E /* ViewController.swift in Sources */,
+				FE1A179C1B0B93DD00F2C28C /* Config.swift in Sources */,
 				FE3AD7581B0A7A7900F8650E /* AppDelegate.swift in Sources */,
 				FEE3F3741B0A8F9000496130 /* SettingsViewController.swift in Sources */,
+				FE1A17951B0B8E8300F2C28C /* BallScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
