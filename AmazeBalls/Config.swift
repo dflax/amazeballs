@@ -45,7 +45,7 @@ extension Int {
 }
 extension Float {
 	var cf: CGFloat { return CGFloat(self) }
-	var f:  Float   { return Float(self) }
+	var f:  Float   { return self }
 }
 extension Double {
 	var cf: CGFloat { return CGFloat(self) }
