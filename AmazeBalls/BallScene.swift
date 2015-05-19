@@ -35,7 +35,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 			// TODO DROP BALLS HERE
 			println("Drop ball in at \(location)")
 			if touch.tapCount == 2 {
-				self.stopBalls(()
+				self.stopBalls()
 			}
 		}
 	}
