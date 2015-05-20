@@ -110,16 +110,16 @@ println("settingsSegue triggered")
 		let userDefaults = NSUserDefaults.standardUserDefaults()
 
 		let cgFloatGrav = gravitySetting * -40.0
-		let cgFloatBounce =
+
 		// Store values for the various settings in User Defaults
-		userDefaults.setFloat(cgFloatGrav.f, forKey:"gravityValue")
-		userDefaults.setFloat(bouncySetting.f forKey:"bouncyness")
-		userDefaults.setBool(boundingWallSetting forKey:"boundingWallSetting")
-		userDefaults.setBool(accelerometerSetting forKey:"accelerometerSetting")
-		userDefaults.setInteger(activeBall forKey:"activeBall")
+		userDefaults.setFloat(Float(cgFloatGrav), forKey:"gravityValue")
+		userDefaults.setFloat(Float(bouncySetting), forKey:"bouncyness")
+		userDefaults.setBool(boundingWallSetting, forKey:"boundingWallSetting")
+		userDefaults.setBool(accelerometerSetting, forKey:"accelerometerSetting")
+		userDefaults.setInteger(activeBall, forKey:"activeBall")
 		
 		// With the new physics now stored in NSUserDefaults, update the Physics for the scene
-		[ballScene updateWorldPhysicsSettings];
+//		ballScene.updateWorldPhysicsSettings()
 		
 		// Now dismiss the modal view controller
 		self.dismissViewControllerAnimated(true, completion: nil)

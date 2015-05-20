@@ -54,12 +54,28 @@ class SettingsViewController:UIViewController, Printable {
 
 		// Set the initial state for the view's value controls
 		let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
+//		gravitySlider.value    = CGFloat(userDefaults.floatForKey("gravityValue"))        ? [userDefaults floatForKey:@"gravityValue"] / -40.0 : -9.8 / -40.0;
+//		bouncynessSlider.value = userDefaults.floatForKey("bouncyness")          ? [userDefaults floatForKey:@"bouncyness"]           :  0.5;
+//		boundingSwitch.on      = userDefaults.boolForKey("boundingWallSetting")  ? [userDefaults boolForKey:@"boundingWallSetting"]   :  NO;
+//		accelerometerSwitch.on = userDefaults.boolForKey("accelerometerSetting") ? [userDefaults boolForKey:@"accelerometerSetting"]  :  NO;
+//		activeBall             = userDefaults.integerForKey("activeBall")        ? [userDefaults integerForKey:@"activeBall"]         :  2000;
+//		
+//		// Visually show which ball is currently active
+//		UIButton * currentBall = (UIButton *)[self.view viewWithTag:_activeBall];
+//		currentBall.layer.borderColor = [[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor];
+//		currentBall.layer.borderWidth = 1.0;
+
+		let grav = defaults.floatForKey("gravityValue")
+		println("grav: \(grav)")
+		gravitySlider.value = grav
+
+//		if (let grav = defaults?.floatForKey("gravityValue") ) {
+//			gravitySlider.value = grav
+//		} else {
+//			gravitySlider.value = -9.8 / 40.0
+//		}
 /*
-		if let grav: Float = defaults.floatForKey("gravityValue") as? Float {
-			gravitySlider.value = grav
-		} else {
-			gravitySlider.value = -9.8 / 40.0
-		}
 		if let bouncy: Float = defaults.floatForKey("bouncyness") as? Float {
 			bouncynessSlider.value = bouncy
 		} else {
@@ -94,7 +110,13 @@ class SettingsViewController:UIViewController, Printable {
 
 	// If the user taps save, call the delegate method to save - with all of the widget values
 	@IBAction func saveSetting() {
-		delegate?.settingsViewController(self, gravitySetting: gravitySlider.value.cf, bouncySetting: bouncynessSlider.value.cf, boundingWallSetting: boundingSwitch.on, accelerometerSetting: accelerometerSwitch.on, activeBall: activeBall)
+		delegate?.settingsViewController(self,
+			gravitySetting: gravitySlider.value.cf,
+			bouncySetting: bouncynessSlider.value.cf,
+			boundingWallSetting: boundingSwitch.on,
+			accelerometerSetting: accelerometerSwitch.on,
+			activeBall: activeBall
+		)
 	}
 
 
