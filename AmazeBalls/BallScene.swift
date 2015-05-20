@@ -20,12 +20,27 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	override func didMoveToView(view: SKView) {
-		
+
 		// Set the overall physicsWorld and outer wall characteristics
 		physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
 		physicsWorld.contactDelegate = self
 		physicsBody = SKPhysicsBody(edgeLoopFromRect: ScreenRect)
 		physicsBody?.categoryBitMask = CollisionCategories.EdgeBody
+
+		// Load the brickwall background
+		let wallTexture = SKTexture(imageNamed: "brickwall")
+		let wallSprite  = SKSpriteNode(texture: wallTexture)
+		wallSprite.size = ScreenSize
+		wallSprite.position = ScreenCenter
+		wallSprite.zPosition = -10
+		self.addChild(wallSprite)
+
+		// Load the floor for the bottom of the scene
+		let floor = Floor()
+		floor.zPosition = 100
+
+		self.addChild(floor)
+println("floor: \(floor)")
 	}
 
 	override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -73,6 +88,10 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 			node, stop in
 			node.speed = 0
 		}
+	}
+
+	// Use to remove any balls that have fallen off the screen
+	override func update(currentTime: CFTimeInterval) {
 	}
 
 }

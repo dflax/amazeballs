@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE3C8CD51B0D0AD20030BCBA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */; };
 		FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */; };
 		FEB3F1C51B0BC17F00BBD388 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C41B0BC17F00BBD388 /* GameScene.swift */; };
 		FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */; };
@@ -15,7 +16,6 @@
 		FEB3F1DB1B0BC17F00BBD388 /* AmazeballsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1DA1B0BC17F00BBD388 /* AmazeballsTests.swift */; };
 		FEE83E561B0BC1F10073DA61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEE83E551B0BC1F10073DA61 /* Images.xcassets */; };
 		FEE83E591B0BC2C80073DA61 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FEE83E571B0BC2C80073DA61 /* LICENSE */; };
-		FEE83E5A1B0BC2C80073DA61 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E581B0BC2C80073DA61 /* README.md */; };
 		FEE83E601B0BC2E40073DA61 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5B1B0BC2E40073DA61 /* Ball.swift */; };
 		FEE83E611B0BC2E40073DA61 /* BallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */; };
 		FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5D1B0BC2E40073DA61 /* Config.swift */; };
@@ -33,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = AmazeBalls/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
 		FEB3F1BB1B0BC17F00BBD388 /* Amazeballs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amazeballs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB3F1BF1B0BC17F00BBD388 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +145,7 @@
 			children = (
 				FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */,
 				FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */,
+				FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -264,8 +266,8 @@
 				FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */,
 				FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */,
 				FEE83E601B0BC2E40073DA61 /* Ball.swift in Sources */,
-				FEE83E5A1B0BC2C80073DA61 /* README.md in Sources */,
 				FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */,
+				FE3C8CD51B0D0AD20030BCBA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

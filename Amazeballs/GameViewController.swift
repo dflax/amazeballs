@@ -9,14 +9,14 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, SettingsDelegateProtocol {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		let skView = self.view as! SKView
 
-		let scene = GameScene(size: skView.bounds.size)
+		let scene = BallScene(size: skView.bounds.size)
 		scene.scaleMode = .AspectFit
 
 		skView.presentScene(scene)
@@ -50,11 +50,10 @@ class GameViewController: UIViewController {
 
 		// Leveraging a Storyboard segue to bring up the settings view, must set the delegate correctly
 		if (segue.identifier == "settingsSegue") {
-println("settingsSegue triggered")
 
 			// set the destination of the segue (the settingsView) delegate to myself
 			let settingsView = segue.destinationViewController as! SettingsViewController
-//			settingsView.delegate = self
+			settingsView.delegate = self
 		}
 	}
 	
@@ -62,7 +61,7 @@ println("settingsSegue triggered")
 
 	// When the user taps save, the delegate calls this method, sending back all of the data values from the settings panel
 	func settingsViewController(viewController: SettingsViewController, gravitySetting: Float, bouncySetting: Float, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int) {
-println("Save content")
+//println("Save content")
 
 		// Ceate a handle for the Standard User Defaults
 		let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -86,33 +85,8 @@ println("Save content")
 
 	// If the user cancels the settings view, simply dismiss the modal view controller for settings
 	func settingsViewController(viewController: SettingsViewController, cancelled: Bool) {
-println("Cancelled")
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 
+
 }
-
-
-/*
-
-- (void)ABSettingsViewController:(ABSettingsViewController *)settingsViewController didSaveGravity:(CGFloat)gravitySetting andBouncyness:(CGFloat)bouncySetting andBoundingWall:(BOOL)boundingWallSetting andAccelerometer:(BOOL)accelerometerSetting andActiveBall:(int)activeBall{
-
-// Ceate a handle for the Standard User Defaults
-NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-
-// Store values for the various settings in User Defaults
-[userDefaults setFloat:gravitySetting * -40.0 forKey:@"gravityValue"];
-[userDefaults setFloat:bouncySetting forKey:@"bouncyness"];
-[userDefaults setBool:boundingWallSetting forKey:@"boundingWallSetting" ];
-[userDefaults setBool:accelerometerSetting forKey:@"accelerometerSetting"];
-[userDefaults setInteger:activeBall forKey:@"activeBall"];
-
-// With the new physics now stored in NSUserDefaults, update the Physics for the scene
-[ballScene updateWorldPhysicsSettings];
-
-// Now dismiss the modal view controller
-[self dismissViewControllerAnimated:YES completion:nil];
-}
-
-*/
-

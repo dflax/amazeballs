@@ -17,9 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="brickwall" translatesAutoresizingMaskIntoConstraints="NO" id="XK2-n7-IJg">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tvh-jF-9nD">
                                 <rect key="frame" x="562" y="558" width="22" height="22"/>
                                 <state key="normal">
@@ -32,12 +29,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XK2-n7-IJg" firstAttribute="leading" secondItem="IQT-x0-kH5" secondAttribute="leadingMargin" constant="-16" id="496-Gi-F3q"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="XK2-n7-IJg" secondAttribute="trailing" constant="-16" id="7uf-BC-rwA"/>
                             <constraint firstItem="Tvh-jF-9nD" firstAttribute="trailing" secondItem="IQT-x0-kH5" secondAttribute="trailingMargin" id="MtH-aY-SSy"/>
-                            <constraint firstItem="V6h-Sj-quc" firstAttribute="top" secondItem="XK2-n7-IJg" secondAttribute="bottom" id="VTk-qR-YZm"/>
                             <constraint firstItem="V6h-Sj-quc" firstAttribute="top" secondItem="Tvh-jF-9nD" secondAttribute="bottom" constant="20" id="Wuh-pa-xky"/>
-                            <constraint firstItem="XK2-n7-IJg" firstAttribute="top" secondItem="IQT-x0-kH5" secondAttribute="topMargin" id="faA-1J-KIB"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -45,10 +38,10 @@
             </objects>
             <point key="canvasLocation" x="6" y="435"/>
         </scene>
-        <!--View Controller-->
+        <!--Settings View Controller-->
         <scene sceneID="Eqb-Np-hCW">
             <objects>
-                <viewController id="Cka-1r-CHb" sceneMemberID="viewController">
+                <viewController id="Cka-1r-CHb" customClass="SettingsViewController" customModule="Amazeballs" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MVo-Xo-qXa"/>
                         <viewControllerLayoutGuide type="bottom" id="FdO-WK-D3d"/>
@@ -80,68 +73,95 @@
                                 <state key="normal" image="amazeball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mjy-1N-pML"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2001" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3VY-gg-lHl">
                                 <rect key="frame" x="99" y="517" width="75" height="75"/>
                                 <state key="normal" image="baseball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="20f-fQ-CKw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-yk-Cbm">
                                 <rect key="frame" x="182" y="517" width="75" height="75"/>
                                 <state key="normal" image="basketball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="HBX-g2-4Cw"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2003" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4L-h8-nIK">
                                 <rect key="frame" x="265" y="517" width="75" height="75"/>
                                 <state key="normal" image="football">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="aYZ-FG-c9Z"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-1W-8c7">
                                 <rect key="frame" x="348" y="517" width="75" height="75"/>
                                 <state key="normal" image="pumpkin">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mhX-kv-uel"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2005" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-hE-4sp">
                                 <rect key="frame" x="431" y="517" width="75" height="75"/>
                                 <state key="normal" image="soccer1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="ICd-Eo-d5v"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="2006" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDc-gw-Xx8">
                                 <rect key="frame" x="514" y="517" width="75" height="75"/>
                                 <state key="normal" image="soccer2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="Bns-2J-07K"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIZ-WC-khM">
                                 <rect key="frame" x="550" y="28" width="34" height="30"/>
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="saveSetting" destination="Cka-1r-CHb" eventType="touchUpInside" id="gn3-ZB-9da"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKg-IN-dcv">
                                 <rect key="frame" x="16" y="28" width="48" height="30"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancelSettingsView" destination="Cka-1r-CHb" eventType="touchUpInside" id="08o-mO-ifa"/>
+                                </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vPj-K2-O7L">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vPj-K2-O7L">
                                 <rect key="frame" x="500" y="234" width="51" height="31"/>
                             </switch>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wZ2-Dw-D7q">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wZ2-Dw-D7q">
                                 <rect key="frame" x="48" y="234" width="51" height="31"/>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Accelerometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-he-rEL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accelerometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-he-rEL">
                                 <rect key="frame" x="16" y="205" width="112" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Bounding Walls" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQF-nQ-O0B">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bounding Walls" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQF-nQ-O0B">
                                 <rect key="frame" x="464" y="205" width="120" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -152,6 +172,9 @@
                                 <state key="normal" title="Random">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="zar-Zr-8HT"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -179,17 +202,35 @@
                             <constraint firstItem="YDc-gw-Xx8" firstAttribute="leading" secondItem="Ft2-hE-4sp" secondAttribute="trailing" constant="8" id="ZEP-rX-bI6"/>
                             <constraint firstItem="DIZ-WC-khM" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="Zwe-Xg-5aa"/>
                             <constraint firstItem="0c2-yk-Cbm" firstAttribute="leading" secondItem="3VY-gg-lHl" secondAttribute="trailing" constant="8" id="faV-0z-JKt"/>
+                            <constraint firstItem="bQF-nQ-O0B" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="gL0-Sf-0EW"/>
+                            <constraint firstItem="m6b-he-rEL" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="gS9-Wf-UX9"/>
                             <constraint firstItem="m6b-he-rEL" firstAttribute="top" secondItem="ScU-hV-ofn" secondAttribute="bottom" constant="15" id="jRn-hD-qEP"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="CeZ-1W-8c7" secondAttribute="bottom" constant="8" id="l30-4Z-MxL"/>
                             <constraint firstItem="ScU-hV-ofn" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="ljN-fP-bZp"/>
+                            <constraint firstItem="wZ2-Dw-D7q" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" constant="32" id="o4I-o0-x4E"/>
                             <constraint firstItem="V4L-h8-nIK" firstAttribute="leading" secondItem="0c2-yk-Cbm" secondAttribute="trailing" constant="8" id="puj-M9-YPE"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="V4L-h8-nIK" secondAttribute="bottom" constant="8" id="tvL-91-3ba"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="Ou5-cK-Ltc" secondAttribute="bottom" constant="8" id="wGw-D4-UUD"/>
                             <constraint firstItem="ufP-bP-fgd" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="wfx-tp-oHE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vPj-K2-O7L" secondAttribute="trailing" constant="35" id="x8I-1E-d4Z"/>
                             <constraint firstItem="vPj-K2-O7L" firstAttribute="top" secondItem="bQF-nQ-O0B" secondAttribute="bottom" constant="8" id="y6k-m8-VTf"/>
                             <constraint firstItem="ScU-hV-ofn" firstAttribute="top" secondItem="ufP-bP-fgd" secondAttribute="bottom" constant="41" id="yXJ-TT-AC3"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="accelerometerSwitch" destination="wZ2-Dw-D7q" id="A5j-9i-r9n"/>
+                        <outlet property="bouncynessSlider" destination="ScU-hV-ofn" id="WrT-XG-NAD"/>
+                        <outlet property="boundingSwitch" destination="vPj-K2-O7L" id="TPf-dd-M9g"/>
+                        <outlet property="buttonAmazeBall" destination="Ou5-cK-Ltc" id="bdU-W6-mQq"/>
+                        <outlet property="buttonBaseball" destination="3VY-gg-lHl" id="eOx-YU-FWl"/>
+                        <outlet property="buttonBasketball" destination="0c2-yk-Cbm" id="gMX-Bq-M1M"/>
+                        <outlet property="buttonFootball" destination="V4L-h8-nIK" id="nGm-8j-ImD"/>
+                        <outlet property="buttonPumpkin" destination="CeZ-1W-8c7" id="DXJ-aB-Gvt"/>
+                        <outlet property="buttonRandom" destination="G3z-KP-fT1" id="ijW-vg-JOl"/>
+                        <outlet property="buttonSoccerBallOne" destination="Ft2-hE-4sp" id="fZu-JZ-L6Y"/>
+                        <outlet property="buttonSoccerBallTwo" destination="YDc-gw-Xx8" id="JGw-eb-z16"/>
+                        <outlet property="gravitySlider" destination="ufP-bP-fgd" id="lmF-j2-wmb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PNV-ZC-IhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -200,7 +241,6 @@
         <image name="amazeball" width="75" height="75"/>
         <image name="baseball" width="75" height="73"/>
         <image name="basketball" width="75" height="75"/>
-        <image name="brickwall" width="1024" height="768"/>
         <image name="football" width="75" height="73"/>
         <image name="pumpkin" width="75" height="75"/>
         <image name="soccer1" width="75" height="75"/>
