@@ -20,7 +20,6 @@
 		FEE83E611B0BC2E40073DA61 /* BallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */; };
 		FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5D1B0BC2E40073DA61 /* Config.swift */; };
 		FEE83E631B0BC2E40073DA61 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5E1B0BC2E40073DA61 /* Floor.swift */; };
-		FEE83E641B0BC2E40073DA61 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5F1B0BC2E40073DA61 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +50,6 @@
 		FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallScene.swift; sourceTree = "<group>"; };
 		FEE83E5D1B0BC2E40073DA61 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Amazeballs/Config.swift; sourceTree = "<group>"; };
 		FEE83E5E1B0BC2E40073DA61 /* Floor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
-		FEE83E5F1B0BC2E40073DA61 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +144,6 @@
 			children = (
 				FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */,
 				FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */,
-				FEE83E5F1B0BC2E40073DA61 /* SettingsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -216,7 +213,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "Amazeballs" */;
+			buildConfigurationList = FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "AmazeBalls" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -269,7 +266,6 @@
 				FEE83E601B0BC2E40073DA61 /* Ball.swift in Sources */,
 				FEE83E5A1B0BC2C80073DA61 /* README.md in Sources */,
 				FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */,
-				FEE83E641B0BC2E40073DA61 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +447,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "Amazeballs" */ = {
+		FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FEB3F1DC1B0BC17F00BBD388 /* Debug */,

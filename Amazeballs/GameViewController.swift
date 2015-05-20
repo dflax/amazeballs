@@ -5,53 +5,11 @@
 //  Created by Daniel Flax on 5/19/15.
 //  Copyright (c) 2015 Daniel Flax. All rights reserved.
 //
-/*
+
 import UIKit
 import SpriteKit
 
 class GameViewController: UIViewController {
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		let skView = self.view as! SKView
-
-		skView.showsFPS = true
-		skView.showsNodeCount = true
-
-		let scene = GameScene(size: skView.bounds.size)
-		scene.scaleMode = .AspectFit
-
-		skView.presentScene(scene)
-	}
-
-	override func shouldAutorotate() -> Bool {
-		return true
-	}
-
-	override func supportedInterfaceOrientations() -> Int {
-		if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-			return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-		} else {
-			return Int(UIInterfaceOrientationMask.All.rawValue)
-		}
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-
-	}
-
-	override func prefersStatusBarHidden() -> Bool {
-		return true
-	}
-
-}
-*/
-import UIKit
-import SpriteKit
-
-class GameViewController: UIViewController, SettingsDelegateProtocol {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -96,7 +54,7 @@ println("settingsSegue triggered")
 
 			// set the destination of the segue (the settingsView) delegate to myself
 			let settingsView = segue.destinationViewController as! SettingsViewController
-			settingsView.delegate = self
+//			settingsView.delegate = self
 		}
 	}
 	

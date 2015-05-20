@@ -45,10 +45,10 @@
             </objects>
             <point key="canvasLocation" x="6" y="435"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--View Controller-->
         <scene sceneID="Eqb-Np-hCW">
             <objects>
-                <viewController id="Cka-1r-CHb" customClass="SettingsViewController" customModule="Amazeballs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Cka-1r-CHb" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MVo-Xo-qXa"/>
                         <viewControllerLayoutGuide type="bottom" id="FdO-WK-D3d"/>
@@ -122,18 +122,12 @@
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="saveSetting" destination="Cka-1r-CHb" eventType="touchUpInside" id="GC5-mq-GE2"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKg-IN-dcv">
                                 <rect key="frame" x="16" y="28" width="48" height="30"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="cancelSettingsView" destination="Cka-1r-CHb" eventType="touchUpInside" id="YZ5-p0-okC"/>
-                                </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vPj-K2-O7L">
                                 <rect key="frame" x="500" y="234" width="51" height="31"/>
@@ -153,6 +147,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3z-KP-fT1">
+                                <rect key="frame" x="522" y="443" width="58" height="30"/>
+                                <state key="normal" title="Random">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -190,19 +190,6 @@
                             <constraint firstItem="ScU-hV-ofn" firstAttribute="top" secondItem="ufP-bP-fgd" secondAttribute="bottom" constant="41" id="yXJ-TT-AC3"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="accelerometerSwitch" destination="wZ2-Dw-D7q" id="fF8-pz-hMo"/>
-                        <outlet property="bouncynessSlider" destination="ScU-hV-ofn" id="IMh-LU-XGt"/>
-                        <outlet property="boundingSwitch" destination="vPj-K2-O7L" id="zHf-kr-CBu"/>
-                        <outlet property="buttonAmazeBall" destination="Ou5-cK-Ltc" id="jNz-vN-Pu9"/>
-                        <outlet property="buttonBaseball" destination="3VY-gg-lHl" id="RVi-oh-F5i"/>
-                        <outlet property="buttonBasketball" destination="0c2-yk-Cbm" id="tKY-nH-Qra"/>
-                        <outlet property="buttonFootball" destination="V4L-h8-nIK" id="c38-o5-khd"/>
-                        <outlet property="buttonPumpkin" destination="CeZ-1W-8c7" id="aoC-Ls-yzX"/>
-                        <outlet property="buttonSoccerBallOne" destination="Ft2-hE-4sp" id="Z6k-kN-mJ5"/>
-                        <outlet property="buttonSoccerBallTwo" destination="YDc-gw-Xx8" id="bpA-hW-Tri"/>
-                        <outlet property="gravitySlider" destination="ufP-bP-fgd" id="3Kg-e7-DNG"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PNV-ZC-IhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
