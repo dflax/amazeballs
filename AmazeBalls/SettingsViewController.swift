@@ -12,7 +12,7 @@ import SpriteKit
 // Declare a delegate protocol to send back the settings values the user selects and to handle cancellation
 protocol SettingsDelegateProtocol {
 	func settingsViewController(viewController: SettingsViewController, cancelled: Bool)
-	func settingsViewController(viewController: SettingsViewController, gravitySetting: CGFloat, bouncySetting: CGFloat, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int)
+	func settingsViewController(viewController: SettingsViewController, gravitySetting: Float, bouncySetting: Float, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int)
 }
 
 class SettingsViewController:UIViewController, Printable {
@@ -66,37 +66,14 @@ class SettingsViewController:UIViewController, Printable {
 //		currentBall.layer.borderColor = [[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor];
 //		currentBall.layer.borderWidth = 1.0;
 
-		let grav = defaults.floatForKey("gravityValue")
-		println("grav: \(grav)")
-		gravitySlider.value = grav
+		let grav = defaults.valueForKey("gravityValue") as! Float
+println("grav: \(grav)")
+		gravitySlider.value = defaults.valueForKey("gravityValue") as! Float
+		bouncynessSlider.value = defaults.valueForKey("bouncyness") as! Float
+		boundingSwitch.on = defaults.boolForKey("boundingWallSetting")
+		accelerometerSwitch.on = defaults.boolForKey("accelerometerSetting")
+		activeBall = defaults.integerForKey("activeBall")
 
-//		if (let grav = defaults?.floatForKey("gravityValue") ) {
-//			gravitySlider.value = grav
-//		} else {
-//			gravitySlider.value = -9.8 / 40.0
-//		}
-/*
-		if let bouncy: Float = defaults.floatForKey("bouncyness") as? Float {
-			bouncynessSlider.value = bouncy
-		} else {
-			bouncynessSlider.value = 0.5
-		}
-		if let bSwitch: Bool = defaults.boolForKey("boundingWallSetting") as? Bool {
-			boundingSwitch.on = bSwitch
-		} else {
-			boundingSwitch.on = false
-		}
-		if let accel: Bool = defaults.boolForKey("accelerometerSetting") as? Bool {
-			accelerometerSwitch.on = accel
-		} else {
-			accelerometerSwitch.on = false
-		}
-		if let aBall: Int = defaults.integerForKey("activeBall") as? Int {
-			activeBall = aBall
-		} else {
-			activeBall = 2000
-		}
-*/
 		// Visually show which ball is currently active
 		let currentBallButton = self.view.viewWithTag(activeBall) as! UIButton
 		currentBallButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0) as! CGColorRef
@@ -111,40 +88,30 @@ class SettingsViewController:UIViewController, Printable {
 	// If the user taps save, call the delegate method to save - with all of the widget values
 	@IBAction func saveSetting() {
 		delegate?.settingsViewController(self,
-			gravitySetting: gravitySlider.value.cf,
-			bouncySetting: bouncynessSlider.value.cf,
+			gravitySetting: gravitySlider.value,
+			bouncySetting: bouncynessSlider.value,
 			boundingWallSetting: boundingSwitch.on,
 			accelerometerSetting: accelerometerSwitch.on,
 			activeBall: activeBall
 		)
 	}
 
+	// When user taps on a ball type, clear all selections and update UI to demonstrate which one's been selected, also update the _activeBall value.
+	@IBAction func selectBallType() {
+		buttonAmazeBall.layer.borderWidth     = 0.0
+		buttonBaseball.layer.borderWidth      = 0.0
+		buttonBasketball.layer.borderWidth    = 0.0
+		buttonFootball.layer.borderWidth      = 0.0
+		buttonPumpkin.layer.borderWidth       = 0.0
+		buttonSoccerBallOne.layer.borderWidth = 0.0
+		buttonSoccerBallTwo.layer.borderWidth = 0.0
+		buttonRandom.layer.borderWidth        = 0.0
+
+		selectedBallButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0) as! CGColorRef
+		selectedBallButton.layer.borderWidth = 1.0
+
+		activeBall = selectedBallButton.tag;
+	}
 
 }
 
-
-
-/*
-
-// When user taps on a ball type, clear all selections and update UI to demonstrate which one's been
-// selected, also update the _activeBall value.
-- (IBAction)selectBallType:(id)sender {
-_buttonAmazeBall.layer.borderWidth     = 0.0;
-_buttonBaseball.layer.borderWidth      = 0.0;
-_buttonBasketball.layer.borderWidth    = 0.0;
-_buttonFootball.layer.borderWidth      = 0.0;
-_buttonPumpkin.layer.borderWidth       = 0.0;
-_buttonSoccerBallOne.layer.borderWidth = 0.0;
-_buttonSoccerBallTwo.layer.borderWidth = 0.0;
-_buttonRandom.layer.borderWidth        = 0.0;
-
-UIButton * senderButton = (UIButton *)sender;
-
-senderButton.layer.borderColor = [[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] CGColor];
-senderButton.layer.borderWidth = 1.0;
-
-_activeBall = senderButton.tag;
-}
-
-
-*/

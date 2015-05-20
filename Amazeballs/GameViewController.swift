@@ -103,8 +103,8 @@ println("settingsSegue triggered")
 	//MARK: - Settings Delegate Protocol Methods
 
 	// When the user taps save, the delegate calls this method, sending back all of the data values from the settings panel
-	func settingsViewController(viewController: SettingsViewController, gravitySetting: CGFloat, bouncySetting: CGFloat, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int) {
-		println("Save content")
+	func settingsViewController(viewController: SettingsViewController, gravitySetting: Float, bouncySetting: Float, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int) {
+println("Save content")
 
 		// Ceate a handle for the Standard User Defaults
 		let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -112,22 +112,23 @@ println("settingsSegue triggered")
 		let cgFloatGrav = gravitySetting * -40.0
 
 		// Store values for the various settings in User Defaults
-		userDefaults.setFloat(Float(cgFloatGrav), forKey:"gravityValue")
-		userDefaults.setFloat(Float(bouncySetting), forKey:"bouncyness")
+		userDefaults.setValue(gravitySetting, forKey:"gravityValue")
+		userDefaults.setValue(bouncySetting, forKey:"bouncyness")
 		userDefaults.setBool(boundingWallSetting, forKey:"boundingWallSetting")
 		userDefaults.setBool(accelerometerSetting, forKey:"accelerometerSetting")
 		userDefaults.setInteger(activeBall, forKey:"activeBall")
-		
+		userDefaults.synchronize()
+
 		// With the new physics now stored in NSUserDefaults, update the Physics for the scene
 //		ballScene.updateWorldPhysicsSettings()
-		
+
 		// Now dismiss the modal view controller
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 
 	// If the user cancels the settings view, simply dismiss the modal view controller for settings
 	func settingsViewController(viewController: SettingsViewController, cancelled: Bool) {
-		println("Cancelled")
+println("Cancelled")
 		self.dismissViewControllerAnimated(true, completion: nil)
 	}
 
