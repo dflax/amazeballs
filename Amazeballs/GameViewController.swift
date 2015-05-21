@@ -57,14 +57,13 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 			let settingsView = segue.destinationViewController as! SettingsViewController
 			settingsView.delegate = self
 		}
-		println("gravity: (\(scene.physicsWorld.gravity.dx), \(scene.physicsWorld.gravity.dy))")
+println("gravity: (\(scene.physicsWorld.gravity.dx), \(scene.physicsWorld.gravity.dy))")
 	}
 	
 	//MARK: - Settings Delegate Protocol Methods
 
 	// When the user taps save, the delegate calls this method, sending back all of the data values from the settings panel
 	func settingsViewController(viewController: SettingsViewController, gravitySetting: Float, bouncySetting: Float, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int) {
-//println("Save content")
 
 		// Ceate a handle for the Standard User Defaults
 		let userDefaults = NSUserDefaults.standardUserDefaults()

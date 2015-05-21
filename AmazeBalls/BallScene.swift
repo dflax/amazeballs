@@ -60,7 +60,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		for touch in (touches as! Set<UITouch>) {
 			let location = touch.locationInNode(self)
 
-			println("Drop ball in at \(location)")
+println("Drop ball in at \(location)")
 
 			// If it's not already a ball, drop a new ball at that location
 			self.addChild(Ball(location: location, ballType: activeBall, bouncyness: CGFloat(bouncyness)))
@@ -129,11 +129,11 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		let userDefaults = NSUserDefaults.standardUserDefaults()
 
 		// Pull values for the different settings. Substitute in defaults if the NSUserDefaults doesn't include any value
-		currentGravity       = userDefaults.valueForKey("gravityValue")         != nil ? userDefaults.valueForKey("gravityValue")         as! Float : -9.8
-		activeBall           = userDefaults.valueForKey("activeBall")           != nil ? userDefaults.valueForKey("activeBall")           as! Int   : 2000
-		bouncyness           = userDefaults.valueForKey("bouncyness")           != nil ? userDefaults.valueForKey("bouncyness")           as! Float : 0.5
-		boundingWall         = userDefaults.valueForKey("boundingWallSetting")  != nil ? userDefaults.valueForKey("boundingWallSetting")  as! Bool  : false
-		accelerometerSetting = userDefaults.valueForKey("accelerometerSetting") != nil ? userDefaults.valueForKey("accelerometerSetting") as! Bool  : false
+		currentGravity       = userDefaults.valueForKey("gravityValue")         != nil ? -1*abs(userDefaults.valueForKey("gravityValue")  as! Float) : -9.8
+		activeBall           = userDefaults.valueForKey("activeBall")           != nil ? userDefaults.valueForKey("activeBall")           as! Int    : 2000
+		bouncyness           = userDefaults.valueForKey("bouncyness")           != nil ? userDefaults.valueForKey("bouncyness")           as! Float  : 0.5
+		boundingWall         = userDefaults.valueForKey("boundingWallSetting")  != nil ? userDefaults.valueForKey("boundingWallSetting")  as! Bool   : false
+		accelerometerSetting = userDefaults.valueForKey("accelerometerSetting") != nil ? userDefaults.valueForKey("accelerometerSetting") as! Bool   : false
 
 		// If no Accelerometer, set the simple gravity for the world
 		if (!accelerometerSetting) {
@@ -174,7 +174,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 				// Take the x and y acceleration vectors and multiply by the gravity values to come up with a full gravity vector
 				let xGravity = CGFloat(data.acceleration.x) * CGFloat(self.currentGravity)
 				let yGravity = CGFloat(data.acceleration.y) * CGFloat(self.currentGravity)
-				self.physicsWorld.gravity = CGVector(dx: yGravity, dy: xGravity)
+				self.physicsWorld.gravity = CGVector(dx: yGravity, dy: -xGravity)
 			}
 		}
 	}
