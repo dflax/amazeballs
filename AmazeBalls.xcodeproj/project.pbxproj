@@ -159,9 +159,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FEB3F1BA1B0BC17F00BBD388 /* Amazeballs */ = {
+		FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "Amazeballs" */;
+			buildConfigurationList = FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeBalls" */;
 			buildPhases = (
 				FEB3F1B71B0BC17F00BBD388 /* Sources */,
 				FEB3F1B81B0BC17F00BBD388 /* Frameworks */,
@@ -171,7 +171,7 @@
 			);
 			dependencies = (
 			);
-			name = Amazeballs;
+			name = AmazeBalls;
 			productName = Amazeballs;
 			productReference = FEB3F1BB1B0BC17F00BBD388 /* Amazeballs.app */;
 			productType = "com.apple.product-type.application";
@@ -225,7 +225,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FEB3F1BA1B0BC17F00BBD388 /* Amazeballs */,
+				FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */,
 				FEB3F1D31B0BC17F00BBD388 /* AmazeballsTests */,
 			);
 		};
@@ -280,7 +280,7 @@
 /* Begin PBXTargetDependency section */
 		FEB3F1D61B0BC17F00BBD388 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FEB3F1BA1B0BC17F00BBD388 /* Amazeballs */;
+			target = FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */;
 			targetProxy = FEB3F1D51B0BC17F00BBD388 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -454,7 +454,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "Amazeballs" */ = {
+		FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FEB3F1DF1B0BC17F00BBD388 /* Debug */,

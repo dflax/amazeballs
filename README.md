@@ -29,7 +29,10 @@ Enjoy.
 --Daniel Flax
 August 25, 2013
 
+--==========--
+May 21, 2015
 
 Enhancement Ideas
 
 Instead of using number 2000-2006 to represent the ball types, put in an enum to represent all of the ball types:
+While the collision logic is in place to detect when balls collide and when they collide with the bounding wall, the app doesn't do anything interested with that collision.
