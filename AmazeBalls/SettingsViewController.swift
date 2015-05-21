@@ -101,6 +101,15 @@ class SettingsViewController:UIViewController, Printable {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		buttonAmazeBall.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonBaseball.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonBasketball.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonFootball.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonPumpkin.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonSoccerBallOne.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonSoccerBallTwo.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+		buttonRandom.frame.size = CGSize(width: settingsBallSize, height: settingsBallSize)
+
 		// Set the initial state for the view's value controls
 		let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 

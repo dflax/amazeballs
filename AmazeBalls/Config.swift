@@ -45,9 +45,8 @@ let isPad: Bool = {
 	}()
 
 // Calculate the right size for the settingsViewController ball images
-var settingsBallSize: Float {
-
-	return 75.0
+var settingsBallSize: CGFloat {
+	return ((ScreenWidth - 50) / 8)
 }
 
 //Random Integer generator
