@@ -41,22 +41,9 @@ class Floor: SKSpriteNode {
 		var floorSize: CGSize
 		let floorOrigin = CGPoint(x: ScreenWidth / 2.0, y: 30.0)
 
-		// Set the wall image name depending on device type
-		var floorImageName: String = ""
-		if (isPad) {
-			floorSize = CGSize(width: 1004.0, height: 10.0)
-			floorImageName = "floor_ipad"
-		} else {
-
-			// Use the right image for 3.5" vs. 4" iPhone / iPod Touch
-			if (ScreenHeight > 500.0) {
-				floorSize = CGSize(width: 548.0, height: 10.0)
-				floorImageName = "floor_iphone4"
-			} else {
-				floorSize = CGSize(width: 460.0, height: 10.0)
-				floorImageName = "floor_iphone35"
-			}
-		}
+		// Set the floor image and size
+		floorImageName = "floor_ipad"
+		floorSize = CGSize(width: 0.9 * ScreenWidth, height: 10.0)
 
 		// Set the actual texture for the object
 		let texture = SKTexture(imageNamed: floorImageName)

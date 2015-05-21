@@ -35,6 +35,12 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+println("ScreenWidth: \(ScreenWidth)")
+println("ScreenHeight: \(ScreenHeight)")
+println("ScreenCenter: \(ScreenCenter)")
+println("ScreenSize: \(ScreenSize)")
+println("ScreenRect: \(ScreenRect)")
+
 		let skView = self.view as! SKView
 
 		scene = BallScene(size: skView.bounds.size)
