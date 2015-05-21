@@ -99,8 +99,10 @@ class SettingsViewController:UIViewController, Printable {
 		boundingSwitch.on = defaults.valueForKey("boundingWallSetting") != nil ? defaults.valueForKey("boundingWallSetting") as! Bool : false
 		accelerometerSwitch.on = defaults.valueForKey("accelerometerSetting") != nil ? defaults.valueForKey("accelerometerSetting") as! Bool : false
 		activeBall = defaults.valueForKey("activeBall") != nil ? defaults.valueForKey("activeBall") as! Int : 2000
+		activeBall = activeBall == 0 ? 2000 : 2000
 
 		// Visually show which ball is currently active
+println("activeBall: \(activeBall)")
 		let currentBallButton = self.view.viewWithTag(activeBall) as! UIButton
 
 		currentBallButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0).CGColor

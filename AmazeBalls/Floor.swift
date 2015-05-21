@@ -20,7 +20,7 @@ class Floor: SKSpriteNode {
 		super.init(texture: emptyTexture, color: SKColor.clearColor(), size: emptyTexture.size())
 
 		var floorSize: CGSize
-		let floorOrigin = CGPoint(x: ScreenHeight / 2.0, y: 30.0)
+		let floorOrigin = CGPoint(x: ScreenWidth / 2.0, y: 30.0)
 
 		// Set the wall image name depending on device type
 		var floorImageName: String = ""
@@ -57,4 +57,6 @@ class Floor: SKSpriteNode {
 	}
 
 }
+
+
 

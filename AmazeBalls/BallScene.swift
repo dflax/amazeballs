@@ -32,9 +32,9 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	override func didMoveToView(view: SKView) {
 
 		// Set the overall physicsWorld and outer wall characteristics
-		physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
+//		physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
 		physicsWorld.contactDelegate = self
-		physicsBody = SKPhysicsBody(edgeLoopFromRect: ScreenRect)
+//		physicsBody = SKPhysicsBody(edgeLoopFromRect: ScreenRect)
 		physicsBody?.categoryBitMask = CollisionCategories.EdgeBody
 
 		// Load the brickwall background
@@ -63,7 +63,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 			println("Drop ball in at \(location)")
 
 			// If it's not already a ball, drop a new ball at that location
-			self.addChild(Ball(location: location, ballType: 2000, bouncyness: 1.0))
+			self.addChild(Ball(location: location, ballType: activeBall, bouncyness: CGFloat(bouncyness)))
 
 			if touch.tapCount == 2 {
 				self.stopBalls()
