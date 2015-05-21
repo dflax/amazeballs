@@ -11,12 +11,14 @@ import SpriteKit
 
 class GameViewController: UIViewController, SettingsDelegateProtocol {
 
+	var scene: BallScene!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		let skView = self.view as! SKView
 
-		let scene = BallScene(size: skView.bounds.size)
+		scene = BallScene(size: skView.bounds.size)
 		scene.scaleMode = .AspectFit
 
 		skView.presentScene(scene)
@@ -77,7 +79,7 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 		userDefaults.synchronize()
 
 		// With the new physics now stored in NSUserDefaults, update the Physics for the scene
-//		ballScene.updateWorldPhysicsSettings()
+		scene.updateWorldPhysicsSettings()
 
 		// Now dismiss the modal view controller
 		self.dismissViewControllerAnimated(true, completion: nil)
