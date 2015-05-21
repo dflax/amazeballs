@@ -71,9 +71,9 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 		// Store values for the various settings in User Defaults
 		userDefaults.setValue(gravitySetting, forKey:"gravityValue")
 		userDefaults.setValue(bouncySetting, forKey:"bouncyness")
-		userDefaults.setBool(boundingWallSetting, forKey:"boundingWallSetting")
-		userDefaults.setBool(accelerometerSetting, forKey:"accelerometerSetting")
-		userDefaults.setInteger(activeBall, forKey:"activeBall")
+		userDefaults.setValue(boundingWallSetting, forKey:"boundingWallSetting")
+		userDefaults.setValue(accelerometerSetting, forKey:"accelerometerSetting")
+		userDefaults.setValue(activeBall, forKey:"activeBall")
 		userDefaults.synchronize()
 
 		// With the new physics now stored in NSUserDefaults, update the Physics for the scene

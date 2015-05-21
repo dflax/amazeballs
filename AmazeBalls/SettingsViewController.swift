@@ -93,11 +93,12 @@ class SettingsViewController:UIViewController, Printable {
 		// Set the initial state for the view's value controls
 		let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
-		gravitySlider.value = defaults.valueForKey("gravityValue") as! Float
-		bouncynessSlider.value = defaults.valueForKey("bouncyness") as! Float
-		boundingSwitch.on = defaults.boolForKey("boundingWallSetting")
-		accelerometerSwitch.on = defaults.boolForKey("accelerometerSetting")
-		activeBall = defaults.integerForKey("activeBall")
+		gravitySlider.value = defaults.valueForKey("gravityValue") != nil ? defaults.valueForKey("gravityValue") as! Float : -9.8
+		bouncynessSlider.value = defaults.valueForKey("bouncyness") != nil ? defaults.valueForKey("bouncyness") as! Float : 1.0
+
+		boundingSwitch.on = defaults.valueForKey("boundingWallSetting") != nil ? defaults.valueForKey("boundingWallSetting") as! Bool : false
+		accelerometerSwitch.on = defaults.valueForKey("accelerometerSetting") != nil ? defaults.valueForKey("accelerometerSetting") as! Bool : false
+		activeBall = defaults.valueForKey("activeBall") != nil ? defaults.valueForKey("activeBall") as! Int : 2000
 
 		// Visually show which ball is currently active
 		let currentBallButton = self.view.viewWithTag(activeBall) as! UIButton
