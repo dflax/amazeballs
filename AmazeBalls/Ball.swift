@@ -36,8 +36,14 @@ class Ball: SKSpriteNode {
 		super.init(texture: emptyTexture, color: SKColor.clearColor(), size: emptyTexture.size())
 
 		var ballNameString = ""
+		var ballLookup = ballType
 
-		switch (ballType) {
+		// If a random ball is selected, select the random ball
+		if (ballLookup == 2007) {
+			ballLookup = randomNumber(minX: 2000, maxX: 2006)
+		}
+
+		switch (ballLookup) {
 		case 2000:
 			ballNameString = "amazeball"
 			break

@@ -32,9 +32,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	override func didMoveToView(view: SKView) {
 
 		// Set the overall physicsWorld and outer wall characteristics
-//		physicsWorld.gravity = CGVector(dx: 0.0, dy: 0.0)
 		physicsWorld.contactDelegate = self
-//		physicsBody = SKPhysicsBody(edgeLoopFromRect: ScreenRect)
 		physicsBody?.categoryBitMask = CollisionCategories.EdgeBody
 
 		// Load the brickwall background
@@ -59,8 +57,6 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		// Go though all touch points in the set
 		for touch in (touches as! Set<UITouch>) {
 			let location = touch.locationInNode(self)
-
-println("Drop ball in at \(location)")
 
 			// If it's not already a ball, drop a new ball at that location
 			self.addChild(Ball(location: location, ballType: activeBall, bouncyness: CGFloat(bouncyness)))

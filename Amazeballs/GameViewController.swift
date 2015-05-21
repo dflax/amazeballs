@@ -57,7 +57,6 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 			let settingsView = segue.destinationViewController as! SettingsViewController
 			settingsView.delegate = self
 		}
-println("gravity: (\(scene.physicsWorld.gravity.dx), \(scene.physicsWorld.gravity.dy))")
 	}
 	
 	//MARK: - Settings Delegate Protocol Methods

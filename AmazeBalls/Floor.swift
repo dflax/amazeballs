@@ -55,7 +55,6 @@ class Floor: SKSpriteNode {
 		physicsBody?.categoryBitMask    = CollisionCategories.Floor
 		physicsBody?.contactTestBitMask = CollisionCategories.Ball
 	}
-
 }
 
 

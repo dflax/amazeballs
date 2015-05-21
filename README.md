@@ -28,3 +28,8 @@ Enjoy.
 
 --Daniel Flax
 August 25, 2013
+
+
+Enhancement Ideas
+
+Instead of using number 2000-2006 to represent the ball types, put in an enum to represent all of the ball types:
