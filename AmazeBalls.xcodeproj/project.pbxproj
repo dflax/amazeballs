@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FE3C8CD51B0D0AD20030BCBA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */; };
 		FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */; };
-		FEB3F1C51B0BC17F00BBD388 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C41B0BC17F00BBD388 /* GameScene.swift */; };
 		FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */; };
 		FEB3F1CA1B0BC17F00BBD388 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB3F1C81B0BC17F00BBD388 /* Main.storyboard */; };
 		FEB3F1CF1B0BC17F00BBD388 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEB3F1CD1B0BC17F00BBD388 /* LaunchScreen.xib */; };
@@ -37,7 +36,6 @@
 		FEB3F1BB1B0BC17F00BBD388 /* Amazeballs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amazeballs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB3F1BF1B0BC17F00BBD388 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FEB3F1C41B0BC17F00BBD388 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		FEB3F1C91B0BC17F00BBD388 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FEB3F1CE1B0BC17F00BBD388 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */,
-				FEB3F1C41B0BC17F00BBD388 /* GameScene.swift */,
 				FEB3F1C81B0BC17F00BBD388 /* Main.storyboard */,
 				FEB3F1CD1B0BC17F00BBD388 /* LaunchScreen.xib */,
 				FEE83E551B0BC1F10073DA61 /* Images.xcassets */,
@@ -261,7 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FEE83E631B0BC2E40073DA61 /* Floor.swift in Sources */,
-				FEB3F1C51B0BC17F00BBD388 /* GameScene.swift in Sources */,
 				FEE83E611B0BC2E40073DA61 /* BallScene.swift in Sources */,
 				FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */,
 				FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */,

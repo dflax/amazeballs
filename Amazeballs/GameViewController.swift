@@ -44,7 +44,7 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 	
 	// Update the physics settings, when the view appears - after Settings are changed
 	override func viewWillAppear(animated: Bool) {
-		// self.scene.updateWorldPhysicsSettings()
+		 self.scene.updateWorldPhysicsSettings()
 	}
 
 	// Prepare for segues
@@ -57,6 +57,7 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 			let settingsView = segue.destinationViewController as! SettingsViewController
 			settingsView.delegate = self
 		}
+		println("gravity: (\(scene.physicsWorld.gravity.dx), \(scene.physicsWorld.gravity.dy))")
 	}
 	
 	//MARK: - Settings Delegate Protocol Methods
