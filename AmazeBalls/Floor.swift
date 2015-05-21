@@ -42,7 +42,7 @@ class Floor: SKSpriteNode {
 		let floorOrigin = CGPoint(x: ScreenWidth / 2.0, y: 30.0)
 
 		// Set the floor image and size
-		floorImageName = "floor_ipad"
+		let floorImageName = "floor"
 		floorSize = CGSize(width: 0.9 * ScreenWidth, height: 10.0)
 
 		// Set the actual texture for the object
