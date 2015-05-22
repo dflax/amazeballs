@@ -7,244 +7,212 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FE31C4D117AA0E5100CB2EA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4D017AA0E5100CB2EA5 /* Foundation.framework */; };
-		FE31C4D317AA0E5100CB2EA5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4D217AA0E5100CB2EA5 /* CoreGraphics.framework */; };
-		FE31C4D517AA0E5100CB2EA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4D417AA0E5100CB2EA5 /* UIKit.framework */; };
-		FE31C4DB17AA0E5100CB2EA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE31C4D917AA0E5100CB2EA5 /* InfoPlist.strings */; };
-		FE31C4DD17AA0E5100CB2EA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C4DC17AA0E5100CB2EA5 /* main.m */; };
-		FE31C4E117AA0E5100CB2EA5 /* ABAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C4E017AA0E5100CB2EA5 /* ABAppDelegate.m */; };
-		FE31C4E417AA0E5100CB2EA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE31C4E217AA0E5100CB2EA5 /* Main.storyboard */; };
-		FE31C4EA17AA0E5100CB2EA5 /* ABViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C4E917AA0E5100CB2EA5 /* ABViewController.m */; };
-		FE31C4F317AA0E5100CB2EA5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4F217AA0E5100CB2EA5 /* XCTest.framework */; };
-		FE31C4F417AA0E5100CB2EA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4D017AA0E5100CB2EA5 /* Foundation.framework */; };
-		FE31C4F517AA0E5100CB2EA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C4D417AA0E5100CB2EA5 /* UIKit.framework */; };
-		FE31C4FD17AA0E5100CB2EA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE31C4FB17AA0E5100CB2EA5 /* InfoPlist.strings */; };
-		FE31C4FF17AA0E5100CB2EA5 /* AmazeBallsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C4FE17AA0E5100CB2EA5 /* AmazeBallsTests.m */; };
-		FE31C50B17AA135300CB2EA5 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C50A17AA135300CB2EA5 /* SpriteKit.framework */; };
-		FE31C50D17AA136800CB2EA5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31C50C17AA136800CB2EA5 /* CoreMotion.framework */; };
-		FE31C52317AA171600CB2EA5 /* ABBall.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C50F17AA148500CB2EA5 /* ABBall.m */; };
-		FE31C52417AA171600CB2EA5 /* ABBallScene.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C51117AA148500CB2EA5 /* ABBallScene.m */; };
-		FE31C52517AA171600CB2EA5 /* ABSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C51317AA148500CB2EA5 /* ABSettingsViewController.m */; };
-		FE31C52617AA171600CB2EA5 /* ABWall.m in Sources */ = {isa = PBXBuildFile; fileRef = FE31C51517AA148500CB2EA5 /* ABWall.m */; };
-		FE63016D17C93E5700B2114E /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = FE63016C17C93E4300B2114E /* Images.xcassets */; };
-		FEC803BC17C8270D002D12ED /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC803BB17C8270D002D12ED /* QuartzCore.framework */; };
+		FE3C8CD51B0D0AD20030BCBA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */; };
+		FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */; };
+		FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */; };
+		FEB3F1CA1B0BC17F00BBD388 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB3F1C81B0BC17F00BBD388 /* Main.storyboard */; };
+		FEB3F1CF1B0BC17F00BBD388 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEB3F1CD1B0BC17F00BBD388 /* LaunchScreen.xib */; };
+		FEB3F1DB1B0BC17F00BBD388 /* AmazeballsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB3F1DA1B0BC17F00BBD388 /* AmazeballsTests.swift */; };
+		FEE83E561B0BC1F10073DA61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEE83E551B0BC1F10073DA61 /* Images.xcassets */; };
+		FEE83E591B0BC2C80073DA61 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FEE83E571B0BC2C80073DA61 /* LICENSE */; };
+		FEE83E601B0BC2E40073DA61 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5B1B0BC2E40073DA61 /* Ball.swift */; };
+		FEE83E611B0BC2E40073DA61 /* BallScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */; };
+		FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5D1B0BC2E40073DA61 /* Config.swift */; };
+		FEE83E631B0BC2E40073DA61 /* Floor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE83E5E1B0BC2E40073DA61 /* Floor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		FE31C4F617AA0E5100CB2EA5 /* PBXContainerItemProxy */ = {
+		FEB3F1D51B0BC17F00BBD388 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = FE31C4C517AA0E5100CB2EA5 /* Project object */;
+			containerPortal = FEB3F1B31B0BC17F00BBD388 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FE31C4CC17AA0E5100CB2EA5;
-			remoteInfo = AmazeBalls;
+			remoteGlobalIDString = FEB3F1BA1B0BC17F00BBD388;
+			remoteInfo = Amazeballs;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FE31C4CD17AA0E5100CB2EA5 /* AmazeBalls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmazeBalls.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		FE31C4D017AA0E5100CB2EA5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		FE31C4D217AA0E5100CB2EA5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		FE31C4D417AA0E5100CB2EA5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		FE31C4D817AA0E5100CB2EA5 /* AmazeBalls-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmazeBalls-Info.plist"; sourceTree = "<group>"; };
-		FE31C4DA17AA0E5100CB2EA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FE31C4DC17AA0E5100CB2EA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FE31C4DE17AA0E5100CB2EA5 /* AmazeBalls-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AmazeBalls-Prefix.pch"; sourceTree = "<group>"; };
-		FE31C4DF17AA0E5100CB2EA5 /* ABAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABAppDelegate.h; sourceTree = "<group>"; };
-		FE31C4E017AA0E5100CB2EA5 /* ABAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABAppDelegate.m; sourceTree = "<group>"; };
-		FE31C4E317AA0E5100CB2EA5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FE31C4E817AA0E5100CB2EA5 /* ABViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABViewController.h; sourceTree = "<group>"; };
-		FE31C4E917AA0E5100CB2EA5 /* ABViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABViewController.m; sourceTree = "<group>"; };
-		FE31C4F117AA0E5100CB2EA5 /* AmazeBallsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmazeBallsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FE31C4F217AA0E5100CB2EA5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		FE31C4FA17AA0E5100CB2EA5 /* AmazeBallsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AmazeBallsTests-Info.plist"; sourceTree = "<group>"; };
-		FE31C4FC17AA0E5100CB2EA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FE31C4FE17AA0E5100CB2EA5 /* AmazeBallsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmazeBallsTests.m; sourceTree = "<group>"; };
-		FE31C50A17AA135300CB2EA5 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
-		FE31C50C17AA136800CB2EA5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		FE31C50E17AA148500CB2EA5 /* ABBall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABBall.h; sourceTree = "<group>"; };
-		FE31C50F17AA148500CB2EA5 /* ABBall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABBall.m; sourceTree = "<group>"; };
-		FE31C51017AA148500CB2EA5 /* ABBallScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABBallScene.h; sourceTree = "<group>"; };
-		FE31C51117AA148500CB2EA5 /* ABBallScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABBallScene.m; sourceTree = "<group>"; };
-		FE31C51217AA148500CB2EA5 /* ABSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABSettingsViewController.h; sourceTree = "<group>"; };
-		FE31C51317AA148500CB2EA5 /* ABSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABSettingsViewController.m; sourceTree = "<group>"; };
-		FE31C51417AA148500CB2EA5 /* ABWall.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ABWall.h; sourceTree = "<group>"; };
-		FE31C51517AA148500CB2EA5 /* ABWall.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABWall.m; sourceTree = "<group>"; };
-		FE63016C17C93E4300B2114E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		FE99EBE617CA2E8C005D50B9 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
-		FE99EBE717CA2E8C005D50B9 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
-		FEC803BB17C8270D002D12ED /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = AmazeBalls/SettingsViewController.swift; sourceTree = SOURCE_ROOT; };
+		FEB3F1BB1B0BC17F00BBD388 /* AmazeBalls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmazeBalls.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEB3F1BF1B0BC17F00BBD388 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		FEB3F1C91B0BC17F00BBD388 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FEB3F1CE1B0BC17F00BBD388 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		FEB3F1D41B0BC17F00BBD388 /* AmazeballsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmazeballsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEB3F1D91B0BC17F00BBD388 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FEB3F1DA1B0BC17F00BBD388 /* AmazeballsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazeballsTests.swift; sourceTree = "<group>"; };
+		FEE83E551B0BC1F10073DA61 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FEE83E571B0BC2C80073DA61 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		FEE83E581B0BC2C80073DA61 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		FEE83E5B1B0BC2E40073DA61 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallScene.swift; sourceTree = "<group>"; };
+		FEE83E5D1B0BC2E40073DA61 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Amazeballs/Config.swift; sourceTree = "<group>"; };
+		FEE83E5E1B0BC2E40073DA61 /* Floor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Floor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		FE31C4CA17AA0E5100CB2EA5 /* Frameworks */ = {
+		FEB3F1B81B0BC17F00BBD388 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEC803BC17C8270D002D12ED /* QuartzCore.framework in Frameworks */,
-				FE31C50D17AA136800CB2EA5 /* CoreMotion.framework in Frameworks */,
-				FE31C50B17AA135300CB2EA5 /* SpriteKit.framework in Frameworks */,
-				FE31C4D317AA0E5100CB2EA5 /* CoreGraphics.framework in Frameworks */,
-				FE31C4D517AA0E5100CB2EA5 /* UIKit.framework in Frameworks */,
-				FE31C4D117AA0E5100CB2EA5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FE31C4EE17AA0E5100CB2EA5 /* Frameworks */ = {
+		FEB3F1D11B0BC17F00BBD388 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE31C4F317AA0E5100CB2EA5 /* XCTest.framework in Frameworks */,
-				FE31C4F517AA0E5100CB2EA5 /* UIKit.framework in Frameworks */,
-				FE31C4F417AA0E5100CB2EA5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FE31C4C417AA0E5100CB2EA5 = {
+		FEB3F1B21B0BC17F00BBD388 = {
 			isa = PBXGroup;
 			children = (
-				FE31C4D617AA0E5100CB2EA5 /* AmazeBalls */,
-				FE31C4F817AA0E5100CB2EA5 /* AmazeBallsTests */,
-				FE31C4CF17AA0E5100CB2EA5 /* Frameworks */,
-				FE31C4CE17AA0E5100CB2EA5 /* Products */,
+				FEE83E571B0BC2C80073DA61 /* LICENSE */,
+				FEE83E581B0BC2C80073DA61 /* README.md */,
+				FEE83E5D1B0BC2E40073DA61 /* Config.swift */,
+				FEB3F1BD1B0BC17F00BBD388 /* Amazeballs */,
+				FEB3F1D71B0BC17F00BBD388 /* AmazeballsTests */,
+				FEB3F1BC1B0BC17F00BBD388 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		FE31C4CE17AA0E5100CB2EA5 /* Products */ = {
+		FEB3F1BC1B0BC17F00BBD388 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FE31C4CD17AA0E5100CB2EA5 /* AmazeBalls.app */,
-				FE31C4F117AA0E5100CB2EA5 /* AmazeBallsTests.xctest */,
+				FEB3F1BB1B0BC17F00BBD388 /* AmazeBalls.app */,
+				FEB3F1D41B0BC17F00BBD388 /* AmazeballsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FE31C4CF17AA0E5100CB2EA5 /* Frameworks */ = {
+		FEB3F1BD1B0BC17F00BBD388 /* Amazeballs */ = {
 			isa = PBXGroup;
 			children = (
-				FEC803BB17C8270D002D12ED /* QuartzCore.framework */,
-				FE31C50C17AA136800CB2EA5 /* CoreMotion.framework */,
-				FE31C50A17AA135300CB2EA5 /* SpriteKit.framework */,
-				FE31C4D017AA0E5100CB2EA5 /* Foundation.framework */,
-				FE31C4D217AA0E5100CB2EA5 /* CoreGraphics.framework */,
-				FE31C4D417AA0E5100CB2EA5 /* UIKit.framework */,
-				FE31C4F217AA0E5100CB2EA5 /* XCTest.framework */,
+				FEE83E661B0BC3720073DA61 /* Controllers */,
+				FEE83E651B0BC3560073DA61 /* Views */,
+				FEE83E671B0BC37C0073DA61 /* Models */,
+				FEB3F1BE1B0BC17F00BBD388 /* Supporting Files */,
 			);
-			name = Frameworks;
+			path = Amazeballs;
 			sourceTree = "<group>";
 		};
-		FE31C4D617AA0E5100CB2EA5 /* AmazeBalls */ = {
+		FEB3F1BE1B0BC17F00BBD388 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FE31C4DF17AA0E5100CB2EA5 /* ABAppDelegate.h */,
-				FE31C4E017AA0E5100CB2EA5 /* ABAppDelegate.m */,
-				FE31C4E817AA0E5100CB2EA5 /* ABViewController.h */,
-				FE31C4E917AA0E5100CB2EA5 /* ABViewController.m */,
-				FE31C51017AA148500CB2EA5 /* ABBallScene.h */,
-				FE31C51117AA148500CB2EA5 /* ABBallScene.m */,
-				FE31C50E17AA148500CB2EA5 /* ABBall.h */,
-				FE31C50F17AA148500CB2EA5 /* ABBall.m */,
-				FE31C51217AA148500CB2EA5 /* ABSettingsViewController.h */,
-				FE31C51317AA148500CB2EA5 /* ABSettingsViewController.m */,
-				FE31C51417AA148500CB2EA5 /* ABWall.h */,
-				FE31C51517AA148500CB2EA5 /* ABWall.m */,
-				FE31C4E217AA0E5100CB2EA5 /* Main.storyboard */,
-				FE63016C17C93E4300B2114E /* Images.xcassets */,
-				FE31C4D717AA0E5100CB2EA5 /* Supporting Files */,
-			);
-			path = AmazeBalls;
-			sourceTree = "<group>";
-		};
-		FE31C4D717AA0E5100CB2EA5 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				FE99EBE617CA2E8C005D50B9 /* LICENSE */,
-				FE99EBE717CA2E8C005D50B9 /* README.md */,
-				FE31C4D817AA0E5100CB2EA5 /* AmazeBalls-Info.plist */,
-				FE31C4D917AA0E5100CB2EA5 /* InfoPlist.strings */,
-				FE31C4DC17AA0E5100CB2EA5 /* main.m */,
-				FE31C4DE17AA0E5100CB2EA5 /* AmazeBalls-Prefix.pch */,
+				FEB3F1BF1B0BC17F00BBD388 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FE31C4F817AA0E5100CB2EA5 /* AmazeBallsTests */ = {
+		FEB3F1D71B0BC17F00BBD388 /* AmazeballsTests */ = {
 			isa = PBXGroup;
 			children = (
-				FE31C4FE17AA0E5100CB2EA5 /* AmazeBallsTests.m */,
-				FE31C4F917AA0E5100CB2EA5 /* Supporting Files */,
+				FEB3F1DA1B0BC17F00BBD388 /* AmazeballsTests.swift */,
+				FEB3F1D81B0BC17F00BBD388 /* Supporting Files */,
 			);
-			path = AmazeBallsTests;
+			path = AmazeballsTests;
 			sourceTree = "<group>";
 		};
-		FE31C4F917AA0E5100CB2EA5 /* Supporting Files */ = {
+		FEB3F1D81B0BC17F00BBD388 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FE31C4FA17AA0E5100CB2EA5 /* AmazeBallsTests-Info.plist */,
-				FE31C4FB17AA0E5100CB2EA5 /* InfoPlist.strings */,
+				FEB3F1D91B0BC17F00BBD388 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FEE83E651B0BC3560073DA61 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FEE83E5C1B0BC2E40073DA61 /* BallScene.swift */,
+				FEB3F1C81B0BC17F00BBD388 /* Main.storyboard */,
+				FEB3F1CD1B0BC17F00BBD388 /* LaunchScreen.xib */,
+				FEE83E551B0BC1F10073DA61 /* Images.xcassets */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		FEE83E661B0BC3720073DA61 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FEB3F1C01B0BC17F00BBD388 /* AppDelegate.swift */,
+				FEB3F1C61B0BC17F00BBD388 /* GameViewController.swift */,
+				FE3C8CD41B0D0AD20030BCBA /* SettingsViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FEE83E671B0BC37C0073DA61 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FEE83E5B1B0BC2E40073DA61 /* Ball.swift */,
+				FEE83E5E1B0BC2E40073DA61 /* Floor.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FE31C4CC17AA0E5100CB2EA5 /* AmazeBalls */ = {
+		FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FE31C50217AA0E5100CB2EA5 /* Build configuration list for PBXNativeTarget "AmazeBalls" */;
+			buildConfigurationList = FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeBalls" */;
 			buildPhases = (
-				FE31C4C917AA0E5100CB2EA5 /* Sources */,
-				FE31C4CA17AA0E5100CB2EA5 /* Frameworks */,
-				FE31C4CB17AA0E5100CB2EA5 /* Resources */,
+				FEB3F1B71B0BC17F00BBD388 /* Sources */,
+				FEB3F1B81B0BC17F00BBD388 /* Frameworks */,
+				FEB3F1B91B0BC17F00BBD388 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = AmazeBalls;
-			productName = AmazeBalls;
-			productReference = FE31C4CD17AA0E5100CB2EA5 /* AmazeBalls.app */;
+			productName = Amazeballs;
+			productReference = FEB3F1BB1B0BC17F00BBD388 /* AmazeBalls.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FE31C4F017AA0E5100CB2EA5 /* AmazeBallsTests */ = {
+		FEB3F1D31B0BC17F00BBD388 /* AmazeballsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FE31C50517AA0E5100CB2EA5 /* Build configuration list for PBXNativeTarget "AmazeBallsTests" */;
+			buildConfigurationList = FEB3F1E11B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeballsTests" */;
 			buildPhases = (
-				FE31C4ED17AA0E5100CB2EA5 /* Sources */,
-				FE31C4EE17AA0E5100CB2EA5 /* Frameworks */,
-				FE31C4EF17AA0E5100CB2EA5 /* Resources */,
+				FEB3F1D01B0BC17F00BBD388 /* Sources */,
+				FEB3F1D11B0BC17F00BBD388 /* Frameworks */,
+				FEB3F1D21B0BC17F00BBD388 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FE31C4F717AA0E5100CB2EA5 /* PBXTargetDependency */,
+				FEB3F1D61B0BC17F00BBD388 /* PBXTargetDependency */,
 			);
-			name = AmazeBallsTests;
-			productName = AmazeBallsTests;
-			productReference = FE31C4F117AA0E5100CB2EA5 /* AmazeBallsTests.xctest */;
+			name = AmazeballsTests;
+			productName = AmazeballsTests;
+			productReference = FEB3F1D41B0BC17F00BBD388 /* AmazeballsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		FE31C4C517AA0E5100CB2EA5 /* Project object */ = {
+		FEB3F1B31B0BC17F00BBD388 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = AB;
-				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = "Piece of Cake Adventures, LLC";
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Daniel Flax";
 				TargetAttributes = {
-					FE31C4CC17AA0E5100CB2EA5 = {
-						DevelopmentTeam = 9N4HA7TLU8;
+					FEB3F1BA1B0BC17F00BBD388 = {
+						CreatedOnToolsVersion = 6.3.1;
 					};
-					FE31C4F017AA0E5100CB2EA5 = {
-						TestTargetID = FE31C4CC17AA0E5100CB2EA5;
+					FEB3F1D31B0BC17F00BBD388 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = FEB3F1BA1B0BC17F00BBD388;
 					};
 				};
 			};
-			buildConfigurationList = FE31C4C817AA0E5100CB2EA5 /* Build configuration list for PBXProject "AmazeBalls" */;
+			buildConfigurationList = FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "AmazeBalls" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -252,100 +220,92 @@
 				en,
 				Base,
 			);
-			mainGroup = FE31C4C417AA0E5100CB2EA5;
-			productRefGroup = FE31C4CE17AA0E5100CB2EA5 /* Products */;
+			mainGroup = FEB3F1B21B0BC17F00BBD388;
+			productRefGroup = FEB3F1BC1B0BC17F00BBD388 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FE31C4CC17AA0E5100CB2EA5 /* AmazeBalls */,
-				FE31C4F017AA0E5100CB2EA5 /* AmazeBallsTests */,
+				FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */,
+				FEB3F1D31B0BC17F00BBD388 /* AmazeballsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		FE31C4CB17AA0E5100CB2EA5 /* Resources */ = {
+		FEB3F1B91B0BC17F00BBD388 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE31C4E417AA0E5100CB2EA5 /* Main.storyboard in Resources */,
-				FE31C4DB17AA0E5100CB2EA5 /* InfoPlist.strings in Resources */,
+				FEB3F1CF1B0BC17F00BBD388 /* LaunchScreen.xib in Resources */,
+				FEE83E561B0BC1F10073DA61 /* Images.xcassets in Resources */,
+				FEE83E591B0BC2C80073DA61 /* LICENSE in Resources */,
+				FEB3F1CA1B0BC17F00BBD388 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FE31C4EF17AA0E5100CB2EA5 /* Resources */ = {
+		FEB3F1D21B0BC17F00BBD388 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE31C4FD17AA0E5100CB2EA5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		FE31C4C917AA0E5100CB2EA5 /* Sources */ = {
+		FEB3F1B71B0BC17F00BBD388 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE63016D17C93E5700B2114E /* Images.xcassets in Sources */,
-				FE31C52317AA171600CB2EA5 /* ABBall.m in Sources */,
-				FE31C52417AA171600CB2EA5 /* ABBallScene.m in Sources */,
-				FE31C52517AA171600CB2EA5 /* ABSettingsViewController.m in Sources */,
-				FE31C52617AA171600CB2EA5 /* ABWall.m in Sources */,
-				FE31C4DD17AA0E5100CB2EA5 /* main.m in Sources */,
-				FE31C4EA17AA0E5100CB2EA5 /* ABViewController.m in Sources */,
-				FE31C4E117AA0E5100CB2EA5 /* ABAppDelegate.m in Sources */,
+				FEE83E631B0BC2E40073DA61 /* Floor.swift in Sources */,
+				FEE83E611B0BC2E40073DA61 /* BallScene.swift in Sources */,
+				FEB3F1C71B0BC17F00BBD388 /* GameViewController.swift in Sources */,
+				FEE83E621B0BC2E40073DA61 /* Config.swift in Sources */,
+				FEE83E601B0BC2E40073DA61 /* Ball.swift in Sources */,
+				FEB3F1C11B0BC17F00BBD388 /* AppDelegate.swift in Sources */,
+				FE3C8CD51B0D0AD20030BCBA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FE31C4ED17AA0E5100CB2EA5 /* Sources */ = {
+		FEB3F1D01B0BC17F00BBD388 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FE31C4FF17AA0E5100CB2EA5 /* AmazeBallsTests.m in Sources */,
+				FEB3F1DB1B0BC17F00BBD388 /* AmazeballsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		FE31C4F717AA0E5100CB2EA5 /* PBXTargetDependency */ = {
+		FEB3F1D61B0BC17F00BBD388 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FE31C4CC17AA0E5100CB2EA5 /* AmazeBalls */;
-			targetProxy = FE31C4F617AA0E5100CB2EA5 /* PBXContainerItemProxy */;
+			target = FEB3F1BA1B0BC17F00BBD388 /* AmazeBalls */;
+			targetProxy = FEB3F1D51B0BC17F00BBD388 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		FE31C4D917AA0E5100CB2EA5 /* InfoPlist.strings */ = {
+		FEB3F1C81B0BC17F00BBD388 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FE31C4DA17AA0E5100CB2EA5 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FE31C4E217AA0E5100CB2EA5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FE31C4E317AA0E5100CB2EA5 /* Base */,
+				FEB3F1C91B0BC17F00BBD388 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		FE31C4FB17AA0E5100CB2EA5 /* InfoPlist.strings */ = {
+		FEB3F1CD1B0BC17F00BBD388 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				FE31C4FC17AA0E5100CB2EA5 /* en */,
+				FEB3F1CE1B0BC17F00BBD388 /* Base */,
 			);
-			name = InfoPlist.strings;
+			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		FE31C50017AA0E5100CB2EA5 /* Debug */ = {
+		FEB3F1DC1B0BC17F00BBD388 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -360,30 +320,37 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		FE31C50117AA0E5100CB2EA5 /* Release */ = {
+		FEB3F1DD1B0BC17F00BBD388 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -398,126 +365,114 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				COPY_PHASE_STRIP = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		FE31C50317AA0E5100CB2EA5 /* Debug */ = {
+		FEB3F1DF1B0BC17F00BBD388 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AmazeBalls/AmazeBalls-Prefix.pch";
-				INFOPLIST_FILE = "AmazeBalls/AmazeBalls-Info.plist";
+				INFOPLIST_FILE = Amazeballs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FAA5792C-EB36-4542-A9CA-3B579DDE775E";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		FE31C50417AA0E5100CB2EA5 /* Release */ = {
+		FEB3F1E01B0BC17F00BBD388 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AmazeBalls/AmazeBalls-Prefix.pch";
-				INFOPLIST_FILE = "AmazeBalls/AmazeBalls-Info.plist";
+				INFOPLIST_FILE = Amazeballs/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "FAA5792C-EB36-4542-A9CA-3B579DDE775E";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		FE31C50617AA0E5100CB2EA5 /* Debug */ = {
+		FEB3F1E21B0BC17F00BBD388 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AmazeBalls.app/AmazeBalls";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AmazeBalls/AmazeBalls-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "AmazeBallsTests/AmazeBallsTests-Info.plist";
+				INFOPLIST_FILE = AmazeballsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Amazeballs.app/Amazeballs";
 			};
 			name = Debug;
 		};
-		FE31C50717AA0E5100CB2EA5 /* Release */ = {
+		FEB3F1E31B0BC17F00BBD388 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AmazeBalls.app/AmazeBalls";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AmazeBalls/AmazeBalls-Prefix.pch";
-				INFOPLIST_FILE = "AmazeBallsTests/AmazeBallsTests-Info.plist";
+				INFOPLIST_FILE = AmazeballsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Amazeballs.app/Amazeballs";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FE31C4C817AA0E5100CB2EA5 /* Build configuration list for PBXProject "AmazeBalls" */ = {
+		FEB3F1B61B0BC17F00BBD388 /* Build configuration list for PBXProject "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FE31C50017AA0E5100CB2EA5 /* Debug */,
-				FE31C50117AA0E5100CB2EA5 /* Release */,
+				FEB3F1DC1B0BC17F00BBD388 /* Debug */,
+				FEB3F1DD1B0BC17F00BBD388 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FE31C50217AA0E5100CB2EA5 /* Build configuration list for PBXNativeTarget "AmazeBalls" */ = {
+		FEB3F1DE1B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FE31C50317AA0E5100CB2EA5 /* Debug */,
-				FE31C50417AA0E5100CB2EA5 /* Release */,
+				FEB3F1DF1B0BC17F00BBD388 /* Debug */,
+				FEB3F1E01B0BC17F00BBD388 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FE31C50517AA0E5100CB2EA5 /* Build configuration list for PBXNativeTarget "AmazeBallsTests" */ = {
+		FEB3F1E11B0BC17F00BBD388 /* Build configuration list for PBXNativeTarget "AmazeballsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				FE31C50617AA0E5100CB2EA5 /* Debug */,
-				FE31C50717AA0E5100CB2EA5 /* Release */,
+				FEB3F1E21B0BC17F00BBD388 /* Debug */,
+				FEB3F1E31B0BC17F00BBD388 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = FE31C4C517AA0E5100CB2EA5 /* Project object */;
+	rootObject = FEB3F1B31B0BC17F00BBD388 /* Project object */;
 }
