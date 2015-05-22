@@ -68,7 +68,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="2000" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ou5-cK-Ltc">
+                            <button opaque="NO" tag="2000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ou5-cK-Ltc">
                                 <rect key="frame" x="16" y="530" width="50" height="50"/>
                                 <state key="normal" image="amazeball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -77,7 +77,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mjy-1N-pML"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2001" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3VY-gg-lHl">
+                            <button opaque="NO" tag="2001" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3VY-gg-lHl">
                                 <rect key="frame" x="74" y="530" width="50" height="50"/>
                                 <state key="normal" image="baseball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,7 +86,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="20f-fQ-CKw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2002" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-yk-Cbm">
+                            <button opaque="NO" tag="2002" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-yk-Cbm">
                                 <rect key="frame" x="132" y="530" width="50" height="50"/>
                                 <state key="normal" image="basketball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,7 +95,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="HBX-g2-4Cw"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2003" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4L-h8-nIK">
+                            <button opaque="NO" tag="2003" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4L-h8-nIK">
                                 <rect key="frame" x="190" y="530" width="50" height="50"/>
                                 <state key="normal" image="football">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -104,7 +104,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="aYZ-FG-c9Z"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-1W-8c7">
+                            <button opaque="NO" tag="2004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-1W-8c7">
                                 <rect key="frame" x="248" y="530" width="50" height="50"/>
                                 <state key="normal" image="pumpkin">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,7 +113,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mhX-kv-uel"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2005" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-hE-4sp">
+                            <button opaque="NO" tag="2005" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-hE-4sp">
                                 <rect key="frame" x="306" y="530" width="50" height="50"/>
                                 <state key="normal" image="soccer1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -122,7 +122,7 @@
                                     <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="ICd-Eo-d5v"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" tag="2006" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDc-gw-Xx8">
+                            <button opaque="NO" tag="2006" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDc-gw-Xx8">
                                 <rect key="frame" x="364" y="530" width="50" height="50"/>
                                 <state key="normal" image="soccer2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -167,7 +167,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="2007" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3z-KP-fT1">
+                            <button opaque="NO" tag="2007" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3z-KP-fT1">
                                 <rect key="frame" x="422" y="530" width="75" height="50"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="16"/>
                                 <state key="normal" title="Random">
@@ -184,19 +184,27 @@
                             <constraint firstItem="ufP-bP-fgd" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="3c1-06-7pt"/>
                             <constraint firstItem="bQF-nQ-O0B" firstAttribute="trailing" secondItem="DIZ-WC-khM" secondAttribute="trailing" id="4KF-nJ-ayY"/>
                             <constraint firstItem="bQF-nQ-O0B" firstAttribute="trailing" secondItem="vPj-K2-O7L" secondAttribute="trailing" id="5im-4c-HpR"/>
+                            <constraint firstItem="G3z-KP-fT1" firstAttribute="leading" secondItem="YDc-gw-Xx8" secondAttribute="trailing" constant="8" id="7Uf-m0-KKs"/>
+                            <constraint firstItem="0c2-yk-Cbm" firstAttribute="leading" secondItem="3VY-gg-lHl" secondAttribute="trailing" constant="8" id="9Yc-as-ozz"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="0c2-yk-Cbm" secondAttribute="bottom" constant="10" id="BEc-jY-Uar"/>
                             <constraint firstItem="ScU-hV-ofn" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="BVQ-0V-jL5"/>
+                            <constraint firstItem="CeZ-1W-8c7" firstAttribute="leading" secondItem="V4L-h8-nIK" secondAttribute="trailing" constant="8" id="CS7-U6-Bf4"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="BKg-IN-dcv" secondAttribute="leading" id="EHe-6L-daK"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="3VY-gg-lHl" secondAttribute="bottom" constant="10" id="EMB-Jq-Xr5"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="m6b-he-rEL" secondAttribute="leading" id="EQC-PR-DgZ"/>
                             <constraint firstItem="BKg-IN-dcv" firstAttribute="top" secondItem="MVo-Xo-qXa" secondAttribute="bottom" id="IBW-Nr-Ulp"/>
+                            <constraint firstItem="Ft2-hE-4sp" firstAttribute="leading" secondItem="CeZ-1W-8c7" secondAttribute="trailing" constant="8" id="LiH-Ld-cat"/>
                             <constraint firstItem="ScU-hV-ofn" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="NGa-xh-DuT"/>
+                            <constraint firstItem="Ou5-cK-Ltc" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="Pgy-pb-07b"/>
+                            <constraint firstItem="3VY-gg-lHl" firstAttribute="leading" secondItem="Ou5-cK-Ltc" secondAttribute="trailing" constant="8" id="UTD-Re-Mt7"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="Ft2-hE-4sp" secondAttribute="bottom" constant="10" id="WE6-Xt-cJZ"/>
+                            <constraint firstItem="YDc-gw-Xx8" firstAttribute="leading" secondItem="Ft2-hE-4sp" secondAttribute="trailing" constant="8" id="YEh-HB-UJa"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="u0W-vz-cIK" secondAttribute="leading" id="ZUY-eC-azU"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="G3z-KP-fT1" secondAttribute="bottom" constant="10" id="bNT-HK-DF0"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="YDc-gw-Xx8" secondAttribute="bottom" constant="10" id="fUv-IJ-NdU"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="wZ2-Dw-D7q" secondAttribute="leading" id="h3I-dS-zmN"/>
                             <constraint firstItem="DIZ-WC-khM" firstAttribute="top" secondItem="MVo-Xo-qXa" secondAttribute="bottom" id="o3K-eM-BYi"/>
+                            <constraint firstItem="V4L-h8-nIK" firstAttribute="leading" secondItem="0c2-yk-Cbm" secondAttribute="trailing" constant="8" id="p3X-GD-2Ja"/>
                             <constraint firstItem="ufP-bP-fgd" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="pu5-Xe-Pij"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="V4L-h8-nIK" secondAttribute="bottom" constant="10" id="tUe-nh-BDy"/>
                             <constraint firstItem="DIZ-WC-khM" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="vrn-ut-900"/>
