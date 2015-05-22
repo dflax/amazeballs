@@ -3,102 +3,103 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ball_29.png",
+      "filename" : "Ball_29.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ball_29@2x.png",
+      "filename" : "Ball_58.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ball_40@2x-1.png",
+      "filename" : "Ball_80.png",
       "scale" : "2x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "ball_57.png",
+      "filename" : "Ball_57.png",
       "scale" : "1x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "ball_57@2x.png",
+      "filename" : "Ball_114.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ball_60@2x.png",
+      "filename" : "Ball_120.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "Ball_180.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ball_29-1.png",
+      "filename" : "Ball_29-1.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ball_29@2x-1.png",
+      "filename" : "Ball_58-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ball_40.png",
+      "filename" : "Ball_40.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ball_40@2x.png",
+      "filename" : "Ball_80-1.png",
       "scale" : "2x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "ball_50.png",
+      "filename" : "Ball_50.png",
       "scale" : "1x"
     },
     {
       "size" : "50x50",
       "idiom" : "ipad",
-      "filename" : "ball_50@2x.png",
+      "filename" : "Ball_100.png",
       "scale" : "2x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "ball_72.png",
+      "filename" : "Ball_72.png",
       "scale" : "1x"
     },
     {
       "size" : "72x72",
       "idiom" : "ipad",
-      "filename" : "ball_72@2x.png",
+      "filename" : "Ball_144.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ball_76.png",
+      "filename" : "Ball_76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ball_76@2x.png",
+      "filename" : "Ball_152.png",
       "scale" : "2x"
     }
   ],

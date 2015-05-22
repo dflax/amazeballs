@@ -70,6 +70,10 @@
                             </label>
                             <button opaque="NO" tag="2000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ou5-cK-Ltc">
                                 <rect key="frame" x="16" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IF1-br-DOM"/>
+                                    <constraint firstAttribute="width" constant="50" id="x9h-g3-qOD"/>
+                                </constraints>
                                 <state key="normal" image="amazeball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -79,6 +83,10 @@
                             </button>
                             <button opaque="NO" tag="2001" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3VY-gg-lHl">
                                 <rect key="frame" x="74" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="EQY-wL-33N"/>
+                                    <constraint firstAttribute="height" constant="50" id="mH6-5s-2oa"/>
+                                </constraints>
                                 <state key="normal" image="baseball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -88,6 +96,10 @@
                             </button>
                             <button opaque="NO" tag="2002" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-yk-Cbm">
                                 <rect key="frame" x="132" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="fEo-XW-hjW"/>
+                                    <constraint firstAttribute="height" constant="50" id="h2J-A0-Pqq"/>
+                                </constraints>
                                 <state key="normal" image="basketball">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -97,6 +109,10 @@
                             </button>
                             <button opaque="NO" tag="2003" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4L-h8-nIK">
                                 <rect key="frame" x="190" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="6kV-r1-61J"/>
+                                    <constraint firstAttribute="height" constant="50" id="ImA-sw-HOS"/>
+                                </constraints>
                                 <state key="normal" image="football">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -106,6 +122,10 @@
                             </button>
                             <button opaque="NO" tag="2004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-1W-8c7">
                                 <rect key="frame" x="248" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8yE-bX-QZw"/>
+                                    <constraint firstAttribute="width" constant="50" id="nPs-58-I4q"/>
+                                </constraints>
                                 <state key="normal" image="pumpkin">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -115,6 +135,10 @@
                             </button>
                             <button opaque="NO" tag="2005" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-hE-4sp">
                                 <rect key="frame" x="306" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="D3V-7n-2SM"/>
+                                    <constraint firstAttribute="height" constant="50" id="XIv-cw-Cgd"/>
+                                </constraints>
                                 <state key="normal" image="soccer1">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -124,6 +148,10 @@
                             </button>
                             <button opaque="NO" tag="2006" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDc-gw-Xx8">
                                 <rect key="frame" x="364" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Bb0-Wa-lRW"/>
+                                    <constraint firstAttribute="width" constant="50" id="o81-Rh-idm"/>
+                                </constraints>
                                 <state key="normal" image="soccer2">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -200,7 +228,7 @@
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="Ft2-hE-4sp" secondAttribute="bottom" constant="10" id="WE6-Xt-cJZ"/>
                             <constraint firstItem="YDc-gw-Xx8" firstAttribute="leading" secondItem="Ft2-hE-4sp" secondAttribute="trailing" constant="8" id="YEh-HB-UJa"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="u0W-vz-cIK" secondAttribute="leading" id="ZUY-eC-azU"/>
-                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="G3z-KP-fT1" secondAttribute="bottom" constant="10" id="bNT-HK-DF0"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="G3z-KP-fT1" secondAttribute="bottom" constant="20" id="bNT-HK-DF0"/>
                             <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="YDc-gw-Xx8" secondAttribute="bottom" constant="10" id="fUv-IJ-NdU"/>
                             <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="wZ2-Dw-D7q" secondAttribute="leading" id="h3I-dS-zmN"/>
                             <constraint firstItem="DIZ-WC-khM" firstAttribute="top" secondItem="MVo-Xo-qXa" secondAttribute="bottom" id="o3K-eM-BYi"/>
