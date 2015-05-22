@@ -35,12 +35,6 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-// println("ScreenWidth: \(ScreenWidth)")
-// println("ScreenHeight: \(ScreenHeight)")
-// println("ScreenCenter: \(ScreenCenter)")
-// println("ScreenSize: \(ScreenSize)")
-// println("ScreenRect: \(ScreenRect)")
-
 		let skView = self.view as! SKView
 
 		scene = BallScene(size: skView.bounds.size)
@@ -51,22 +45,15 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 		skView.showsNodeCount = true
 		skView.ignoresSiblingOrder = true
 		scene.scaleMode = .ResizeFill
-		
+
 		// Present the main scene for the game
 		skView.presentScene(scene)
-		
-		// Calculate the size for the view
-		// Use the MIN/MAX to ensure a landscape view is created
-		//		CGSize boundrySize = CGSizeMake(MAX(ballView.frame.size.height, ballView.frame.size.width), MIN(ballView.frame.size.height, ballView.frame.size.width));
-		
-		// Set the view's frame to use this new size
-		//		self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, boundrySize.width, boundrySize.height);
 	}
-	
+
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
-	
+
 	// Update the physics settings, when the view appears - after Settings are changed
 	override func viewWillAppear(animated: Bool) {
 		 self.scene.updateWorldPhysicsSettings()
@@ -83,7 +70,7 @@ class GameViewController: UIViewController, SettingsDelegateProtocol {
 			settingsView.delegate = self
 		}
 	}
-	
+
 	//MARK: - Settings Delegate Protocol Methods
 
 	// When the user taps save, the delegate calls this method, sending back all of the data values from the settings panel
