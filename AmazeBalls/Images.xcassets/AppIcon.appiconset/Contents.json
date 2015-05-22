@@ -124,7 +124,7 @@
       "size" : "24x24",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "Ball_24.png",
+      "filename" : "Ball_48.png",
       "role" : "notificationCenter",
       "subtype" : "38mm"
     },
@@ -132,7 +132,7 @@
       "size" : "27.5x27.5",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "Ball_27.png",
+      "filename" : "Ball_55.png",
       "role" : "notificationCenter",
       "subtype" : "42mm"
     },
@@ -162,7 +162,7 @@
       "size" : "44x44",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "Ball_44.png",
+      "filename" : "Ball_88.png",
       "role" : "longLook",
       "subtype" : "42mm"
     },
@@ -170,7 +170,7 @@
       "size" : "86x86",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "Ball_86.png",
+      "filename" : "Ball_172.png",
       "role" : "quickLook",
       "subtype" : "38mm"
     },
@@ -178,7 +178,7 @@
       "size" : "98x98",
       "idiom" : "watch",
       "scale" : "2x",
-      "filename" : "Ball_98.png",
+      "filename" : "Ball_196.png",
       "role" : "quickLook",
       "subtype" : "42mm"
     }
