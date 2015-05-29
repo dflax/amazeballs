@@ -55,7 +55,7 @@ class SettingsViewController:UIViewController, Printable {
 	// Property to keep track of the active ball
 	var activeBall: Int = 2000
 
-	// Delegate to support Clown actions
+	// Delegate to support Settings changes
 	var delegate: SettingsDelegateProtocol?
 
 	// Support the Printable protocol
