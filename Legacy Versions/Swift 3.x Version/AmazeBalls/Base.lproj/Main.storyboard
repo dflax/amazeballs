@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vwo-KI-4hs">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="aHg-vp-1DV">
+            <objects>
+                <viewController id="vwo-KI-4hs" customClass="GameViewController" customModule="AmazeBalls" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="26f-By-uj1"/>
+                        <viewControllerLayoutGuide type="bottom" id="V6h-Sj-quc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IQT-x0-kH5" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tvh-jF-9nD">
+                                <rect key="frame" x="562" y="558" width="22" height="22"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Cka-1r-CHb" kind="show" identifier="settingsSegue" id="38F-qx-i13"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Tvh-jF-9nD" firstAttribute="trailing" secondItem="IQT-x0-kH5" secondAttribute="trailingMargin" id="MtH-aY-SSy"/>
+                            <constraint firstItem="V6h-Sj-quc" firstAttribute="top" secondItem="Tvh-jF-9nD" secondAttribute="bottom" constant="20" id="Wuh-pa-xky"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4la-TW-jYK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6" y="435"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Eqb-Np-hCW">
+            <objects>
+                <viewController id="Cka-1r-CHb" customClass="SettingsViewController" customModule="AmazeBalls" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MVo-Xo-qXa"/>
+                        <viewControllerLayoutGuide type="bottom" id="FdO-WK-D3d"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZMX-Ch-REx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="9.8000000000000007" minValue="0.0" maxValue="19.600000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="ufP-bP-fgd">
+                                <rect key="frame" x="14" y="64" width="572" height="31"/>
+                            </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1.1000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="ScU-hV-ofn">
+                                <rect key="frame" x="14" y="112" width="572" height="31"/>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Bouncyness" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYj-NH-ojF">
+                                <rect key="frame" x="16" y="99" width="95" height="21"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Gravity" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0W-vz-cIK">
+                                <rect key="frame" x="16" y="50" width="55" height="21"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" tag="2000" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ou5-cK-Ltc">
+                                <rect key="frame" x="16" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IF1-br-DOM"/>
+                                    <constraint firstAttribute="width" constant="50" id="x9h-g3-qOD"/>
+                                </constraints>
+                                <state key="normal" image="amazeball">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mjy-1N-pML"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2001" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3VY-gg-lHl">
+                                <rect key="frame" x="74" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="EQY-wL-33N"/>
+                                    <constraint firstAttribute="height" constant="50" id="mH6-5s-2oa"/>
+                                </constraints>
+                                <state key="normal" image="baseball">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="20f-fQ-CKw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2002" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0c2-yk-Cbm">
+                                <rect key="frame" x="132" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="fEo-XW-hjW"/>
+                                    <constraint firstAttribute="height" constant="50" id="h2J-A0-Pqq"/>
+                                </constraints>
+                                <state key="normal" image="basketball">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="HBX-g2-4Cw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2003" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V4L-h8-nIK">
+                                <rect key="frame" x="190" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="6kV-r1-61J"/>
+                                    <constraint firstAttribute="height" constant="50" id="ImA-sw-HOS"/>
+                                </constraints>
+                                <state key="normal" image="football">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="aYZ-FG-c9Z"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2004" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-1W-8c7">
+                                <rect key="frame" x="248" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8yE-bX-QZw"/>
+                                    <constraint firstAttribute="width" constant="50" id="nPs-58-I4q"/>
+                                </constraints>
+                                <state key="normal" image="pumpkin">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="mhX-kv-uel"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2005" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ft2-hE-4sp">
+                                <rect key="frame" x="306" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="D3V-7n-2SM"/>
+                                    <constraint firstAttribute="height" constant="50" id="XIv-cw-Cgd"/>
+                                </constraints>
+                                <state key="normal" image="soccer1">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="ICd-Eo-d5v"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2006" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDc-gw-Xx8">
+                                <rect key="frame" x="364" y="530" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Bb0-Wa-lRW"/>
+                                    <constraint firstAttribute="width" constant="50" id="o81-Rh-idm"/>
+                                </constraints>
+                                <state key="normal" image="soccer2">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="Bns-2J-07K"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DIZ-WC-khM">
+                                <rect key="frame" x="550" y="20" width="34" height="30"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveSetting" destination="Cka-1r-CHb" eventType="touchUpInside" id="gn3-ZB-9da"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKg-IN-dcv">
+                                <rect key="frame" x="16" y="20" width="48" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelSettingsView" destination="Cka-1r-CHb" eventType="touchUpInside" id="08o-mO-ifa"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vPj-K2-O7L">
+                                <rect key="frame" x="500" y="175" width="51" height="31"/>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wZ2-Dw-D7q">
+                                <rect key="frame" x="48" y="175" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Accelerometer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-he-rEL">
+                                <rect key="frame" x="16" y="146" width="112" height="21"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Bounding Walls" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQF-nQ-O0B">
+                                <rect key="frame" x="464" y="146" width="120" height="21"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" tag="2007" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3z-KP-fT1">
+                                <rect key="frame" x="422" y="530" width="75" height="50"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="16"/>
+                                <state key="normal" title="Random">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="selectBallType:" destination="Cka-1r-CHb" eventType="touchUpInside" id="zar-Zr-8HT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="CeZ-1W-8c7" secondAttribute="bottom" constant="10" id="39c-hM-urw"/>
+                            <constraint firstItem="ufP-bP-fgd" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="3c1-06-7pt"/>
+                            <constraint firstItem="bQF-nQ-O0B" firstAttribute="trailing" secondItem="DIZ-WC-khM" secondAttribute="trailing" id="4KF-nJ-ayY"/>
+                            <constraint firstItem="bQF-nQ-O0B" firstAttribute="trailing" secondItem="vPj-K2-O7L" secondAttribute="trailing" id="5im-4c-HpR"/>
+                            <constraint firstItem="G3z-KP-fT1" firstAttribute="leading" secondItem="YDc-gw-Xx8" secondAttribute="trailing" constant="8" id="7Uf-m0-KKs"/>
+                            <constraint firstItem="0c2-yk-Cbm" firstAttribute="leading" secondItem="3VY-gg-lHl" secondAttribute="trailing" constant="8" id="9Yc-as-ozz"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="0c2-yk-Cbm" secondAttribute="bottom" constant="10" id="BEc-jY-Uar"/>
+                            <constraint firstItem="ScU-hV-ofn" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="BVQ-0V-jL5"/>
+                            <constraint firstItem="CeZ-1W-8c7" firstAttribute="leading" secondItem="V4L-h8-nIK" secondAttribute="trailing" constant="8" id="CS7-U6-Bf4"/>
+                            <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="BKg-IN-dcv" secondAttribute="leading" id="EHe-6L-daK"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="3VY-gg-lHl" secondAttribute="bottom" constant="10" id="EMB-Jq-Xr5"/>
+                            <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="m6b-he-rEL" secondAttribute="leading" id="EQC-PR-DgZ"/>
+                            <constraint firstItem="BKg-IN-dcv" firstAttribute="top" secondItem="MVo-Xo-qXa" secondAttribute="bottom" id="IBW-Nr-Ulp"/>
+                            <constraint firstItem="Ft2-hE-4sp" firstAttribute="leading" secondItem="CeZ-1W-8c7" secondAttribute="trailing" constant="8" id="LiH-Ld-cat"/>
+                            <constraint firstItem="ScU-hV-ofn" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="NGa-xh-DuT"/>
+                            <constraint firstItem="Ou5-cK-Ltc" firstAttribute="leading" secondItem="ZMX-Ch-REx" secondAttribute="leadingMargin" id="Pgy-pb-07b"/>
+                            <constraint firstItem="3VY-gg-lHl" firstAttribute="leading" secondItem="Ou5-cK-Ltc" secondAttribute="trailing" constant="8" id="UTD-Re-Mt7"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="Ft2-hE-4sp" secondAttribute="bottom" constant="10" id="WE6-Xt-cJZ"/>
+                            <constraint firstItem="YDc-gw-Xx8" firstAttribute="leading" secondItem="Ft2-hE-4sp" secondAttribute="trailing" constant="8" id="YEh-HB-UJa"/>
+                            <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="u0W-vz-cIK" secondAttribute="leading" id="ZUY-eC-azU"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="G3z-KP-fT1" secondAttribute="bottom" constant="20" id="bNT-HK-DF0"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="YDc-gw-Xx8" secondAttribute="bottom" constant="10" id="fUv-IJ-NdU"/>
+                            <constraint firstItem="lYj-NH-ojF" firstAttribute="leading" secondItem="wZ2-Dw-D7q" secondAttribute="leading" id="h3I-dS-zmN"/>
+                            <constraint firstItem="DIZ-WC-khM" firstAttribute="top" secondItem="MVo-Xo-qXa" secondAttribute="bottom" id="o3K-eM-BYi"/>
+                            <constraint firstItem="V4L-h8-nIK" firstAttribute="leading" secondItem="0c2-yk-Cbm" secondAttribute="trailing" constant="8" id="p3X-GD-2Ja"/>
+                            <constraint firstItem="ufP-bP-fgd" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="pu5-Xe-Pij"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="V4L-h8-nIK" secondAttribute="bottom" constant="10" id="tUe-nh-BDy"/>
+                            <constraint firstItem="DIZ-WC-khM" firstAttribute="trailing" secondItem="ZMX-Ch-REx" secondAttribute="trailingMargin" id="vrn-ut-900"/>
+                            <constraint firstItem="FdO-WK-D3d" firstAttribute="top" secondItem="Ou5-cK-Ltc" secondAttribute="bottom" constant="10" id="yM8-GN-vTs"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="accelerometerSwitch" destination="wZ2-Dw-D7q" id="A5j-9i-r9n"/>
+                        <outlet property="bouncynessSlider" destination="ScU-hV-ofn" id="WrT-XG-NAD"/>
+                        <outlet property="boundingSwitch" destination="vPj-K2-O7L" id="TPf-dd-M9g"/>
+                        <outlet property="buttonAmazeBall" destination="Ou5-cK-Ltc" id="bdU-W6-mQq"/>
+                        <outlet property="buttonBaseball" destination="3VY-gg-lHl" id="eOx-YU-FWl"/>
+                        <outlet property="buttonBasketball" destination="0c2-yk-Cbm" id="gMX-Bq-M1M"/>
+                        <outlet property="buttonFootball" destination="V4L-h8-nIK" id="nGm-8j-ImD"/>
+                        <outlet property="buttonPumpkin" destination="CeZ-1W-8c7" id="DXJ-aB-Gvt"/>
+                        <outlet property="buttonRandom" destination="G3z-KP-fT1" id="ijW-vg-JOl"/>
+                        <outlet property="buttonSoccerBallOne" destination="Ft2-hE-4sp" id="fZu-JZ-L6Y"/>
+                        <outlet property="buttonSoccerBallTwo" destination="YDc-gw-Xx8" id="JGw-eb-z16"/>
+                        <outlet property="gravitySlider" destination="ufP-bP-fgd" id="lmF-j2-wmb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PNV-ZC-IhE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="792" y="435"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="amazeball" width="75" height="75"/>
+        <image name="baseball" width="75" height="73"/>
+        <image name="basketball" width="75" height="75"/>
+        <image name="football" width="75" height="73"/>
+        <image name="pumpkin" width="75" height="75"/>
+        <image name="soccer1" width="75" height="75"/>
+        <image name="soccer2" width="75" height="75"/>
+    </resources>
+</document>

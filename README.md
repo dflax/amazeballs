@@ -1,5 +1,19 @@
-amazeballs
+Amazeballs
 ==========
+
+Update: March 28, 2020
+
+So.... it turns out it's really difficult to convert a Swift 2.x project to a current version. I attempted to install older versions of XCode (8.3.3 and 10.1) to facilitate the conversion of the project targets, but that doesn't seem to have worked. So, given that this is a fairly simple project, I'm going to stash the legacy version of the project and build a new one from scratch.
+
+New:
+New graphics that are all PDF vector images. This should easily facilitate proper Auto-Layout, full screen behavior on all devices and sizes.
+
+
+--Daniel Flax
+March 28, 2020
+
+==================
+
 
 Update: November 10, 2013
 Test cases needed. Goal is to leverage XCtest class.

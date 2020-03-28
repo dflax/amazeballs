@@ -48,7 +48,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		super.init(size: size)
 	}
 
-	override func didMoveToView(view: SKView) {
+	override func didMove(to view: SKView) {
 
 		// Set the overall physicsWorld and outer wall characteristics
 		physicsWorld.contactDelegate = self
@@ -65,17 +65,15 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		// Load the floor for the bottom of the scene
 		let floor = Floor()
 		floor.zPosition = 100
-
 		self.addChild(floor)
 
 		updateWorldPhysicsSettings()
 	}
 
-	override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		// Go though all touch points in the set
-		for touch in (touches as! Set<UITouch>) {
-			let location = touch.locationInNode(self)
+		for touch in (touches) {
+			let location = touch.location(in: self)
 
 			// If it's not already a ball, drop a new ball at that location
 			self.addChild(Ball(location: location, ballType: activeBall, bouncyness: CGFloat(bouncyness)))
@@ -109,25 +107,25 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 
 		// Checck if the collision is between Ball and Floor
 		if ((firstBody.categoryBitMask & CollisionCategories.Ball != 0) && (secondBody.categoryBitMask & CollisionCategories.EdgeBody != 0)) {
-//			println("Ball and wall collide")
+//			print("Ball and wall collide")
 		}
 	}
 
 	// Stop all balls from moving
 	func stopBalls() {
-		self.enumerateChildNodesWithName("ball") {
+		self.enumerateChildNodes(withName: "ball") {
 			node, stop in
 			node.speed = 0
 		}
 	}
 
 	// Use to remove any balls that have fallen off the screen
-	override func update(currentTime: CFTimeInterval) {
+	override func update(_ ntTime: CFTimeInterval) {
 	}
 
 	// Loop through all ballNodes, and execute the passed in block if they've falled more than 500 points below the screen, they aren't coming back.
 	override func didSimulatePhysics() {
-		self.enumerateChildNodesWithName("ball") {
+		self.enumerateChildNodes(withName: "ball") {
 			node, stop in
 			if node.position.y < -500 {
 				node.removeFromParent()
@@ -136,19 +134,22 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	//MARK: - Settings for the Physics World
-	
+
 	// This is the main method to update the physics for the scene based on the settings the user has entered on the Settings View.
 	func updateWorldPhysicsSettings() {
 
+		print ("Pre-Update:")
+		self.printSceneSettings()
+
 		// Grab the standard user defaults handle
-		let userDefaults = NSUserDefaults.standardUserDefaults()
+		let userDefaults = UserDefaults.standard
 
 		// Pull values for the different settings. Substitute in defaults if the NSUserDefaults doesn't include any value
-		currentGravity       = userDefaults.valueForKey("gravityValue")         != nil ? -1*abs(userDefaults.valueForKey("gravityValue")  as! Float) : -9.8
-		activeBall           = userDefaults.valueForKey("activeBall")           != nil ? userDefaults.valueForKey("activeBall")           as! Int    : 2000
-		bouncyness           = userDefaults.valueForKey("bouncyness")           != nil ? userDefaults.valueForKey("bouncyness")           as! Float  : 0.5
-		boundingWall         = userDefaults.valueForKey("boundingWallSetting")  != nil ? userDefaults.valueForKey("boundingWallSetting")  as! Bool   : false
-		accelerometerSetting = userDefaults.valueForKey("accelerometerSetting") != nil ? userDefaults.valueForKey("accelerometerSetting") as! Bool   : false
+		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? -1*abs(userDefaults.value(forKey: "gravityValue")  as! Float) : -9.8
+		activeBall           = userDefaults.value(forKey: "activeBall")           != nil ? userDefaults.value(forKey: "activeBall")           as! Int    : 2000
+		bouncyness           = userDefaults.value(forKey: "bouncyness")           != nil ? userDefaults.value(forKey: "bouncyness")           as! Float  : 0.5
+		boundingWall         = userDefaults.value(forKey: "boundingWallSetting")  != nil ? userDefaults.value(forKey: "boundingWallSetting")  as! Bool   : false
+		accelerometerSetting = userDefaults.value(forKey: "accelerometerSetting") != nil ? userDefaults.value(forKey: "accelerometerSetting") as! Bool   : false
 
 		// If no Accelerometer, set the simple gravity for the world
 		if (!accelerometerSetting) {
@@ -163,17 +164,21 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		}
 
 		// Loop through all balls and update their bouncyness values
-		self.enumerateChildNodesWithName("ball") {
+		self.enumerateChildNodes(withName: "ball") {
 			node, stop in
 			node.physicsBody?.restitution = CGFloat(self.bouncyness)
 		}
 
 		// Set whether there is a bounding wall (edge loop) around the frame
 		if boundingWall == true {
-			self.physicsBody = SKPhysicsBody(edgeLoopFromRect: ScreenRect)
+			self.physicsBody = SKPhysicsBody(edgeLoopFrom: ScreenRect)
 		} else {
 			self.physicsBody = nil
 		}
+
+		print ("Post-Update:")
+		self.printSceneSettings()
+
 	}
 
 	//MARK: - Accelerate Framework Methods
@@ -182,18 +187,25 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	func startComplexGravity() {
 
 		// Check if the accelerometer is available
-		if (motionManager.accelerometerAvailable) {
-			motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue()) {
+		if (motionManager.isAccelerometerAvailable) {
+			motionManager.startAccelerometerUpdates(to: OperationQueue()) {
 				(data, error) in
 
 				// Take the x and y acceleration vectors and multiply by the gravity values to come up with a full gravity vector
-				let xGravity = CGFloat(data.acceleration.x) * CGFloat(self.currentGravity)
-				let yGravity = CGFloat(data.acceleration.y) * CGFloat(self.currentGravity)
+				let xGravity = CGFloat((data?.acceleration.x)!) * CGFloat(self.currentGravity)
+				let yGravity = CGFloat(data!.acceleration.y) * CGFloat(self.currentGravity)
 				self.physicsWorld.gravity = CGVector(dx: yGravity, dy: -xGravity)
 			}
 		}
 	}
-	
-				
-}
 
+	// Print out the current Physics World Settings
+	func printSceneSettings() {
+		print ("Gravity: \(currentGravity ?? 0)")
+		print ("Active Ball: \(activeBall ?? 0)")
+		print ("Bouncyness:  \(bouncyness ?? 0)")
+
+		print ("Bounding Wall: \(boundingWall != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
+		print ("Accelerometer: \(accelerometerSetting != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
+	}
+}

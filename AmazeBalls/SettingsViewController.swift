@@ -1,9 +1,10 @@
 //
 //  SettingsViewController.swift
-//  AmazeBalls
+//  amazeballs
 //
-//  Created by Daniel Flax on 5/18/15.
-//  Copyright (c) 2015 Daniel Flax. All rights reserved.
+//  Created by Daniel Flax on 3/28/20.
+//  Copyright © 2020 Daniel Flax. All rights reserved.
+//
 //
 //                        The MIT License (MIT)
 //
@@ -34,7 +35,7 @@ protocol SettingsDelegateProtocol {
 	func settingsViewController(viewController: SettingsViewController, gravitySetting: Float, bouncySetting: Float, boundingWallSetting: Bool, accelerometerSetting: Bool, activeBall: Int)
 }
 
-class SettingsViewController:UIViewController, Printable {
+class SettingsViewController : UIViewController {
 
 	// UI Widgets to grab their values
 	@IBOutlet weak var gravitySlider:       UISlider!
@@ -55,7 +56,7 @@ class SettingsViewController:UIViewController, Printable {
 	// Property to keep track of the active ball
 	var activeBall: Int = 2000
 
-	// Delegate to support Settings changes
+	// Delegate to support Clown actions
 	var delegate: SettingsDelegateProtocol?
 
 	// Support the Printable protocol
@@ -69,12 +70,12 @@ class SettingsViewController:UIViewController, Printable {
 
 	// If the user taps cancel, call the delegate method to cancel (dismissing the settings view controller)
 	@IBAction func cancelSettingsView() {
-		delegate?.settingsViewController(self, cancelled: true)
+		delegate?.settingsViewController(viewController: self, cancelled: true)
 	}
 
 	// If the user taps save, call the delegate method to save - with all of the widget values
 	@IBAction func saveSetting() {
-		delegate?.settingsViewController(self, gravitySetting: gravitySlider.value, bouncySetting: bouncynessSlider.value, boundingWallSetting: boundingSwitch.on, accelerometerSetting: accelerometerSwitch.on, activeBall: activeBall)
+		delegate?.settingsViewController(viewController: self, gravitySetting: gravitySlider.value, bouncySetting: bouncynessSlider.value, boundingWallSetting: boundingSwitch.isOn, accelerometerSetting: accelerometerSwitch.isOn, activeBall: activeBall)
 	}
 
 	// When user taps on a ball type, clear all selections and update UI to demonstrate which one's been selected, also update the _activeBall value.
@@ -92,7 +93,7 @@ class SettingsViewController:UIViewController, Printable {
 		buttonSoccerBallTwo.layer.borderWidth = 0.0
 		buttonRandom.layer.borderWidth        = 0.0
 
-		senderButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0).CGColor
+		senderButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0).cgColor
 		senderButton.layer.borderWidth = 1.0
 		activeBall = sender.tag
 	}
@@ -102,25 +103,22 @@ class SettingsViewController:UIViewController, Printable {
 		super.viewDidLoad()
 
 		// Set the initial state for the view's value controls
-		let defaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+		let defaults: UserDefaults = UserDefaults.standard
 
-		gravitySlider.value    = defaults.valueForKey("gravityValue") != nil ? abs(defaults.valueForKey("gravityValue") as! Float) : 9.8
-		bouncynessSlider.value = defaults.valueForKey("bouncyness")   != nil ?     defaults.valueForKey("bouncyness") as! Float    : 1.0
+		gravitySlider.value    = defaults.value(forKey: "gravityValue") != nil ? abs(defaults.value(forKey: "gravityValue") as! Float) : 9.8
+		bouncynessSlider.value = defaults.value(forKey: "bouncyness")   != nil ?     defaults.value(forKey: "bouncyness") as! Float    : 1.0
 
-		boundingSwitch.on = defaults.valueForKey("boundingWallSetting") != nil ? defaults.valueForKey("boundingWallSetting") as! Bool : false
-		accelerometerSwitch.on = defaults.valueForKey("accelerometerSetting") != nil ? defaults.valueForKey("accelerometerSetting") as! Bool : false
-		activeBall = defaults.valueForKey("activeBall") != nil ? defaults.valueForKey("activeBall") as! Int : 2000
+		boundingSwitch.isOn = defaults.value(forKey: "boundingWallSetting") != nil ? defaults.value(forKey: "boundingWallSetting") as! Bool : false
+		accelerometerSwitch.isOn = defaults.value(forKey: "accelerometerSetting") != nil ? defaults.value(forKey: "accelerometerSetting") as! Bool : false
+
+		activeBall = defaults.value(forKey: "activeBall") != nil ? defaults.value(forKey: "activeBall") as! Int : 2000
 		activeBall = activeBall == 0 ? 2000 : activeBall
 
 		// Visually show which ball is currently active
 		let currentBallButton = self.view.viewWithTag(activeBall) as! UIButton
 
-		currentBallButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0).CGColor
+		currentBallButton.layer.borderColor = UIColor(red: 0.0, green: 122.0 / 255.0, blue: 1.0, alpha: 1.0).cgColor
 		currentBallButton.layer.borderWidth = 1.0
-		currentBallButton.layer.hidden = false
+		currentBallButton.layer.isHidden = false
 	}
-	
-	
-	
 }
-

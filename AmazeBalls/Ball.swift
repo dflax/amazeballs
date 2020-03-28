@@ -1,9 +1,9 @@
 //
 //  Ball.swift
-//  AmazeBalls
+//  amazeballs
 //
-//  Created by Daniel Flax on 5/18/15.
-//  Copyright (c) 2015 Daniel Flax. All rights reserved.
+//  Created by Daniel Flax on 3/28/20.
+//  Copyright © 2020 Daniel Flax. All rights reserved.
 //
 //                        The MIT License (MIT)
 //
@@ -45,14 +45,14 @@ class Ball: SKSpriteNode {
 	}
 
 	init() {
-		let emptyTexture = SKTexture(imageNamed: "StarterNode")
-		super.init(texture: emptyTexture, color: SKColor.clearColor(), size: emptyTexture.size())
+		let emptyTexture = SKTexture(imageNamed: "ball-amazeball")
+		super.init(texture: emptyTexture, color: SKColor.clear, size: emptyTexture.size())
 	}
 
 	init(location: CGPoint, ballType: Int, bouncyness: CGFloat) {
 
-		let emptyTexture = SKTexture(imageNamed: "StarterNode")
-		super.init(texture: emptyTexture, color: SKColor.clearColor(), size: emptyTexture.size())
+		let emptyTexture = SKTexture(imageNamed: "ball-amazeball")
+		super.init(texture: emptyTexture, color: SKColor.clear, size: emptyTexture.size())
 
 		var ballNameString = ""
 		var ballLookup = ballType
@@ -64,25 +64,25 @@ class Ball: SKSpriteNode {
 
 		switch (ballLookup) {
 		case 2000:
-			ballNameString = "amazeball"
+			ballNameString = "ball-amazeball"
 			break
 		case 2001:
-			ballNameString = "baseball"
+			ballNameString = "ball-baseball"
 			break
 		case 2002:
-			ballNameString = "basketball"
+			ballNameString = "ball-basketball"
 			break
 		case 2003:
-			ballNameString = "football"
+			ballNameString = "ball-football"
 			break
 		case 2004:
-			ballNameString = "pumpkin"
+			ballNameString = "ball-pumpkin"
 			break
 		case 2005:
-			ballNameString = "soccer1"
+			ballNameString = "ball-soccer1"
 			break
 		case 2006:
-			ballNameString = "soccer2"
+			ballNameString = "ball-soccer2"
 			break
 		default:
 			break
@@ -94,11 +94,11 @@ class Ball: SKSpriteNode {
 		size = CGSize(width: 75.0, height: 75.0)
 		position = location
 
-		physicsBody = SKPhysicsBody(texture: self.texture,size:self.size)
-		physicsBody?.dynamic = true
+		physicsBody = SKPhysicsBody(texture: self.texture!,size:self.size)
+		physicsBody?.isDynamic = true
 		physicsBody?.usesPreciseCollisionDetection = false
 		physicsBody?.allowsRotation = true
-		userInteractionEnabled = true
+		isUserInteractionEnabled = true
 		physicsBody?.affectedByGravity = true
 		physicsBody?.restitution = bouncyness
 		physicsBody?.friction = 0.0
@@ -109,23 +109,22 @@ class Ball: SKSpriteNode {
 	}
 
 	//MARK: - Touch Handling
-	override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 
-		for touch in (touches as! Set<UITouch>) {
-			let location = touch.locationInNode(self)
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		for touch in touches {
+			let location = touch.location(in: self)
 
 			moveTransalation = CGPoint(x: location.x - self.anchorPoint.x, y: location.y - self.anchorPoint.y)
 		}
 	}
 
-	override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//		var nodeTouched = SKNode()
+//		var currentNodeTouched = SKNode()
 
-		var nodeTouched = SKNode()
-		var currentNodeTouched = SKNode()
-
-		for touch in (touches as! Set<UITouch>) {
-			let location = touch.locationInNode(self.scene)
-			let previousLocation = touch.previousLocationInNode(self.scene)
+		for touch in touches {
+			let location = touch.location(in: self.scene!)
+			let previousLocation = touch.previousLocation(in: self.scene!)
 
 			// Calculate an update to the throwing vector
 			// Move the last three down the stack
@@ -141,12 +140,12 @@ class Ball: SKSpriteNode {
 		}
 	}
 
-	override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-		var nodeTouched = SKNode()
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+//		var nodeTouched = SKNode()
 
 		for touch in (touches as! Set<UITouch>) {
-			let location = touch.locationInNode(self.scene)
-			let previousLocation = touch.previousLocationInNode(self.scene)
+			let location = touch.location(in: self.scene!)
+			let previousLocation = touch.previousLocation(in: self.scene!)
 
 			// Calculate an update to the throwing vector
 			// Move the last three down the stack
@@ -167,5 +166,3 @@ class Ball: SKSpriteNode {
 	}
 
 }
-
-

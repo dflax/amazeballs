@@ -1,9 +1,9 @@
 //
 //  Floor.swift
-//  AmazeBalls
+//  amazeballs
 //
-//  Created by Daniel Flax on 5/18/15.
-//  Copyright (c) 2015 Daniel Flax. All rights reserved.
+//  Created by Daniel Flax on 3/28/20.
+//  Copyright © 2020 Daniel Flax. All rights reserved.
 //
 //                        The MIT License (MIT)
 //
@@ -29,14 +29,13 @@ import UIKit
 import SpriteKit
 
 class Floor: SKSpriteNode {
-
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 	}
-	
+
 	init() {
-		let emptyTexture = SKTexture(imageNamed: "StarterNode")
-		super.init(texture: emptyTexture, color: SKColor.clearColor(), size: emptyTexture.size())
+		let emptyTexture = SKTexture(imageNamed: "floor")
+		super.init(texture: emptyTexture, color: SKColor.clear, size: emptyTexture.size())
 
 		var floorSize: CGSize
 		let floorOrigin = CGPoint(x: ScreenWidth / 2.0, y: 30.0)
@@ -51,9 +50,9 @@ class Floor: SKSpriteNode {
 		self.size = floorSize
 
 		// Set the physics body properties for the wall
-		physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.size.width, height: self.size.height))
+		physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width, height: self.size.height))
 		physicsBody?.affectedByGravity = false
-		physicsBody?.dynamic           = false
+		physicsBody?.isDynamic         = false
 
 		position = floorOrigin
 
@@ -62,6 +61,3 @@ class Floor: SKSpriteNode {
 		physicsBody?.contactTestBitMask = CollisionCategories.Ball
 	}
 }
-
-
-
