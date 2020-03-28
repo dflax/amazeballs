@@ -53,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				FE9CE404242F9B9D004E25A8 /* README.md */,
-				FE9CE40C242FAEF4004E25A8 /* Config.swift */,
 				FE9CE3EF242F9B38004E25A8 /* amazeballs */,
 				FE9CE3EE242F9B38004E25A8 /* Products */,
 			);
@@ -70,19 +69,44 @@
 		FE9CE3EF242F9B38004E25A8 /* amazeballs */ = {
 			isa = PBXGroup;
 			children = (
+				FEDFE99B242FEE5A002A2F0C /* App Assets */,
+				FEDFE99C242FEE69002A2F0C /* Views */,
+				FEDFE99D242FEE85002A2F0C /* Models */,
+			);
+			path = amazeballs;
+			sourceTree = "<group>";
+		};
+		FEDFE99B242FEE5A002A2F0C /* App Assets */ = {
+			isa = PBXGroup;
+			children = (
+				FE9CE3FE242F9B39004E25A8 /* Info.plist */,
+				FE9CE40C242FAEF4004E25A8 /* Config.swift */,
 				FE9CE3F0242F9B38004E25A8 /* AppDelegate.swift */,
 				FE9CE3F2242F9B38004E25A8 /* SceneDelegate.swift */,
+			);
+			path = "App Assets";
+			sourceTree = "<group>";
+		};
+		FEDFE99C242FEE69002A2F0C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FE9CE3F9242F9B39004E25A8 /* Assets.xcassets */,
+				FE9CE3FB242F9B39004E25A8 /* LaunchScreen.storyboard */,
 				FE9CE406242FA85C004E25A8 /* AmazeBallsViewController.swift */,
 				FE9CE40A242FAA8C004E25A8 /* SettingsViewController.swift */,
 				FE9CE408242FA8C8004E25A8 /* BallScene.swift */,
 				FE9CE3F6242F9B38004E25A8 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FEDFE99D242FEE85002A2F0C /* Models */ = {
+			isa = PBXGroup;
+			children = (
 				FE9CE410242FB1B0004E25A8 /* Ball.swift */,
 				FE9CE40E242FB1A1004E25A8 /* Floor.swift */,
-				FE9CE3F9242F9B39004E25A8 /* Assets.xcassets */,
-				FE9CE3FB242F9B39004E25A8 /* LaunchScreen.storyboard */,
-				FE9CE3FE242F9B39004E25A8 /* Info.plist */,
 			);
-			path = amazeballs;
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
