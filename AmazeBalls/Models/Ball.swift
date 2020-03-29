@@ -57,32 +57,167 @@ class Ball: SKSpriteNode {
 		var ballNameString = ""
 		var ballLookup = ballType
 
+print ("1")
 		// If a random ball is selected, select the random ball
 		if (ballLookup == 2007) {
-			ballLookup = randomNumber(minX: 2000, maxX: 2006)
+			ballLookup = randomNumber(minX: 2000, maxX: 2050)
 		}
+
+print ("2")
 
 		switch (ballLookup) {
 		case 2000:
 			ballNameString = "ball-amazeball"
 			break
 		case 2001:
-			ballNameString = "ball-baseball"
+			ballNameString = "ball-baseball1"
 			break
 		case 2002:
-			ballNameString = "ball-basketball"
+			ballNameString = "ball-basketball1"
 			break
 		case 2003:
-			ballNameString = "ball-football"
+			ballNameString = "ball-football1"
 			break
 		case 2004:
-			ballNameString = "ball-pumpkin"
+			ballNameString = "ball-pumpkin1"
 			break
 		case 2005:
 			ballNameString = "ball-soccer1"
 			break
 		case 2006:
 			ballNameString = "ball-soccer2"
+			break
+		case 2007:
+			ballNameString = "ball-apple1"
+			break
+		case 2008:
+			ballNameString = "ball-banana1"
+			break
+		case 2009:
+			ballNameString = "ball-banana2"
+			break
+		case 2010:
+			ballNameString = "ball-banana3"
+			break
+		case 2011:
+			ballNameString = "ball-baseball2"
+			break
+		case 2012:
+			ballNameString = "ball-baseball3"
+			break
+		case 2013:
+			ballNameString = "ball-basketball2"
+			break
+		case 2014:
+			ballNameString = "ball-basketball3"
+			break
+		case 2015:
+			ballNameString = "ball-bowling1"
+			break
+		case 2016:
+			ballNameString = "ball-bowling2"
+			break
+		case 2017:
+			ballNameString = "ball-bowling3"
+			break
+		case 2018:
+			ballNameString = "ball-bowling4"
+			break
+		case 2019:
+			ballNameString = "ball-bowlingpin1"
+			break
+		case 2020:
+			ballNameString = "ball-bowlingpins2"
+			break
+		case 2021:
+			ballNameString = "ball-cherries1"
+			break
+		case 2022:
+			ballNameString = "ball-cherries2"
+			break
+		case 2023:
+			ballNameString = "ball-christmasball1"
+			break
+		case 2024:
+			ballNameString = "ball-cookie1"
+			break
+		case 2025:
+			ballNameString = "ball-discoball1"
+			break
+		case 2026:
+			ballNameString = "ball-discoball2"
+			break
+		case 2027:
+			ballNameString = "ball-egg1"
+			break
+		case 2028:
+			ballNameString = "ball-eightball1"
+			break
+		case 2029:
+			ballNameString = "ball-football2"
+			break
+		case 2030:
+			ballNameString = "ball-football3"
+			break
+		case 2031:
+			ballNameString = "ball-football4"
+			break
+		case 2032:
+			ballNameString = "ball-glassball1"
+			break
+		case 2033:
+			ballNameString = "ball-golf1"
+			break
+		case 2034:
+			ballNameString = "ball-golf2"
+			break
+		case 2035:
+			ballNameString = "ball-golf3"
+			break
+		case 2036:
+			ballNameString = "ball-hockeypuck1"
+			break
+		case 2037:
+			ballNameString = "ball-olive1"
+			break
+		case 2038:
+			ballNameString = "ball-peace1"
+			break
+		case 2039:
+			ballNameString = "ball-peace2"
+			break
+		case 2040:
+			ballNameString = "ball-soccer3"
+			break
+		case 2041:
+			ballNameString = "ball-soccer4"
+			break
+		case 2042:
+			ballNameString = "ball-soccer5"
+			break
+		case 2043:
+			ballNameString = "ball-soccer6"
+			break
+		case 2044:
+			ballNameString = "ball-tennis1"
+			break
+		case 2045:
+			ballNameString = "ball-tennis2"
+			break
+		case 2046:
+			ballNameString = "ball-tennis3"
+			break
+		case 2047:
+			ballNameString = "ball-tennis4"
+			break
+		case 2048:
+			ballNameString = "ball-tennis5"
+			break
+		case 2049:
+			ballNameString = "ball-volleyball1"
+			break
+		case 2050:
+			ballNameString = "ball-volleyball2"
 			break
 		default:
 			break
@@ -95,6 +230,7 @@ class Ball: SKSpriteNode {
 		position = location
 
 		physicsBody = SKPhysicsBody(texture: self.texture!,size:self.size)
+
 		physicsBody?.isDynamic = true
 		physicsBody?.usesPreciseCollisionDetection = false
 		physicsBody?.allowsRotation = true
@@ -103,13 +239,12 @@ class Ball: SKSpriteNode {
 		physicsBody?.restitution = bouncyness
 		physicsBody?.friction = 0.0
 		physicsBody?.linearDamping = 0.0
-		
+
 		physicsBody?.categoryBitMask    = CollisionCategories.Ball
 		physicsBody?.contactTestBitMask = CollisionCategories.EdgeBody | CollisionCategories.Ball
 	}
 
-	//MARK: - Touch Handling
-
+	// MARK: - Touch Handling
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		for touch in touches {
 			let location = touch.location(in: self)
@@ -164,5 +299,4 @@ class Ball: SKSpriteNode {
 			self.physicsBody?.applyImpulse(throwVector)
 		}
 	}
-
 }

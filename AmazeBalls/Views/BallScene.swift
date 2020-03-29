@@ -30,7 +30,6 @@ import SpriteKit
 import CoreMotion
 
 class BallScene: SKScene, SKPhysicsContactDelegate {
-
 	var contentCreated      : Bool!
 	var currentGravity      : Float!
 	var activeBall          : Int!
@@ -49,7 +48,6 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	override func didMove(to view: SKView) {
-
 		// Set the overall physicsWorld and outer wall characteristics
 		physicsWorld.contactDelegate = self
 		physicsBody?.categoryBitMask = CollisionCategories.EdgeBody
@@ -84,11 +82,9 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		}
 	}
 
-	//MARK: - Detect Collisions and Handle
-	
+	// MARK: - Detect Collisions and Handle
 	// SKPhysicsContactDelegate - to handle collisions between objects
 	func didBeginContact(contact: SKPhysicsContact) {
-		
 		var firstBody: SKPhysicsBody
 		var secondBody: SKPhysicsBody
 		if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -98,7 +94,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 			firstBody = contact.bodyB
 			secondBody = contact.bodyA
 		}
-		
+
 		// Check if the collision is between Ball and Floor
 		if ((firstBody.categoryBitMask & CollisionCategories.Ball != 0) && (secondBody.categoryBitMask & CollisionCategories.Floor != 0)) {
 			// Ball and Floor collided
@@ -145,7 +141,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		let userDefaults = UserDefaults.standard
 
 		// Pull values for the different settings. Substitute in defaults if the NSUserDefaults doesn't include any value
-		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? -1*abs(userDefaults.value(forKey: "gravityValue")  as! Float) : -9.8
+		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? abs(userDefaults.value(forKey: "gravityValue")  as! Float) : 9.8
 		activeBall           = userDefaults.value(forKey: "activeBall")           != nil ? userDefaults.value(forKey: "activeBall")           as! Int    : 2000
 		bouncyness           = userDefaults.value(forKey: "bouncyness")           != nil ? userDefaults.value(forKey: "bouncyness")           as! Float  : 0.5
 		boundingWall         = userDefaults.value(forKey: "boundingWallSetting")  != nil ? userDefaults.value(forKey: "boundingWallSetting")  as! Bool   : false

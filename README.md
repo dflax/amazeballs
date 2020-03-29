@@ -1,4 +1,11 @@
 Amazeballs
+
+==========
+
+Update: March 29, 2020
+
+Updated with a bunch of additional ball images. Performance is lousy on selecting random balls. Need to figure out how to improve that performance.
+
 ==========
 
 Update: March 28, 2020

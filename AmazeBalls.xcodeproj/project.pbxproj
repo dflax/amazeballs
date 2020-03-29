@@ -69,6 +69,7 @@
 		FE9CE3EF242F9B38004E25A8 /* amazeballs */ = {
 			isa = PBXGroup;
 			children = (
+				FE9CE3FE242F9B39004E25A8 /* Info.plist */,
 				FEDFE99B242FEE5A002A2F0C /* App Assets */,
 				FEDFE99C242FEE69002A2F0C /* Views */,
 				FEDFE99D242FEE85002A2F0C /* Models */,
@@ -79,7 +80,6 @@
 		FEDFE99B242FEE5A002A2F0C /* App Assets */ = {
 			isa = PBXGroup;
 			children = (
-				FE9CE3FE242F9B39004E25A8 /* Info.plist */,
 				FE9CE40C242FAEF4004E25A8 /* Config.swift */,
 				FE9CE3F0242F9B38004E25A8 /* AppDelegate.swift */,
 				FE9CE3F2242F9B38004E25A8 /* SceneDelegate.swift */,
