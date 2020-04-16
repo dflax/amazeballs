@@ -57,13 +57,13 @@ class Ball: SKSpriteNode {
 		var ballNameString = ""
 		var ballLookup = ballType
 
-print ("1")
-		// If a random ball is selected, select the random ball
+		// If a random ball is selected, select the random ball from the first 7 of the options
+		//
+		// Peformance problems with the new, more complicated shapes. Need to figure out how to
+		// speed up performance. Most likely using the SKTexture preload technique.
 		if (ballLookup == 2007) {
-			ballLookup = randomNumber(minX: 2000, maxX: 2050)
+			ballLookup = randomNumber(minX: 2000, maxX: 2006)
 		}
-
-print ("2")
 
 		switch (ballLookup) {
 		case 2000:
@@ -230,6 +230,7 @@ print ("2")
 		position = location
 
 		physicsBody = SKPhysicsBody(texture: self.texture!,size:self.size)
+//		physicsBody = SKPhysicsBody(circleOfRadius: 75.0, center: location)
 
 		physicsBody?.isDynamic = true
 		physicsBody?.usesPreciseCollisionDetection = false
@@ -298,5 +299,23 @@ print ("2")
 
 			self.physicsBody?.applyImpulse(throwVector)
 		}
+	}
+}
+
+extension Ball {
+	override func copy() -> Any {
+		let copy = Ball()
+
+		copy.moveTransalation   = self.moveTransalation
+		copy.currentPointVector = self.currentPointVector
+		copy.pointVector1       = self.pointVector1
+		copy.pointVector2       = self.pointVector2
+		copy.pointVector3       = self.pointVector3
+		copy.throwVector        = self.throwVector
+
+		copy.texture     = self.texture
+		copy.physicsBody = self.physicsBody
+
+		return copy
 	}
 }

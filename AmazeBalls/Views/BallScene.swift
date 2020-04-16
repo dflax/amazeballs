@@ -30,14 +30,16 @@ import SpriteKit
 import CoreMotion
 
 class BallScene: SKScene, SKPhysicsContactDelegate {
-	var contentCreated      : Bool!
-	var currentGravity      : Float!
-	var activeBall          : Int!
-	var bouncyness          : Float!
-	var boundingWall        : Bool!
-	var accelerometerSetting: Bool!
+	var contentCreated       : Bool!
+	var currentGravity       : Float!
+	var activeBall           : Int!
+	var bouncyness           : Float!
+	var boundingWall         : Bool!
+	var accelerometerSetting : Bool!
 
-	let motionManager: CMMotionManager = CMMotionManager()
+	let motionManager        : CMMotionManager = CMMotionManager()
+
+	var allBalls             : [Int : Ball] = [:]
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder) is not used in this app")
@@ -45,6 +47,12 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 
 	override init(size: CGSize) {
 		super.init(size: size)
+
+		// In the background run a job to load a copy of each Ball object into a Dictionary
+//		let dispatchQueue = DispatchQueue(label: "ballLoading", qos: .background)
+//		dispatchQueue.async{
+//			self.loadBalls()
+//		}
 	}
 
 	override func didMove(to view: SKView) {
@@ -134,14 +142,14 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	// This is the main method to update the physics for the scene based on the settings the user has entered on the Settings View.
 	func updateWorldPhysicsSettings() {
 
-		print ("Pre-Update:")
-		self.printSceneSettings()
+//		print ("Pre-Update:")
+//		self.printSceneSettings()
 
 		// Grab the standard user defaults handle
 		let userDefaults = UserDefaults.standard
 
 		// Pull values for the different settings. Substitute in defaults if the NSUserDefaults doesn't include any value
-		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? abs(userDefaults.value(forKey: "gravityValue")  as! Float) : 9.8
+		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? -1*abs(userDefaults.value(forKey: "gravityValue")  as! Float) : -9.8
 		activeBall           = userDefaults.value(forKey: "activeBall")           != nil ? userDefaults.value(forKey: "activeBall")           as! Int    : 2000
 		bouncyness           = userDefaults.value(forKey: "bouncyness")           != nil ? userDefaults.value(forKey: "bouncyness")           as! Float  : 0.5
 		boundingWall         = userDefaults.value(forKey: "boundingWallSetting")  != nil ? userDefaults.value(forKey: "boundingWallSetting")  as! Bool   : false
@@ -172,9 +180,8 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 			self.physicsBody = nil
 		}
 
-		print ("Post-Update:")
-		self.printSceneSettings()
-
+//		print ("Post-Update:")
+//		self.printSceneSettings()
 	}
 
 	//MARK: - Accelerate Framework Methods
@@ -203,5 +210,17 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 
 		print ("Bounding Wall: \(boundingWall != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
 		print ("Accelerometer: \(accelerometerSetting != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
+	}
+}
+
+// Background method to load a dictionary with Balls for each of the ball types available
+extension BallScene {
+	func loadBalls() {
+		let offScreenLocation = CGPoint(x: -100.0, y: -100.0)
+		for ballCount in 2000...2050 {
+			allBalls[ballCount] = Ball(location: offScreenLocation, ballType: ballCount, bouncyness: 0.5)
+			print ("Loaded ball: \(ballCount)")
+		}
+		print ("Completed loading all balls")
 	}
 }
