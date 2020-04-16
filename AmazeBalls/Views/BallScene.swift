@@ -149,7 +149,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		let userDefaults = UserDefaults.standard
 
 		// Pull values for the different settings. Substitute in defaults if the NSUserDefaults doesn't include any value
-		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? -1*abs(userDefaults.value(forKey: "gravityValue")  as! Float) : -9.8
+		currentGravity       = userDefaults.value(forKey: "gravityValue")         != nil ? abs(userDefaults.value(forKey: "gravityValue")  as! Float) : 9.8
 		activeBall           = userDefaults.value(forKey: "activeBall")           != nil ? userDefaults.value(forKey: "activeBall")           as! Int    : 2000
 		bouncyness           = userDefaults.value(forKey: "bouncyness")           != nil ? userDefaults.value(forKey: "bouncyness")           as! Float  : 0.5
 		boundingWall         = userDefaults.value(forKey: "boundingWallSetting")  != nil ? userDefaults.value(forKey: "boundingWallSetting")  as! Bool   : false
