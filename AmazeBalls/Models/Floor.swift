@@ -53,6 +53,7 @@ class Floor: SKSpriteNode {
 		physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width, height: self.size.height))
 		physicsBody?.affectedByGravity = false
 		physicsBody?.isDynamic         = false
+		physicsBody?.friction          = 0.5
 
 		position = floorOrigin
 

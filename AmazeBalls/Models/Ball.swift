@@ -238,7 +238,7 @@ class Ball: SKSpriteNode {
 		isUserInteractionEnabled = true
 		physicsBody?.affectedByGravity = true
 		physicsBody?.restitution = bouncyness
-		physicsBody?.friction = 0.0
+		physicsBody?.friction = 0.5
 		physicsBody?.linearDamping = 0.0
 
 		physicsBody?.categoryBitMask    = CollisionCategories.Ball

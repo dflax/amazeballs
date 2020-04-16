@@ -2,6 +2,12 @@ Amazeballs
 
 ==========
 
+Update April 16, 2020
+
+Will release this version. Inferior performance for the newer, more complicated ball shapes. The creation of the SKTextures is a challenge. Need to figure out how to use the SKTexture preload.
+
+==========
+
 Update: March 29, 2020
 
 Updated with a bunch of additional ball images. Performance is lousy on selecting random balls. Need to figure out how to improve that performance.
