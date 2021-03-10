@@ -77,8 +77,6 @@ class AmazeBallsViewController: UIViewController, SettingsDelegateProtocol {
 		// Ceate a handle for the Standard User Defaults
 		let userDefaults = UserDefaults.standard
 
-//		let cgFloatGrav = gravitySetting * -40.0
-
 		// Store values for the various settings in User Defaults
 		userDefaults.setValue(gravitySetting, forKey:"gravityValue")
 		userDefaults.setValue(bouncySetting, forKey:"bouncyness")
@@ -99,4 +97,3 @@ class AmazeBallsViewController: UIViewController, SettingsDelegateProtocol {
 		self.dismiss(animated: true, completion: nil)
 	}
 }
-

@@ -47,12 +47,6 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 
 	override init(size: CGSize) {
 		super.init(size: size)
-
-		// In the background run a job to load a copy of each Ball object into a Dictionary
-//		let dispatchQueue = DispatchQueue(label: "ballLoading", qos: .background)
-//		dispatchQueue.async{
-//			self.loadBalls()
-//		}
 	}
 
 	override func didMove(to view: SKView) {
@@ -106,7 +100,7 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		// Check if the collision is between Ball and Floor
 		if ((firstBody.categoryBitMask & CollisionCategories.Ball != 0) && (secondBody.categoryBitMask & CollisionCategories.Floor != 0)) {
 			// Ball and Floor collided
-//			println("Ball and Floor collided")
+//			print("Ball and Floor collided")
 		}
 
 		// Checck if the collision is between Ball and Floor
@@ -138,12 +132,8 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 	}
 
 	//MARK: - Settings for the Physics World
-
 	// This is the main method to update the physics for the scene based on the settings the user has entered on the Settings View.
 	func updateWorldPhysicsSettings() {
-
-//		print ("Pre-Update:")
-//		self.printSceneSettings()
 
 		// Grab the standard user defaults handle
 		let userDefaults = UserDefaults.standard
@@ -179,13 +169,9 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		} else {
 			self.physicsBody = nil
 		}
-
-//		print ("Post-Update:")
-//		self.printSceneSettings()
 	}
 
 	//MARK: - Accelerate Framework Methods
-
 	// If the user selects to have the accelerometer active, complex gravity must be calculated whenever the Core Motion delegate is called
 	func startComplexGravity() {
 
@@ -207,7 +193,6 @@ class BallScene: SKScene, SKPhysicsContactDelegate {
 		print ("Gravity: \(currentGravity ?? 0)")
 		print ("Active Ball: \(activeBall ?? 0)")
 		print ("Bouncyness:  \(bouncyness ?? 0)")
-
 		print ("Bounding Wall: \(boundingWall != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
 		print ("Accelerometer: \(accelerometerSetting != nil ? boundingWall ? "ON" : "OFF" : "OFF")")
 	}

@@ -108,7 +108,7 @@ class SettingsViewController : UIViewController {
 		gravitySlider.value    = defaults.value(forKey: "gravityValue") != nil ? abs(defaults.value(forKey: "gravityValue") as! Float) : 9.8
 		bouncynessSlider.value = defaults.value(forKey: "bouncyness")   != nil ?     defaults.value(forKey: "bouncyness") as! Float    : 1.0
 
-		boundingSwitch.isOn = defaults.value(forKey: "boundingWallSetting") != nil ? defaults.value(forKey: "boundingWallSetting") as! Bool : false
+		boundingSwitch.isOn      = defaults.value(forKey: "boundingWallSetting") != nil ? defaults.value(forKey: "boundingWallSetting") as! Bool : false
 		accelerometerSwitch.isOn = defaults.value(forKey: "accelerometerSetting") != nil ? defaults.value(forKey: "accelerometerSetting") as! Bool : false
 
 		activeBall = defaults.value(forKey: "activeBall") != nil ? defaults.value(forKey: "activeBall") as! Int : 2000
