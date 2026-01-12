@@ -231,7 +231,7 @@ struct AmazeballsGameView: View {
     private func clearAllBalls() {
         // This would need to be implemented by accessing the scene
         // For now, we'll trigger this through a notification or delegate pattern
-        NotificationCenter.default.post(name: .clearAllBalls, object: nil)
+        NotificationCenter.default.post(name: .clearAllBallsNotification, object: nil)
     }
 }
 
@@ -341,7 +341,7 @@ private struct ActionButton: View {
 // MARK: - Notifications
 
 extension Notification.Name {
-    static let clearAllBalls = Notification.Name("clearAllBalls")
+    static let clearAllBallsNotification = Notification.Name("clearAllBalls")
 }
 
 // MARK: - Preview

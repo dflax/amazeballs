@@ -112,7 +112,7 @@ struct WatchQuickSettingsView: View {
                             Text("Gravity")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                            Text("0.0 - 2.0")
+                            Text("0.0 - 4.0")
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }
@@ -146,7 +146,7 @@ struct WatchQuickSettingsView: View {
                             Text("Bounciness")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                            Text("0.0 - 1.0")
+                            Text("0.0 - 1.3")
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }

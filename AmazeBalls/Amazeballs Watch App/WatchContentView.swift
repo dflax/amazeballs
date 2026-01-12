@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WatchKit
 
 /**
  * WatchContentView
@@ -35,6 +36,8 @@ struct WatchContentView: View {
     @State private var showingQuickSettings = false
     @State private var lastTapTime = Date()
     @State private var tapCount = 0
+    @State private var debugLines: [String] = []
+    @State private var ballsCount: Int = 0
     
     // Digital Crown tracking
     @State private var crownValue: Double = 0.0
@@ -49,7 +52,17 @@ struct WatchContentView: View {
     var body: some View {
         ZStack {
             // Main physics simulation (placeholder for now)
-            physicsSimulationView
+            ZStack {
+                physicsSimulationView
+                // Debug overlay (visible in DEBUG builds)
+                #if DEBUG
+                VStack { Spacer() }
+                    .overlay(alignment: .bottomLeading) {
+                        WatchDebugOverlay(lines: debugLines, tapCount: tapCount, ballsCount: ballsCount)
+                            .padding(6)
+                    }
+                #endif
+            }
             
             // Overlay indicators
             overlayIndicators
@@ -64,7 +77,7 @@ struct WatchContentView: View {
         .digitalCrownRotation(
             $crownValue,
             from: crownControlsGravity ? 0.0 : 0.0,
-            through: crownControlsGravity ? 2.0 : 1.0,
+            through: crownControlsGravity ? 4.0 : 1.3,
             by: 0.05,
             sensitivity: .medium,
             isContinuous: false,
@@ -212,6 +225,9 @@ struct WatchContentView: View {
      * Handles single tap gesture - drops a ball or toggles walls
      */
     private func handleSingleTap() {
+        tapCount += 1
+        log("Tap #\(tapCount)")
+        
         let now = Date()
         
         // Check for double-tap (within 0.3 seconds)
@@ -232,6 +248,8 @@ struct WatchContentView: View {
     private func handleDoubleTap() {
         gameSettings.wallsEnabled.toggle()
         
+        log("Double-tap: Walls -> \(gameSettings.wallsEnabled ? "ON" : "OFF")")
+        
         // Show visual feedback
         showingWallToggle = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -250,13 +268,13 @@ struct WatchContentView: View {
      * Handles ball drop (placeholder for physics implementation)
      */
     private func handleBallDrop() {
-        // In a real implementation, this would add a ball to the physics simulation
-        
         // Haptic feedback
         WKInterfaceDevice.current().play(.click)
-        
+        // Update counters/logs (until SpriteKit scene integration on watch)
+        ballsCount += 1
+        log("Ball drop requested. total=\(ballsCount)")
         #if DEBUG
-        print("WatchContentView: Ball dropped at center")
+        print("WatchContentView: Ball dropped at center (overlay count=\(ballsCount))")
         #endif
     }
     
@@ -292,6 +310,44 @@ struct WatchContentView: View {
             crownValue = gameSettings.bounciness
         }
     }
+    
+    /**
+     * Appends a debug line to the in-app overlay (ring buffer)
+     */
+    private func log(_ message: String) {
+        let line = message
+        debugLines.append(line)
+        if debugLines.count > 40 {
+            debugLines.removeFirst(debugLines.count - 40)
+        }
+    }
+}
+
+/// Lightweight on-screen debug overlay for watchOS
+private struct WatchDebugOverlay: View {
+    let lines: [String]
+    let tapCount: Int
+    let ballsCount: Int
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 8) {
+                Text("Taps: \(tapCount)")
+                Text("Balls: \(ballsCount)")
+            }
+            .font(.system(size: 12, weight: .semibold))
+            .padding(4)
+            .background(.black.opacity(0.35), in: RoundedRectangle(cornerRadius: 6))
+            ForEach(lines.suffix(5), id: \.self) { line in
+                Text(line)
+                    .font(.system(size: 10, weight: .regular, design: .monospaced))
+                    .lineLimit(1)
+            }
+        }
+        .foregroundStyle(.white)
+        .padding(4)
+        .background(.black.opacity(0.25), in: RoundedRectangle(cornerRadius: 8))
+    }
 }
 
 // MARK: - Preview
@@ -302,3 +358,4 @@ struct WatchContentView: View {
         .environment(GameSettings.shared)
 }
 #endif
+

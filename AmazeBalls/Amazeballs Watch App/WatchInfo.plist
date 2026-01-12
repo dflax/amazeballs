@@ -13,7 +13,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>WKWatchOnly</key>
-	<true/>
+	<false/>
 	<key>WKRunsIndependentlyOfCompanionApp</key>
 	<false/>
 	<key>CFBundleExecutable</key>
@@ -22,5 +22,7 @@
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>nyc.flax.Amazeballs</string>
 </dict>
 </plist>

@@ -84,6 +84,16 @@ class BallPhysicsScene: SKScene {
     
     /// Ball asset manager for loading ball images
     private let ballAssetManager = BallAssetManager.shared
+
+    /// Preview ball shown during press-and-hold sizing
+    private var previewBall: SKSpriteNode? = nil
+    private var previewBallType: String? = nil
+    
+    /// Timing for preview growth
+    private var previewStartTime: TimeInterval? = nil
+    private var previewDuration: TimeInterval = 2.0
+    private var previewBaseScale: CGFloat = 0.5
+    private var previewTargetScale: CGFloat = 5.0
     
     // MARK: - Settings Cache
     
@@ -331,8 +341,9 @@ class BallPhysicsScene: SKScene {
      *   - point: The position where the ball should be dropped
      *   - ballType: The type of ball (from BallAssetManager)
      *   - settings: Game settings containing physics parameters
+     *   - sizeOverride: Optional size multiplier override for the ball
      */
-    func dropBall(at point: CGPoint, ballType: String?, settings: GameSettings) {
+    func dropBall(at point: CGPoint, ballType: String?, settings: GameSettings, sizeOverride: Double? = nil) {
         // Remove oldest ball if we've hit the limit
         if activeBalls.count >= maxBalls {
             removeOldestBall()
@@ -341,8 +352,9 @@ class BallPhysicsScene: SKScene {
         // Determine ball type (use random if not specified)
         let finalBallType = ballType ?? ballAssetManager.randomBallType() ?? "default"
         
-        // Create ball sprite with size multiplier from settings
-        let ballSprite = createBallSprite(ballType: finalBallType, sizeMultiplier: CGFloat(settings.ballSize))
+        // Use size override if provided, otherwise use effectiveBallSize from settings
+        let sizeMultiplier = CGFloat(sizeOverride ?? settings.effectiveBallSize())
+        let ballSprite = createBallSprite(ballType: finalBallType, sizeMultiplier: sizeMultiplier)
         ballSprite.position = point
         
         // Configure physics based on settings
@@ -355,6 +367,69 @@ class BallPhysicsScene: SKScene {
         #if DEBUG
         print("BallPhysicsScene: Dropped \(finalBallType) ball at \(point). Active balls: \(activeBalls.count)")
         #endif
+    }
+    
+    /**
+     * Begins showing a preview ball at the specified point with minimum size. The ball is static until committed.
+     */
+    func beginPreviewBall(at point: CGPoint, ballType: String?, settings: GameSettings) {
+        // Remove any existing preview first
+        if let existing = previewBall { existing.removeFromParent() }
+        previewBall = nil
+        previewBallType = ballType ?? ballAssetManager.randomBallType() ?? "default"
+
+        // Create sprite at base size (use base texture size and scale down to 0.5x visually)
+        let sprite = createBallSprite(ballType: previewBallType!, sizeMultiplier: 1.0)
+        sprite.position = point
+        sprite.zPosition = 1
+
+        // Remove physics body during preview for performance
+        sprite.physicsBody = nil
+
+        // Set initial scale to min
+        sprite.setScale(previewBaseScale)
+
+        addChild(sprite)
+        previewBall = sprite
+
+        // Initialize timing based on current system time
+        previewStartTime = CACurrentMediaTime()
+        previewDuration = settings.pressAndGrowDuration
+    }
+
+    /**
+     * Updates the preview ball's size based on progress 0.0...1.0
+     */
+    func updatePreviewBall(progress: Double) {
+        // Optional: If external callers want to force a certain progress, we can set the scale directly.
+        guard let sprite = previewBall else { return }
+        let clamped = max(0.0, min(1.0, progress))
+        let scale = previewBaseScale + (previewTargetScale - previewBaseScale) * CGFloat(clamped)
+        sprite.setScale(scale)
+    }
+
+    /**
+     * Commits the preview ball so it becomes dynamic and starts to fall. Also tracks it like a normal ball.
+     */
+    func commitPreviewBall(settings: GameSettings) {
+        guard let sprite = previewBall else { return }
+
+        // Build physics body at final radius based on current scale
+        let baseSize: CGFloat = 40.0
+        let currentScale = sprite.xScale
+        let finalSize = CGSize(width: baseSize * currentScale, height: baseSize * currentScale)
+        sprite.size = finalSize
+
+        // Configure physics and enable dynamics
+        configureBallPhysics(sprite, settings: settings)
+        sprite.physicsBody?.isDynamic = true
+        sprite.physicsBody?.affectedByGravity = true
+
+        // Track as an active ball and clear preview state
+        activeBalls.append(sprite)
+        previewBall = nil
+        previewBallType = nil
+        previewStartTime = nil
     }
     
     /**
@@ -663,6 +738,20 @@ class BallPhysicsScene: SKScene {
         // Update walls geometry and physics
         updateWallsGeometry()
     }
+
+    // MARK: - Frame Update
+
+    override func update(_ currentTime: TimeInterval) {
+        super.update(currentTime)
+        // Smoothly grow preview ball based on elapsed time
+        if let sprite = previewBall, let start = previewStartTime {
+            let elapsed = currentTime - start
+            let total = max(0.1, previewDuration)
+            let progress = max(0.0, min(1.0, elapsed / total))
+            let scale = previewBaseScale + (previewTargetScale - previewBaseScale) * CGFloat(progress)
+            sprite.setScale(scale)
+        }
+    }
 }
 
 // MARK: - SKPhysicsContactDelegate
@@ -730,3 +819,4 @@ extension BallPhysicsScene: SKPhysicsContactDelegate {
         #endif
     }
 }
+

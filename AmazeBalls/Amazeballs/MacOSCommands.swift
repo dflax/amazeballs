@@ -154,13 +154,4 @@ struct AmazeballsMacOSCommands: Commands {
     }
 }
 
-// MARK: - Notification Extensions
-
-extension Notification.Name {
-    static let showBallPicker = Notification.Name("showBallPicker")
-    static let toggleWalls = Notification.Name("toggleWalls")
-    static let toggleAccelerometer = Notification.Name("toggleAccelerometer") 
-    static let resetPhysics = Notification.Name("resetPhysics")
-}
-
 #endif

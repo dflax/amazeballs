@@ -71,20 +71,18 @@ final class SoundManager {
     
     /// Configures the AVAudioSession for optimal game audio playback
     private func configureAudioSession() {
+        #if os(iOS) || os(iPadOS)
         do {
             let audioSession = AVAudioSession.sharedInstance()
-            
-            #if os(iOS) || os(iPadOS)
             // On iOS/iPadOS, configure for ambient audio that mixes with other apps
             try audioSession.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
-            #elseif os(macOS)
-            // On macOS, we don't need to configure the audio session
-            // The system handles audio routing automatically
-            #endif
-            
         } catch {
             print("⚠️ SoundManager: Failed to configure audio session: \(error)")
         }
+        #elseif os(macOS)
+        // On macOS, we don't need to configure the audio session
+        // The system handles audio routing automatically
+        #endif
     }
     
     /// Starts the audio engine if it's not already running
@@ -210,16 +208,19 @@ final class SoundManager {
     }
     
     /// Plays a ball drop/spawn sound
-    /// - Parameter ballSize: Size multiplier of the ball being dropped
-    func playBallDrop(ballSize: Double = 1.0) {
+    /// - Parameter ballSize: Size multiplier of the ball being dropped (if nil, uses current game setting)
+    func playBallDrop(ballSize: Double? = nil) {
         guard gameSettings.soundEffectsEnabled,
               gameSettings.masterVolume > 0.0,
               let buffer = ballDropBuffer else { return }
         
         let player = getAvailablePlayer(from: ballDropPlayers)
         
+        // Use provided size or get effective size from game settings
+        let effectiveSize = ballSize ?? gameSettings.effectiveBallSize()
+        
         // Adjust pitch based on ball size (larger balls = lower pitch)
-        let pitchAdjustment = Float(1.0 / ballSize)
+        let pitchAdjustment = Float(1.0 / effectiveSize)
         playSound(player: player, buffer: buffer, volume: Float(gameSettings.masterVolume), pitch: pitchAdjustment)
     }
     

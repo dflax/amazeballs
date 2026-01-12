@@ -8,6 +8,13 @@
 import SwiftUI
 import SpriteKit
 
+// MARK: - Extensions
+
+extension Notification.Name {
+    static let tiltDidChange = Notification.Name("Amazeballs.tiltDidChange")
+    static let resetTilt = Notification.Name("Amazeballs.resetTilt")
+}
+
 /**
  * SpriteKitSceneView
  *
@@ -60,6 +67,31 @@ struct SpriteKitSceneView: View {
     
     /// Current view size for coordinate conversion
     @State private var viewSize: CGSize = .zero
+
+    #if os(macOS)
+    /// Current visual tilt in degrees for macOS-only trackpad control (-30...30)
+    @State private var tiltDegrees: Double = 0
+    
+    /// Scale factor to keep rotated content fully within the current view bounds
+    private var tiltScale: Double {
+        guard viewSize.width > 0, viewSize.height > 0 else { return 1.0 }
+        let w = Double(viewSize.width)
+        let h = Double(viewSize.height)
+        let theta = abs(tiltDegrees) * .pi / 180.0
+        let rotatedWidth = abs(w * cos(theta)) + abs(h * sin(theta))
+        let rotatedHeight = abs(w * sin(theta)) + abs(h * cos(theta))
+        let scaleX = w / max(rotatedWidth, 0.0001)
+        let scaleY = h / max(rotatedHeight, 0.0001)
+        return max(0.0, min(1.0, min(scaleX, scaleY)))
+    }
+    #endif
+
+    /// Press-and-hold tracking
+    @State private var pressStartTime: Date? = nil
+    @State private var pressStartLocation: CGPoint? = nil
+
+    /// Preview sizing progress (0...1) for press-and-hold mode
+    @State private var previewProgress: Double = 0.0
     
     // MARK: - Body
     
@@ -81,13 +113,13 @@ struct SpriteKitSceneView: View {
                 handleSizeChange(newSize)
             }
             .onChange(of: settings.gravity) { _, _ in
-                updateScenePhysics()
+                refreshScenePhysicsForTilt()
             }
             .onChange(of: settings.bounciness) { _, _ in
-                updateScenePhysics()
+                refreshScenePhysicsForTilt()
             }
             .onChange(of: settings.wallsEnabled) { _, _ in
-                updateScenePhysics()
+                refreshScenePhysicsForTilt()
             }
             .onChange(of: settings.accelerometerEnabled) { _, newValue in
                 updateAccelerometer(enabled: newValue)
@@ -103,6 +135,40 @@ struct SpriteKitSceneView: View {
     @ViewBuilder
     private func sceneContainer(geometry: GeometryProxy) -> some View {
         if let scene = scene {
+            #if os(macOS)
+            TrackpadScrollContainer(onHorizontalScroll: { deltaX, modifiers in
+                // Only handle when Option is pressed
+                if modifiers.contains(.option) {
+                    let sensitivity: Double = 0.1 // degrees per scroll delta unit
+                    let proposed = tiltDegrees + Double(deltaX) * sensitivity
+                    tiltDegrees = max(-25, min(25, proposed))
+                    NotificationCenter.default.post(name: .tiltDidChange, object: nil, userInfo: ["angle": tiltDegrees])
+                    refreshScenePhysicsForTilt()
+                }
+            }) {
+                let baseView = SpriteView(scene: scene)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
+                    .background(Color.black)
+                    .gesture(createTapGesture())
+                    .onReceive(NotificationCenter.default.publisher(for: .clearAllBalls)) { _ in
+                        clearAllBalls()
+                    }
+                    .onReceive(NotificationCenter.default.publisher(for: .resetTilt)) { _ in
+                        tiltDegrees = 0
+                        refreshScenePhysicsForTilt()
+                        NotificationCenter.default.post(name: .tiltDidChange, object: nil, userInfo: ["angle": tiltDegrees])
+                    }
+
+                if abs(tiltDegrees) < 0.0001 {
+                    baseView
+                } else {
+                    baseView
+                        .rotationEffect(.degrees(tiltDegrees))
+                        .scaleEffect(tiltScale)
+                }
+            }
+            #else
             SpriteView(scene: scene)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .clipped()
@@ -111,6 +177,7 @@ struct SpriteKitSceneView: View {
                 .onReceive(NotificationCenter.default.publisher(for: .clearAllBalls)) { _ in
                     clearAllBalls()
                 }
+            #endif
         } else {
             // Placeholder while scene loads
             Rectangle()
@@ -200,11 +267,38 @@ struct SpriteKitSceneView: View {
      * Updates scene physics based on current settings
      */
     private func updateScenePhysics() {
+        guard let _ = scene, isSceneReady else { return }
+        refreshScenePhysicsForTilt()
+    }
+    
+    /**
+     * Re-applies scene physics consistently, including walls, then applies appropriate gravity based on tilt (macOS only)
+     */
+    private func refreshScenePhysicsForTilt() {
         guard let scene = scene, isSceneReady else { return }
+        // First, apply all standard physics updates (walls, restitution, etc.)
         scene.updatePhysics(with: settings)
-        
+        #if os(macOS)
+        // Then apply gravity according to current tilt
+        if abs(tiltDegrees) > 0.0001 {
+            let radians = CGFloat(tiltDegrees * .pi / 180.0)
+            let magnitude = CGFloat(settings.gravity)
+            let dx = sin(radians) * magnitude
+            let dy = -cos(radians) * magnitude
+            scene.physicsWorld.gravity = CGVector(dx: dx, dy: dy)
+        } else {
+            // No tilt: use standard gravity from settings
+            scene.physicsWorld.gravity = CGVector(dx: 0, dy: -CGFloat(settings.gravity))
+        }
+        #else
+        // Non-macOS: standard update is sufficient
+        #endif
         #if DEBUG
-        print("SpriteKitSceneView: Updated scene physics")
+        #if os(macOS)
+        print("SpriteKitSceneView: refreshScenePhysicsForTilt applied (tilt=\(tiltDegrees))")
+        #else
+        print("SpriteKitSceneView: refreshScenePhysicsForTilt applied (non-macOS)")
+        #endif
         #endif
     }
     
@@ -254,29 +348,79 @@ struct SpriteKitSceneView: View {
      * Creates a click gesture optimized for macOS
      */
     private func createMacOSClickGesture() -> some Gesture {
-        DragGesture(minimumDistance: 0)
-            .onEnded { value in
-                handleGestureInput(at: value.location)
+        let gesture = DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                if settings.ballSizeMode == .pressAndGrow {
+                    if pressStartTime == nil {
+                        pressStartTime = Date()
+                        pressStartLocation = value.startLocation
+
+                        if let scene = scene, isSceneReady {
+                            let startPoint = convertToSceneCoordinates(value.startLocation)
+                            let ballType = determineBallType()
+                            scene.beginPreviewBall(at: startPoint, ballType: ballType, settings: settings)
+                        }
+                    }
+                }
             }
+            .onEnded { value in
+                if settings.ballSizeMode == .pressAndGrow {
+                    if let scene = scene, isSceneReady {
+                        scene.commitPreviewBall(settings: settings)
+                    }
+                    pressStartTime = nil
+                    pressStartLocation = nil
+                } else {
+                    handleGestureInput(at: value.location, pressDuration: nil)
+                }
+            }
+        return gesture
     }
-    #else
+    #endif
+    
     /**
      * Creates a tap gesture optimized for iOS/iPadOS
      */
+    #if !os(macOS)
     private func createTouchGesture() -> some Gesture {
-        DragGesture(minimumDistance: 0)
-            .onEnded { value in
-                handleGestureInput(at: value.location)
+        let gesture = DragGesture(minimumDistance: 0)
+            .onChanged { value in
+                if settings.ballSizeMode == .pressAndGrow {
+                    if pressStartTime == nil {
+                        pressStartTime = Date()
+                        pressStartLocation = value.startLocation
+
+                        if let scene = scene, isSceneReady {
+                            let startPoint = convertToSceneCoordinates(value.startLocation)
+                            let ballType = determineBallType()
+                            scene.beginPreviewBall(at: startPoint, ballType: ballType, settings: settings)
+                        }
+                    }
+                }
             }
+            .onEnded { value in
+                if settings.ballSizeMode == .pressAndGrow {
+                    if let scene = scene, isSceneReady {
+                        scene.commitPreviewBall(settings: settings)
+                    }
+                    pressStartTime = nil
+                    pressStartLocation = nil
+                } else {
+                    handleGestureInput(at: value.location, pressDuration: nil)
+                }
+            }
+        return gesture
     }
     #endif
     
     /**
      * Handles gesture input (tap/click) at the specified location
      *
-     * - Parameter location: The location of the gesture in SwiftUI coordinates
+     * - Parameters:
+     *   - location: The location of the gesture in SwiftUI coordinates
+     *   - pressDuration: Optional duration of press-and-hold for size scaling
      */
-    private func handleGestureInput(at location: CGPoint) {
+    private func handleGestureInput(at location: CGPoint, pressDuration: TimeInterval?) {
         guard let scene = scene, isSceneReady else { return }
         
         // Convert SwiftUI coordinates to SpriteKit coordinates
@@ -285,15 +429,26 @@ struct SpriteKitSceneView: View {
         // Determine ball type to drop
         let ballType = determineBallType()
         
+        // Compute optional size override for press-and-grow mode
+        var sizeOverride: Double? = nil
+        if settings.ballSizeMode == .pressAndGrow, let duration = pressDuration {
+            let total = max(0.1, settings.pressAndGrowDuration)
+            let progress = max(0.0, min(1.0, duration / total))
+            let minSize = 0.5
+            let maxSize = 3.0
+            sizeOverride = minSize + (maxSize - minSize) * progress
+        }
+        
         // Drop the ball
         scene.dropBall(
             at: sceneLocation,
             ballType: ballType,
-            settings: settings
+            settings: settings,
+            sizeOverride: sizeOverride
         )
         
         #if DEBUG
-        print("SpriteKitSceneView: Dropped \(ballType ?? "random") ball at \(sceneLocation)")
+        print("SpriteKitSceneView: Dropped \(ballType ?? "random") ball at \(sceneLocation) sizeOverride=\(sizeOverride?.description ?? "nil")")
         #endif
         
         // Provide haptic feedback on supported platforms
@@ -420,6 +575,58 @@ extension SpriteKitSceneView {
 }
 #endif
 
+#if os(macOS)
+import AppKit
+
+/// A container that hosts SwiftUI content and forwards trackpad scrollWheel events
+private struct TrackpadScrollContainer<Content: View>: NSViewRepresentable {
+    let onHorizontalScroll: (_ deltaX: CGFloat, _ modifiers: NSEvent.ModifierFlags) -> Void
+    let content: Content
+
+    init(onHorizontalScroll: @escaping (_ deltaX: CGFloat, _ modifiers: NSEvent.ModifierFlags) -> Void, @ViewBuilder content: () -> Content) {
+        self.onHorizontalScroll = onHorizontalScroll
+        self.content = content()
+    }
+
+    func makeNSView(context: Context) -> _ScrollingHostingView<Content> {
+        let hosting = _ScrollingHostingView(rootView: content)
+        hosting.wantsLayer = true
+        hosting.onHorizontalScroll = { deltaX, modifiers in
+            context.coordinator.onHorizontalScroll(deltaX, modifiers)
+        }
+        return hosting
+    }
+
+    func updateNSView(_ nsView: _ScrollingHostingView<Content>, context: Context) {
+        nsView.rootView = content
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onHorizontalScroll: onHorizontalScroll)
+    }
+
+    final class Coordinator: NSObject {
+        let onHorizontalScroll: (_ deltaX: CGFloat, _ modifiers: NSEvent.ModifierFlags) -> Void
+
+        init(onHorizontalScroll: @escaping (_ deltaX: CGFloat, _ modifiers: NSEvent.ModifierFlags) -> Void) {
+            self.onHorizontalScroll = onHorizontalScroll
+            super.init()
+        }
+    }
+}
+
+/// A hosting view that forwards scrollWheel events to a callback
+private final class _ScrollingHostingView<Content: View>: NSHostingView<Content> {
+    var onHorizontalScroll: ((_ deltaX: CGFloat, _ modifiers: NSEvent.ModifierFlags) -> Void)?
+
+    override func scrollWheel(with event: NSEvent) {
+        super.scrollWheel(with: event)
+        let deltaX = event.hasPreciseScrollingDeltas ? event.scrollingDeltaX : event.deltaX
+        onHorizontalScroll?(deltaX, event.modifierFlags)
+    }
+}
+#endif
+
 // MARK: - Preview
 
 #Preview("Default Settings") {
@@ -445,3 +652,4 @@ extension SpriteKitSceneView {
         .preferredColorScheme(.dark)
 }
 #endif
+

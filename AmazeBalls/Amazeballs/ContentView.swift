@@ -6,12 +6,11 @@
 //
 
 import SwiftUI
-import SwiftData
 
 /**
  * ContentView
  *
- * The main interface for the Amazeballs app that adapts to different platforms:
+ * The main interface for the Amazeballs physics game that adapts to different platforms:
  * - On iPhone: Full-screen physics game interface
  * - On iPad/macOS: Navigation split view with sidebar and game area
  *
@@ -19,17 +18,13 @@ import SwiftData
  * - Platform-adaptive layout
  * - Full-screen physics simulation on iPhone
  * - Navigation-based interface on larger screens
- * - SwiftData integration for data management
  * - Modern iOS design patterns
  */
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Query private var items: [Item]
     
     @State private var showingSettings = false
     @State private var gameSettings = GameSettings.shared
-    @State private var showingFullScreenGame = false
 
     var body: some View {
         #if os(macOS)
@@ -79,16 +74,10 @@ struct ContentView: View {
         #if os(iOS)
         .statusBarHidden()
         #endif
-        .sheet(isPresented: $showingBallPicker) {
-            BallPickerSheet(gameSettings: gameSettings)
-        }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
         }
     }
-    
-    // State for full-screen interface
-    @State private var showingBallPicker = false
     
     /**
      * Floating overlay controls for iPhone interface
@@ -97,7 +86,6 @@ struct ContentView: View {
         VStack {
             // Top controls
             HStack {
-                ballPickerButton
                 Spacer()
                 settingsButton
             }
@@ -106,48 +94,6 @@ struct ContentView: View {
             
             Spacer()
         }
-    }
-    
-    /**
-     * Ball picker button showing current selection
-     */
-    private var ballPickerButton: some View {
-        Button(action: { showingBallPicker = true }) {
-            HStack(spacing: 12) {
-                // Ball image or random icon
-                if let ballType = gameSettings.selectedBallType {
-                    BallAssetManager.shared.ballImageView(for: ballType)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32, height: 32)
-                } else {
-                    Image(systemName: "questionmark.circle.fill")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 32, height: 32)
-                }
-                
-                // Ball name
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Ball")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    
-                    Text(currentBallDisplayName)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .lineLimit(1)
-                }
-                .foregroundStyle(.primary)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
-            .contentShape(RoundedRectangle(cornerRadius: 16))
-        }
-        .accessibilityLabel("Ball selection")
-        .accessibilityValue(currentBallDisplayName)
-        .accessibilityHint("Tap to choose a different ball type")
     }
     
     /**
@@ -166,70 +112,61 @@ struct ContentView: View {
         .accessibilityHint("Tap to open physics settings")
     }
     
-    /**
-     * Display name for current ball selection
-     */
-    private var currentBallDisplayName: String {
-        if let ballType = gameSettings.selectedBallType {
-            return BallAssetManager.shared.displayName(for: ballType)
-        } else {
-            return "Random"
-        }
-    }
-    
-    // MARK: - Navigation Split View Interface (iPad/macOS)
+    // MARK: - Navigation Split View Interface (iPad)
     
     /**
-     * Navigation-based interface for iPad and macOS
+     * Navigation-based interface for iPad
      */
     private var navigationSplitViewInterface: some View {
         NavigationSplitView {
             List {
-                // Game Settings Section
+                // Game Section
                 Section("Game") {
-                    NavigationLink(destination: SettingsView()) {
-                        Label("Settings", systemImage: "gearshape")
+                    NavigationLink(destination: EmbeddedGameView(gameSettings: gameSettings)) {
+                        Label("Play Amazeballs", systemImage: "play.circle.fill")
                     }
                     
-                    NavigationLink(destination: EmbeddedGameView(gameSettings: gameSettings)) {
-                        Label("Play Amazeballs", systemImage: "play.circle")
+                    NavigationLink(destination: SettingsView()) {
+                        Label("Settings", systemImage: "gearshape.fill")
                     }
                 }
                 
-                // Data Management Section  
-                Section("Data") {
-                    ForEach(items) { item in
-                        NavigationLink {
-                            Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                        } label: {
-                            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                        }
+                // Quick Stats Section
+                Section("Current Settings") {
+                    HStack {
+                        Label("Gravity", systemImage: "arrow.down")
+                        Spacer()
+                        Text("\(gameSettings.gravity, specifier: "%.1f")×")
+                            .foregroundStyle(.secondary)
                     }
-                    .onDelete(perform: deleteItems)
+                    
+                    HStack {
+                        Label("Bounciness", systemImage: "arrow.up.bounce")
+                        Spacer()
+                        Text("\(Int(gameSettings.bounciness * 100))%")
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    HStack {
+                        Label("Walls", systemImage: gameSettings.wallsEnabled ? "square.3.layers.3d.top.filled" : "square.3.layers.3d")
+                        Spacer()
+                        Text(gameSettings.wallsEnabled ? "Enabled" : "Disabled")
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    HStack {
+                        Label("Ball Type", systemImage: "volleyball.fill")
+                        Spacer()
+                        Text(gameSettings.selectedBallType ?? "Random")
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
-#if os(macOS)
+            #if os(macOS)
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
+            #endif
             .navigationTitle("Amazeballs")
             .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: {
-                    #if os(macOS)
-                        .primaryAction
-                    #else
-                        .navigationBarTrailing
-                    #endif
-                }()) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-                
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: { showingSettings = true }) {
                         Label("Settings", systemImage: "gearshape")
@@ -237,78 +174,137 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            VStack(spacing: 20) {
-                Image(systemName: "tennis.racket")
-                    .font(.system(size: 60))
-                    .foregroundColor(.accentColor)
-                
-                Text("Welcome to Amazeballs!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                
-                Text("Select an option from the sidebar to get started.")
-                    .foregroundColor(.secondary)
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Current Settings:")
-                        .font(.headline)
-                    
-                    Text("Gravity: \(gameSettings.gravity, specifier: "%.1f")x")
-                    Text("Bounciness: \(Int(gameSettings.bounciness * 100))%")
-                    Text("Walls: \(gameSettings.wallsEnabled ? "Enabled" : "Disabled")")
-                    
-                    if gameSettings.isAccelerometerSupported {
-                        Text("Motion: \(gameSettings.accelerometerEnabled ? "Enabled" : "Disabled")")
-                    }
-                    
-                    Text("Ball Type: \(gameSettings.selectedBallType ?? "Random")")
-                }
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .padding()
-                .background {
-                    #if os(macOS)
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(NSColor.controlBackgroundColor))
-                    #else
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray6))
-                    #endif
-                }
-            }
-            .padding()
+            WelcomeView(gameSettings: gameSettings)
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
         }
     }
+}
 
-    // MARK: - SwiftData Methods
+// MARK: - Welcome View
+
+/**
+ * Welcome view for iPad detail pane
+ */
+private struct WelcomeView: View {
+    @Bindable var gameSettings: GameSettings
     
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    var body: some View {
+        VStack(spacing: 30) {
+            Spacer()
+            
+            // App Icon/Logo
+            Image(systemName: "tennis.racket")
+                .font(.system(size: 80))
+                .foregroundStyle(.blue.gradient)
+                .shadow(color: .blue.opacity(0.3), radius: 10)
+            
+            // Welcome Text
+            VStack(spacing: 16) {
+                Text("Welcome to Amazeballs!")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                
+                Text("A physics-based ball simulation game")
+                    .font(.title2)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
             }
+            
+            // Quick Start Guide
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Get Started:")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                
+                HStack(spacing: 12) {
+                    Image(systemName: "1.circle.fill")
+                        .foregroundStyle(.blue)
+                        .font(.title3)
+                    Text("Tap \"Play Amazeballs\" in the sidebar")
+                }
+                
+                HStack(spacing: 12) {
+                    Image(systemName: "2.circle.fill")
+                        .foregroundStyle(.blue)
+                        .font(.title3)
+                    Text("Tap anywhere to drop balls")
+                }
+                
+                HStack(spacing: 12) {
+                    Image(systemName: "3.circle.fill")
+                        .foregroundStyle(.blue)
+                        .font(.title3)
+                    Text("Adjust physics in Settings")
+                }
+            }
+            .padding(20)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
+            
+            // Current Settings Summary
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Current Physics Settings:")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                
+                HStack {
+                    Text("Gravity:")
+                    Spacer()
+                    Text("\(gameSettings.gravity, specifier: "%.1f")×")
+                        .foregroundStyle(.secondary)
+                }
+                
+                HStack {
+                    Text("Bounciness:")
+                    Spacer()
+                    Text("\(Int(gameSettings.bounciness * 100))%")
+                        .foregroundStyle(.secondary)
+                }
+                
+                HStack {
+                    Text("Walls:")
+                    Spacer()
+                    Text(gameSettings.wallsEnabled ? "Enabled" : "Disabled")
+                        .foregroundStyle(.secondary)
+                }
+                
+                HStack {
+                    Text("Ball Type:")
+                    Spacer()
+                    Text(gameSettings.selectedBallType ?? "Random")
+                        .foregroundStyle(.secondary)
+                }
+                
+                if gameSettings.isAccelerometerSupported {
+                    HStack {
+                        Text("Device Motion:")
+                        Spacer()
+                        Text(gameSettings.accelerometerEnabled ? "Enabled" : "Disabled")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            .font(.body)
+            .padding(20)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
+            
+            Spacer()
         }
+        .padding(40)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(white: 0.95))
     }
 }
 
 // MARK: - Embedded Game View for Navigation Interface
 
 /**
- * Game view embedded in navigation interface for iPad/macOS
+ * Game view embedded in navigation interface for iPad
  */
 private struct EmbeddedGameView: View {
     @Bindable var gameSettings: GameSettings
-    @State private var showingBallPicker = false
     @State private var showingSettings = false
     
     var body: some View {
@@ -320,33 +316,17 @@ private struct EmbeddedGameView: View {
             // Toolbar overlay
             VStack {
                 HStack {
-                    Button(action: { showingBallPicker = true }) {
-                        HStack(spacing: 8) {
-                            if let ballType = gameSettings.selectedBallType {
-                                BallAssetManager.shared.ballImageView(for: ballType)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24, height: 24)
-                            } else {
-                                Image(systemName: "questionmark.circle")
-                                    .frame(width: 24, height: 24)
-                            }
-                            
-                            Text(gameSettings.selectedBallType ?? "Random")
-                                .font(.caption)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
-                        .background(.regularMaterial, in: Capsule())
-                    }
-                    
                     Spacer()
                     
                     Button(action: { showingSettings = true }) {
-                        Image(systemName: "gearshape")
-                            .frame(width: 32, height: 32)
+                        Image(systemName: "gearshape.fill")
+                            .font(.title3)
+                            .foregroundStyle(.primary)
+                            .frame(width: 44, height: 44)
                             .background(.regularMaterial, in: Circle())
+                            .contentShape(Circle())
                     }
+                    .accessibilityLabel("Settings")
                 }
                 .padding()
                 
@@ -357,9 +337,6 @@ private struct EmbeddedGameView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
-        .sheet(isPresented: $showingBallPicker) {
-            BallPickerSheet(gameSettings: gameSettings)
-        }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
         }
@@ -368,7 +345,12 @@ private struct EmbeddedGameView: View {
 
 // MARK: - Preview
 
-#Preview {
+#Preview("ContentView") {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .preferredColorScheme(.dark)
+}
+
+#Preview("Welcome View") {
+    WelcomeView(gameSettings: GameSettings.shared)
+        .preferredColorScheme(.dark)
 }

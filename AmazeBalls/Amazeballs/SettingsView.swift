@@ -29,8 +29,8 @@ import SwiftUI
  * - **Platform capability detection**: Shows what's supported on current device
  *
  * ## Settings Controls
- * - **Gravity**: 0.0 - 2.0x with 1 decimal precision
- * - **Bounciness**: 0 - 100% with percentage display
+ * - **Gravity**: 0.0 - 4.0x with 1 decimal precision
+ * - **Bounciness**: 0 - 130% with percentage display
  * - **Boundary Walls**: Toggle with clear on/off state
  * - **Device Motion**: Toggle with platform availability indication
  * - **Ball Type**: Picker for specific ball types or random selection
@@ -45,6 +45,9 @@ struct SettingsView: View {
     
     /// Controls the reset confirmation alert
     @State private var showingResetAlert = false
+    
+    /// Controls the ball picker sheet presentation
+    @State private var showingBallPicker = false
     
     /// Environment value for dismissing sheets
     @Environment(\.dismiss) private var dismiss
@@ -72,6 +75,7 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 physicsSettingsSection
+                audioSettingsSection
                 gameplaySettingsSection
                 platformSupportSection
                 debugInfoSection
@@ -94,6 +98,9 @@ struct SettingsView: View {
             resetAlertButtons
         } message: {
             resetAlertMessage
+        }
+        .sheet(isPresented: $showingBallPicker) {
+            BallPickerSheet(gameSettings: settings)
         }
     }
     #endif
@@ -127,6 +134,7 @@ struct SettingsView: View {
             // Settings form
             Form {
                 macOSPhysicsSection
+                macOSAudioSection
                 macOSGameplaySection
                 macOSPlatformSection
                 macOSActionsSection
@@ -141,6 +149,9 @@ struct SettingsView: View {
         } message: {
             resetAlertMessage
         }
+        .sheet(isPresented: $showingBallPicker) {
+            BallPickerSheet(gameSettings: settings)
+        }
     }
     #endif
     
@@ -154,10 +165,27 @@ struct SettingsView: View {
             gravitySliderRow
             bouncinessSliderRow
             ballSizeSliderRow
+            ballSizeModeRow
         } header: {
             sectionHeader("Physics", systemImage: "atom")
         } footer: {
             Text("Adjust how balls behave when they move and collide.")
+                .accessibilityHidden(true)
+        }
+    }
+    
+    /**
+     * Audio settings section for iOS
+     */
+    private var audioSettingsSection: some View {
+        Section {
+            masterVolumeSliderRow
+            soundEffectsToggleRow
+            ambientSoundsToggleRow
+        } header: {
+            sectionHeader("Audio", systemImage: "speaker.wave.2")
+        } footer: {
+            Text(audioSectionFooterText)
                 .accessibilityHidden(true)
         }
     }
@@ -185,26 +213,14 @@ struct SettingsView: View {
         Section {
             LabeledContent("Current Platform", value: currentPlatformName())
             
-            Label {
-                Text("Accelerometer")
-            } icon: {
-                Image(systemName: settings.isAccelerometerSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundColor(settings.isAccelerometerSupported ? .green : .red)
-            }
+            Label("Accelerometer", systemImage: settings.isAccelerometerSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundColor(settings.isAccelerometerSupported ? .green : .red)
             
-            Label {
-                Text("Screen Walls")
-            } icon: {
-                Image(systemName: settings.areWallsSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundColor(settings.areWallsSupported ? .green : .red)
-            }
+            Label("Screen Walls", systemImage: settings.areWallsSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundColor(settings.areWallsSupported ? .green : .red)
             
-            Label {
-                Text("CloudKit Sync")
-            } icon: {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
-            }
+            Label("CloudKit Sync", systemImage: settings.isCloudKitAvailable ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundColor(settings.isCloudKitAvailable ? .green : .orange)
             
             resetButton
         } header: {
@@ -218,7 +234,7 @@ struct SettingsView: View {
     private var debugInfoSection: some View {
         Section {
             DisclosureGroup("Current Settings") {
-                let debugInfo = settings.debugDescriptionWithBalls()
+                let debugInfo = settings.debugDescription()
                 ForEach(debugInfo.keys.sorted(), id: \.self) { key in
                     LabeledContent(key.capitalized, value: "\(debugInfo[key] ?? "nil")")
                         .font(.caption)
@@ -226,14 +242,24 @@ struct SettingsView: View {
             }
             
             Button("Validate Settings") {
-                let isValid = settings.validateSettingsWithBalls()
-                let errors = settings.validationErrors()
+                let isValid = settings.validateSettings()
                 print("Settings validation: \(isValid ? "✅ Valid" : "❌ Invalid")")
-                if !errors.isEmpty {
-                    print("Errors: \(errors)")
+            }
+            .font(.caption)
+            
+            Button("Test CloudKit Status") {
+                Task {
+                    // Re-check CloudKit availability
+                    await GameSettings.shared.refreshCloudKitStatus()
                 }
             }
             .font(.caption)
+            
+            Button("Test Sound Effects") {
+                testSoundEffects()
+            }
+            .font(.caption)
+            .disabled(!settings.soundEffectsEnabled || settings.masterVolume == 0.0)
         } header: {
             sectionHeader("Debug Info", systemImage: "info.circle")
         }
@@ -274,6 +300,18 @@ struct SettingsView: View {
             macOSGravityRow
             macOSBouncinessRow
             macOSBallSizeRow
+            macOSBallSizeModeRow
+        }
+    }
+    
+    /**
+     * Audio settings section for macOS
+     */
+    private var macOSAudioSection: some View {
+        Section("Audio") {
+            macOSMasterVolumeRow
+            macOSSoundEffectsRow
+            macOSAmbientSoundsRow
         }
     }
     
@@ -295,19 +333,11 @@ struct SettingsView: View {
         Section("Platform Support") {
             LabeledContent("Current Platform", value: currentPlatformName())
             
-            Label {
-                Text("Accelerometer")
-            } icon: {
-                Image(systemName: settings.isAccelerometerSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundColor(settings.isAccelerometerSupported ? .green : .red)
-            }
+            Label("Accelerometer", systemImage: settings.isAccelerometerSupported ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundColor(settings.isAccelerometerSupported ? .green : .red)
             
-            Label {
-                Text("CloudKit Sync")
-            } icon: {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
-            }
+            Label("CloudKit Sync", systemImage: settings.isCloudKitAvailable ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .foregroundColor(settings.isCloudKitAvailable ? .green : .orange)
         }
     }
     
@@ -346,7 +376,7 @@ struct SettingsView: View {
             
             Slider(
                 value: $settings.gravity,
-                in: 0.0...2.0,
+                in: 0.0...4.0,
                 step: 0.1
             ) {
                 Text("Gravity")
@@ -387,7 +417,7 @@ struct SettingsView: View {
             
             Slider(
                 value: $settings.bounciness,
-                in: 0.0...1.0,
+                in: 0.0...1.3,
                 step: 0.1
             ) {
                 Text("Bounciness")
@@ -417,16 +447,16 @@ struct SettingsView: View {
                 
                 Spacer()
                 
-                Text("\(settings.ballSize, specifier: "%.1f")×")
+                Text(sliderTrailingText)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundStyle(.primary)
-                    .accessibilityLabel("Ball size: \(settings.ballSize, specifier: "%.1f") times normal")
+                    .foregroundStyle(settings.ballSizeMode == .fixed ? .primary : .secondary)
+                    .accessibilityLabel(sliderAccessibilityLabel)
             }
             
             Slider(
                 value: $settings.ballSize,
-                in: 0.5...3.0,
+                in: 0.5...5.0,
                 step: 0.1
             ) {
                 Text("Ball Size")
@@ -440,11 +470,152 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             }
             .tint(.pink)
+            .disabled(settings.ballSizeMode != .fixed)
             .accessibilityLabel("Ball size slider")
-            .accessibilityValue("\(settings.ballSize, specifier: "%.1f") times normal size")
-            .accessibilityHint("Adjust the size of dropped balls")
+            .accessibilityValue(settings.ballSizeMode == .fixed ? "\(settings.ballSize, specifier: "%.1f") times normal size" : "Disabled")
+            .accessibilityHint(settings.ballSizeMode == .fixed ? "Adjust the size of dropped balls" : (settings.ballSizeMode == .random ? "Random ball size is enabled" : "Press and hold to grow balls"))
         }
         .padding(.vertical, 4)
+    }
+    
+    /**
+     * Ball size mode segmented picker row
+     */
+    private var ballSizeModeRow: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Ball Size Mode", systemImage: "dial.medium")
+                .foregroundStyle(.pink)
+
+            Picker("Ball Size Mode", selection: $settings.ballSizeMode) {
+                Text("Fixed").tag(GameSettings.BallSizeMode.fixed)
+                Text("Random").tag(GameSettings.BallSizeMode.random)
+                Text("Press & Hold").tag(GameSettings.BallSizeMode.pressAndGrow)
+            }
+            .pickerStyle(.segmented)
+            .accessibilityLabel("Ball size mode")
+
+            // Contextual help text
+            Group {
+                switch settings.ballSizeMode {
+                case .fixed:
+                    Text("Use the slider to set a fixed size for all balls.")
+                case .random:
+                    Text("Each ball spawns with a random size between min and max.")
+                case .pressAndGrow:
+                    Text("Press and hold to grow the ball from min to max size.")
+                }
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 4)
+    }
+    
+    // MARK: - Audio Control Rows
+    
+    /**
+     * Master volume slider control
+     */
+    private var masterVolumeSliderRow: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Label("Master Volume", systemImage: "speaker.wave.2")
+                    .foregroundStyle(.blue)
+                
+                Spacer()
+                
+                Text("\(Int(settings.masterVolumePercentage))%")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.primary)
+                    .accessibilityLabel("Master volume: \(Int(settings.masterVolumePercentage)) percent")
+            }
+            
+            Slider(
+                value: $settings.masterVolumePercentage,
+                in: 0.0...100.0,
+                step: 5.0
+            ) {
+                Text("Master Volume")
+            } minimumValueLabel: {
+                Image(systemName: "speaker.slash")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            } maximumValueLabel: {
+                Image(systemName: "speaker.wave.3")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            .tint(.blue)
+            .disabled(!settings.soundEffectsEnabled && !settings.ambientSoundsEnabled)
+            .accessibilityLabel("Master volume slider")
+            .accessibilityValue("\(Int(settings.masterVolumePercentage)) percent")
+            .accessibilityHint("Adjust overall game audio volume")
+        }
+        .padding(.vertical, 4)
+    }
+    
+    /**
+     * Sound effects toggle control
+     */
+    private var soundEffectsToggleRow: some View {
+        Toggle(isOn: $settings.soundEffectsEnabled.animation(reduceMotion ? nil : .easeInOut(duration: 0.2))) {
+            Label {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Sound Effects")
+                        .font(.body)
+                    
+                    Text("Ball collisions, bounces, and drops")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } icon: {
+                Image(systemName: "waveform")
+                    .foregroundStyle(.green)
+            }
+        }
+        .tint(.green)
+        .accessibilityLabel("Sound effects")
+        .accessibilityValue(settings.soundEffectsEnabled ? "Enabled" : "Disabled")
+        .accessibilityHint("Toggle collision and interaction sounds")
+        .onChange(of: settings.soundEffectsEnabled) { _, newValue in
+            // Update sound manager when settings change
+            SoundManager.shared.updateAudioSettings()
+            
+            // Play a test sound when enabling
+            if newValue && settings.masterVolume > 0.0 {
+                SoundManager.shared.playBallDrop()
+            }
+        }
+    }
+    
+    /**
+     * Ambient sounds toggle control
+     */
+    private var ambientSoundsToggleRow: some View {
+        Toggle(isOn: $settings.ambientSoundsEnabled.animation(reduceMotion ? nil : .easeInOut(duration: 0.2))) {
+            Label {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Ambient Sounds")
+                        .font(.body)
+                    
+                    Text("Background physics atmosphere")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } icon: {
+                Image(systemName: "music.note")
+                    .foregroundStyle(.purple)
+            }
+        }
+        .tint(.purple)
+        .accessibilityLabel("Ambient sounds")
+        .accessibilityValue(settings.ambientSoundsEnabled ? "Enabled" : "Disabled")
+        .accessibilityHint("Toggle background atmospheric audio")
+        .onChange(of: settings.ambientSoundsEnabled) { _, newValue in
+            // Update ambient sounds immediately
+            SoundManager.shared.setAmbientSounds(enabled: newValue)
+        }
     }
     
     /**
@@ -501,24 +672,55 @@ struct SettingsView: View {
     }
     
     /**
-     * Ball type selection row
+     * Ball type selection row with sheet presentation
      */
     private var ballTypeSelectionRow: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label("Ball Type", systemImage: "volleyball")
                 .foregroundStyle(.mint)
             
-            Picker("Ball Type", selection: $settings.selectedBallType) {
-                Text("Random").tag(nil as String?)
-                
-                ForEach(settings.availableBallTypes, id: \.self) { ballType in
-                    Text(settings.availableBallDisplayNames[ballType] ?? ballType)
-                        .tag(ballType as String?)
+            Button(action: { showingBallPicker = true }) {
+                HStack {
+                    // Current ball image or random icon
+                    if let ballType = settings.selectedBallType {
+                        BallAssetManager.shared.ballImageView(for: ballType)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                    } else {
+                        Image(systemName: "questionmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                            .frame(width: 24, height: 24)
+                    }
+                    
+                    // Ball name
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Current Selection")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        
+                        Text(currentBallDisplayName)
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .lineLimit(1)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
                 }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+                .background(.quaternary, in: RoundedRectangle(cornerRadius: 8))
+                .contentShape(RoundedRectangle(cornerRadius: 8))
             }
-            .pickerStyle(.menu)
-            .accessibilityLabel("Ball type picker")
-            .accessibilityValue(settings.selectedBallDisplayName ?? "Random")
+            .buttonStyle(.plain)
+            .accessibilityLabel("Ball type selection")
+            .accessibilityValue(currentBallDisplayName)
+            .accessibilityHint("Tap to choose a different ball type")
         }
         .padding(.vertical, 4)
     }
@@ -548,7 +750,7 @@ struct SettingsView: View {
             
             Slider(
                 value: $settings.gravity,
-                in: 0.0...2.0,
+                in: 0.0...4.0,
                 step: 0.1
             ) {
                 Text("Gravity")
@@ -556,7 +758,7 @@ struct SettingsView: View {
                 Text("0")
                     .font(.caption)
             } maximumValueLabel: {
-                Text("2")
+                Text("4")
                     .font(.caption)
             }
             .tint(.blue)
@@ -581,7 +783,7 @@ struct SettingsView: View {
             
             Slider(
                 value: $settings.bounciness,
-                in: 0.0...1.0,
+                in: 0.0...1.3,
                 step: 0.1
             ) {
                 Text("Bounciness")
@@ -614,7 +816,7 @@ struct SettingsView: View {
             
             Slider(
                 value: $settings.ballSize,
-                in: 0.5...3.0,
+                in: 0.5...5.0,
                 step: 0.1
             ) {
                 Text("Ball Size")
@@ -622,18 +824,120 @@ struct SettingsView: View {
                 Text("0.5×")
                     .font(.caption)
             } maximumValueLabel: {
-                Text("3×")
+                Text("5×")
                     .font(.caption)
             }
             .tint(.pink)
+            .disabled(settings.ballSizeMode != .fixed)
             
-            Text("\(settings.ballSize, specifier: "%.1f")×")
+            Text(sliderTrailingText)
+                .font(.body)
+                .fontWeight(.medium)
+                .frame(width: 80, alignment: .trailing)
+                .foregroundStyle(settings.ballSizeMode == .fixed ? .primary : .secondary)
+                .accessibilityLabel(sliderAccessibilityLabel)
+        }
+        .accessibilityElement(children: .combine)
+    }
+    
+    /**
+     * macOS-style ball size mode picker control
+     */
+    private var macOSBallSizeModeRow: some View {
+        HStack(alignment: .center, spacing: 16) {
+            Label("Ball Size Mode", systemImage: "dial.medium")
+                .foregroundStyle(.pink)
+                .frame(width: 100, alignment: .leading)
+
+            Picker("Ball Size Mode", selection: $settings.ballSizeMode) {
+                Text("Fixed").tag(GameSettings.BallSizeMode.fixed)
+                Text("Random").tag(GameSettings.BallSizeMode.random)
+                Text("Press & Hold").tag(GameSettings.BallSizeMode.pressAndGrow)
+            }
+            .pickerStyle(.segmented)
+
+            Spacer()
+        }
+        .accessibilityElement(children: .combine)
+    }
+    
+    // MARK: - macOS Audio Controls
+    
+    /**
+     * macOS-style master volume control
+     */
+    private var macOSMasterVolumeRow: some View {
+        HStack(alignment: .center, spacing: 16) {
+            Label("Master Volume", systemImage: "speaker.wave.2")
+                .foregroundStyle(.blue)
+                .frame(width: 100, alignment: .leading)
+            
+            Slider(
+                value: $settings.masterVolumePercentage,
+                in: 0.0...100.0,
+                step: 5.0
+            ) {
+                Text("Master Volume")
+            } minimumValueLabel: {
+                Image(systemName: "speaker.slash")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } maximumValueLabel: {
+                Image(systemName: "speaker.wave.3")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .tint(.blue)
+            .disabled(!settings.soundEffectsEnabled && !settings.ambientSoundsEnabled)
+            
+            Text("\(Int(settings.masterVolumePercentage))%")
                 .font(.body)
                 .fontWeight(.medium)
                 .frame(width: 50, alignment: .trailing)
-                .accessibilityLabel("Ball size: \(settings.ballSize, specifier: "%.1f") times normal")
+                .accessibilityLabel("Master volume: \(Int(settings.masterVolumePercentage)) percent")
         }
         .accessibilityElement(children: .combine)
+    }
+    
+    /**
+     * macOS-style sound effects toggle
+     */
+    private var macOSSoundEffectsRow: some View {
+        Toggle(isOn: $settings.soundEffectsEnabled) {
+            Label("Sound Effects", systemImage: "waveform")
+                .foregroundStyle(.green)
+        }
+        .tint(.green)
+        .accessibilityLabel("Sound effects")
+        .accessibilityValue(settings.soundEffectsEnabled ? "Enabled" : "Disabled")
+        .help("Enable collision and interaction sounds")
+        .onChange(of: settings.soundEffectsEnabled) { _, newValue in
+            // Update sound manager when settings change
+            SoundManager.shared.updateAudioSettings()
+            
+            // Play a test sound when enabling
+            if newValue && settings.masterVolume > 0.0 {
+                SoundManager.shared.playBallDrop()
+            }
+        }
+    }
+    
+    /**
+     * macOS-style ambient sounds toggle
+     */
+    private var macOSAmbientSoundsRow: some View {
+        Toggle(isOn: $settings.ambientSoundsEnabled) {
+            Label("Ambient Sounds", systemImage: "music.note")
+                .foregroundStyle(.purple)
+        }
+        .tint(.purple)
+        .accessibilityLabel("Ambient sounds")
+        .accessibilityValue(settings.ambientSoundsEnabled ? "Enabled" : "Disabled")
+        .help("Enable background atmospheric audio")
+        .onChange(of: settings.ambientSoundsEnabled) { _, newValue in
+            // Update ambient sounds immediately
+            SoundManager.shared.setAmbientSounds(enabled: newValue)
+        }
     }
     
     /**
@@ -668,7 +972,7 @@ struct SettingsView: View {
     }
     
     /**
-     * macOS-style ball type picker
+     * macOS-style ball type selection
      */
     private var macOSBallTypeRow: some View {
         HStack(alignment: .center, spacing: 16) {
@@ -676,15 +980,34 @@ struct SettingsView: View {
                 .foregroundStyle(.mint)
                 .frame(width: 100, alignment: .leading)
             
-            Picker("Ball Type", selection: $settings.selectedBallType) {
-                Text("Random").tag(nil as String?)
-                
-                ForEach(settings.availableBallTypes, id: \.self) { ballType in
-                    Text(settings.availableBallDisplayNames[ballType] ?? ballType)
-                        .tag(ballType as String?)
+            Button(action: { showingBallPicker = true }) {
+                HStack(spacing: 12) {
+                    // Current ball image or random icon
+                    if let ballType = settings.selectedBallType {
+                        BallAssetManager.shared.ballImageView(for: ballType)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                    } else {
+                        Image(systemName: "questionmark.circle.fill")
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                            .frame(width: 20, height: 20)
+                    }
+                    
+                    Text(currentBallDisplayName)
+                        .font(.body)
+                    
+                    Image(systemName: "chevron.right")
+                        .font(.caption2)
+                        .foregroundStyle(.tertiary)
                 }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(Color(.controlBackgroundColor), in: RoundedRectangle(cornerRadius: 6))
+                .contentShape(RoundedRectangle(cornerRadius: 6))
             }
-            .pickerStyle(.menu)
+            .buttonStyle(.plain)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .accessibilityElement(children: .combine)
@@ -763,6 +1086,72 @@ struct SettingsView: View {
             return "Not available on this device"
         }
     }
+    
+    /**
+     * Audio section footer text
+     */
+    private var audioSectionFooterText: String {
+        if settings.masterVolume == 0.0 {
+            return "All sounds are muted"
+        } else if !settings.soundEffectsEnabled && !settings.ambientSoundsEnabled {
+            return "All sound types are disabled"
+        } else {
+            return "Configure game audio and sound effects"
+        }
+    }
+    
+    /**
+     * Display name for current ball selection
+     */
+    private var currentBallDisplayName: String {
+        if let ballType = settings.selectedBallType {
+            return BallAssetManager.shared.displayName(for: ballType)
+        } else {
+            return "Random"
+        }
+    }
+    
+    /**
+     * Test sound effects helper method
+     */
+    private func testSoundEffects() {
+        Task {
+            // Test collision sound
+            SoundManager.shared.playBallCollision(intensity: 1.0)
+            
+            // Wait a bit, then test wall bounce
+            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+            SoundManager.shared.playWallBounce(intensity: 0.8)
+            
+            // Wait a bit, then test ball drop
+            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
+            SoundManager.shared.playBallDrop()
+        }
+    }
+    
+    // MARK: - New Helpers for Ball Size Mode
+    
+    private var sliderTrailingText: String {
+        switch settings.ballSizeMode {
+        case .fixed:
+            return String(format: "%.1f×", settings.ballSize)
+        case .random:
+            return "Random"
+        case .pressAndGrow:
+            return "Press & Hold"
+        }
+    }
+
+    private var sliderAccessibilityLabel: String {
+        switch settings.ballSizeMode {
+        case .fixed:
+            return "Ball size: \(String(format: "%.1f", settings.ballSize)) times normal"
+        case .random:
+            return "Ball size: Random"
+        case .pressAndGrow:
+            return "Ball size: Press and hold to grow"
+        }
+    }
 }
 
 // MARK: - Preview
@@ -798,3 +1187,4 @@ struct SettingsView: View {
         }
         .preferredColorScheme(.dark)
 }
+

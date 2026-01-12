@@ -144,7 +144,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FE9CE3E8242F9B38004E25A8 /* Build configuration list for PBXProject "amazeballs" */;
+			buildConfigurationList = FE9CE3E8242F9B38004E25A8 /* Build configuration list for PBXProject "AmazeBalls" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -335,11 +335,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9N4HA7TLU8;
 				INFOPLIST_FILE = amazeballs/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -354,11 +356,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9N4HA7TLU8;
 				INFOPLIST_FILE = amazeballs/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -369,7 +373,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FE9CE3E8242F9B38004E25A8 /* Build configuration list for PBXProject "amazeballs" */ = {
+		FE9CE3E8242F9B38004E25A8 /* Build configuration list for PBXProject "AmazeBalls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FE9CE3FF242F9B39004E25A8 /* Debug */,

@@ -2,6 +2,12 @@ Amazeballs
 
 ==========
 
+Update April 1, 2025
+
+Update to check for Vision Pro compatibility. All set.
+
+==========
+
 Update April 16, 2020
 
 Will release this version. Inferior performance for the newer, more complicated ball shapes. The creation of the SKTextures is a challenge. Need to figure out how to use the SKTexture preload.

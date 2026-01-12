@@ -7,7 +7,6 @@
 
 #if os(macOS)
 import SwiftUI
-import SwiftData
 
 /**
  * ContentView for macOS
@@ -24,10 +23,8 @@ import SwiftData
  * - Proper mouse/trackpad gesture handling
  *
  * ## Keyboard Shortcuts (via toolbar and menu)
- * - **⌘B**: Show Ball Picker
  * - **⌘W**: Toggle Walls
- * - **⌘A**: Toggle Accelerometer (disabled on macOS)
- * - **⌘,**: Settings Window
+ * - **⌘,**: Settings Window (ball picker now accessible within settings)
  *
  * ## Menu Integration
  * Menu bar commands are implemented in `MacOSCommands.swift` and should be
@@ -41,18 +38,12 @@ import SwiftData
  * - Help: About Amazeballs
  */
 struct MacOSMainView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
     @State private var gameSettings = GameSettings.shared
     @State private var ballAssetManager = BallAssetManager.shared
     
-    // UI State
-    @State private var showingSettings = false
-    @State private var showingBallPicker = false
-    @State private var ballPickerAnchor: CGRect = .zero
-    
     // Window management
     @State private var windowTitle = "Amazeballs"
+    @State private var isTiltActive: Bool = false
     
     var body: some View {
         ZStack {
@@ -67,18 +58,14 @@ struct MacOSMainView: View {
         .toolbar {
             macOSToolbar
         }
-        .sheet(isPresented: $showingSettings) {
-            MacOSSettingsWindow(gameSettings: gameSettings)
-        }
-        .popover(isPresented: $showingBallPicker, arrowEdge: .top) {
-            MacOSBallPicker(
-                gameSettings: gameSettings,
-                ballAssetManager: ballAssetManager
-            )
-        }
         .onAppear {
             setupMacOSWindow()
             setupNotificationObservers()
+            NotificationCenter.default.addObserver(forName: .tiltDidChange, object: nil, queue: .main) { note in
+                if let angle = note.userInfo?["angle"] as? Double {
+                    isTiltActive = abs(angle) > 0.0001
+                }
+            }
         }
         .onDisappear {
             removeNotificationObservers()
@@ -108,9 +95,6 @@ struct MacOSMainView: View {
             Spacer()
             
             HStack {
-                // Ball selection indicator
-                currentBallIndicator
-                
                 Spacer()
                 
                 // Physics info panel
@@ -119,38 +103,6 @@ struct MacOSMainView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
         }
-    }
-    
-    /**
-     * Current ball selection indicator
-     */
-    private var currentBallIndicator: some View {
-        Button(action: { showBallPicker() }) {
-            HStack(spacing: 8) {
-                if let ballType = gameSettings.selectedBallType {
-                    ballAssetManager.ballImageView(for: ballType)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                } else {
-                    Image(systemName: "questionmark.circle")
-                        .frame(width: 24, height: 24)
-                }
-                
-                Text(currentBallDisplayName)
-                    .font(.caption)
-                
-                Image(systemName: "chevron.up.chevron.down")
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
-        }
-        .buttonStyle(.plain)
-        .keyboardShortcut("b", modifiers: .command)
-        .help("Choose ball type (⌘B)")
     }
     
     /**
@@ -197,14 +149,6 @@ struct MacOSMainView: View {
      */
     private var macOSToolbar: some ToolbarContent {
         Group {
-            ToolbarItem(id: "ball-picker", placement: .primaryAction) {
-                Button(action: showBallPicker) {
-                    Label("Ball Picker", systemImage: "circle.grid.3x3")
-                }
-                .keyboardShortcut("b", modifiers: .command)
-                .help("Show ball picker (⌘B)")
-            }
-            
             ToolbarItem(id: "walls-toggle", placement: .primaryAction) {
                 Button(action: toggleWalls) {
                     Label("Walls", systemImage: gameSettings.wallsEnabled ? "square.3.layers.3d.top.filled" : "square.3.layers.3d")
@@ -212,38 +156,20 @@ struct MacOSMainView: View {
                 .keyboardShortcut("w", modifiers: .command)
                 .help("Toggle boundary walls (⌘W)")
             }
-            
-            ToolbarItem(id: "settings", placement: .primaryAction) {
-                Button(action: { showingSettings = true }) {
-                    Label("Settings", systemImage: "gearshape")
+            if isTiltActive {
+                ToolbarItem(id: "reset-tilt", placement: .primaryAction) {
+                    Button(action: {
+                        NotificationCenter.default.post(name: .resetTilt, object: nil)
+                    }) {
+                        Label("Reset Tilt", systemImage: "macwindow")
+                    }
+                    .help("Reset tilt to 0°")
                 }
-                .keyboardShortcut(",", modifiers: .command)
-                .help("Open settings (⌘,)")
             }
         }
     }
     
-    // MARK: - Computed Properties
-    
-    /**
-     * Display name for current ball selection
-     */
-    private var currentBallDisplayName: String {
-        if let ballType = gameSettings.selectedBallType {
-            return ballAssetManager.displayName(for: ballType)
-        } else {
-            return "Random"
-        }
-    }
-    
     // MARK: - Actions
-    
-    /**
-     * Shows the ball picker popover
-     */
-    private func showBallPicker() {
-        showingBallPicker = true
-    }
     
     /**
      * Toggles boundary walls
@@ -269,6 +195,13 @@ struct MacOSMainView: View {
     }
     
     /**
+     * Shows ball picker (now handled via settings)
+     */
+    private func showBallPicker() {
+        // No-op: ball picker is accessed via SettingsView now
+    }
+    
+    /**
      * Clears all balls from the scene
      */
     private func clearAllBalls() {
@@ -291,9 +224,8 @@ struct MacOSMainView: View {
      * Updates window title with current settings
      */
     private func updateWindowTitle() {
-        let ballName = currentBallDisplayName
         let wallStatus = gameSettings.wallsEnabled ? "Walls On" : "Walls Off"
-        windowTitle = "Amazeballs - \(ballName) | \(wallStatus)"
+        windowTitle = "Amazeballs - \(wallStatus)"
     }
     
     // MARK: - Notification Handling
@@ -344,6 +276,7 @@ struct MacOSMainView: View {
         NotificationCenter.default.removeObserver(self, name: .toggleWalls, object: nil)
         NotificationCenter.default.removeObserver(self, name: .toggleAccelerometer, object: nil)
         NotificationCenter.default.removeObserver(self, name: .resetPhysics, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .tiltDidChange, object: nil)
     }
 }
 
@@ -464,115 +397,10 @@ private struct MacOSBallCard: View {
     }
 }
 
-// MARK: - macOS Settings Window
-
-/**
- * Native macOS settings window
- */
-private struct MacOSSettingsWindow: View {
-    @Bindable var gameSettings: GameSettings
-    @Environment(\.dismiss) private var dismiss
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            // Title
-            Text("Amazeballs Settings")
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            // Settings form
-            Form {
-                Section("Physics") {
-                    // Gravity
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Gravity")
-                            Spacer()
-                            Text("\(gameSettings.gravity, specifier: "%.1f")x")
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        Slider(value: $gameSettings.gravity, in: 0.0...2.0, step: 0.1) {
-                            Text("Gravity")
-                        } minimumValueLabel: {
-                            Text("0")
-                                .font(.caption)
-                        } maximumValueLabel: {
-                            Text("2")
-                                .font(.caption)
-                        }
-                    }
-                    
-                    // Bounciness
-                    VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Bounciness")
-                            Spacer()
-                            Text("\(Int(gameSettings.bounciness * 100))%")
-                                .foregroundStyle(.secondary)
-                        }
-                        
-                        Slider(value: $gameSettings.bounciness, in: 0.0...1.0, step: 0.1) {
-                            Text("Bounciness")
-                        } minimumValueLabel: {
-                            Text("0%")
-                                .font(.caption)
-                        } maximumValueLabel: {
-                            Text("100%")
-                                .font(.caption)
-                        }
-                    }
-                }
-                
-                Section("Environment") {
-                    Toggle("Boundary Walls", isOn: $gameSettings.wallsEnabled)
-                    
-                    Toggle("Device Motion", isOn: $gameSettings.accelerometerEnabled)
-                        .disabled(!gameSettings.isAccelerometerSupported)
-                        .help("Motion sensors are not available on macOS")
-                }
-                
-                Section("Ball Selection") {
-                    Picker("Ball Type", selection: $gameSettings.selectedBallType) {
-                        Text("Random").tag(nil as String?)
-                        
-                        ForEach(BallAssetManager.shared.availableBallTypes, id: \.self) { ballType in
-                            Text(BallAssetManager.shared.displayName(for: ballType))
-                                .tag(ballType as String?)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                }
-            }
-            .formStyle(.grouped)
-            
-            // Buttons
-            HStack {
-                Button("Reset to Defaults") {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        gameSettings.reset()
-                    }
-                }
-                
-                Spacer()
-                
-                Button("Done") {
-                    dismiss()
-                }
-                .keyboardShortcut(.return)
-            }
-        }
-        .padding(20)
-        .frame(width: 400, height: 500)
-    }
-}
-
-// MARK: - Preview
-
 #Preview {
     MacOSMainView()
-        .modelContainer(for: Item.self, inMemory: true)
         .frame(width: 900, height: 700)
 }
 
 #endif
+
