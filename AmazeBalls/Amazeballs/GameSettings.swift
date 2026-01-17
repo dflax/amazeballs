@@ -134,14 +134,6 @@ final class GameSettings {
         }
     }
     
-    /// Whether background ambient sounds are enabled
-    /// - Default: false (ambient sounds off for less distraction)
-    var ambientSoundsEnabled: Bool = false {
-        didSet {
-            persistValue(key: Keys.ambientSoundsEnabled, value: ambientSoundsEnabled)
-        }
-    }
-    
     /// Whether to use device motion to influence gravity direction
     /// - Available on: iOS, iPadOS
     /// - Default: false (use standard downward gravity)
@@ -208,7 +200,6 @@ final class GameSettings {
         static let selectedBallType = "amazeballs.settings.selectedBallType"
         static let masterVolume = "amazeballs.settings.masterVolume"
         static let soundEffectsEnabled = "amazeballs.settings.soundEffectsEnabled"
-        static let ambientSoundsEnabled = "amazeballs.settings.ambientSoundsEnabled"
         
         // Key to track if we've initialized from storage before
         static let hasLoadedFromStorage = "amazeballs.settings.hasLoadedFromStorage"
@@ -329,10 +320,6 @@ final class GameSettings {
             soundEffectsEnabled = defaults.bool(forKey: Keys.soundEffectsEnabled)
         }
         
-        if defaults.object(forKey: Keys.ambientSoundsEnabled) != nil {
-            ambientSoundsEnabled = defaults.bool(forKey: Keys.ambientSoundsEnabled)
-        }
-        
         // Mark that we've loaded from storage
         defaults.set(true, forKey: Keys.hasLoadedFromStorage)
         
@@ -424,12 +411,6 @@ final class GameSettings {
             let cloudValue = cloudStore.bool(forKey: Keys.soundEffectsEnabled)
             soundEffectsEnabled = cloudValue
             defaults.set(cloudValue, forKey: Keys.soundEffectsEnabled)
-        }
-        
-        if let _ = cloudStore.object(forKey: Keys.ambientSoundsEnabled) {
-            let cloudValue = cloudStore.bool(forKey: Keys.ambientSoundsEnabled)
-            ambientSoundsEnabled = cloudValue
-            defaults.set(cloudValue, forKey: Keys.ambientSoundsEnabled)
         }
     }
     
@@ -619,13 +600,6 @@ final class GameSettings {
                     defaults.set(newValue, forKey: key)
                 }
                 
-            case Keys.ambientSoundsEnabled:
-                let newValue = cloudStore.bool(forKey: key)
-                if newValue != ambientSoundsEnabled {
-                    ambientSoundsEnabled = newValue
-                    defaults.set(newValue, forKey: key)
-                }
-                
             default:
                 break
             }
@@ -651,7 +625,6 @@ final class GameSettings {
         selectedBallType = nil
         masterVolume = 0.7
         soundEffectsEnabled = true
-        ambientSoundsEnabled = false
         
         print("🔄 GameSettings: All settings reset to defaults and synced")
     }
@@ -663,7 +636,7 @@ final class GameSettings {
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
             Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled, Keys.ambientSoundsEnabled
+            Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         // Always clear from UserDefaults
@@ -719,7 +692,6 @@ final class GameSettings {
             "selectedBallType": selectedBallType ?? "random",
             "masterVolume": masterVolume,
             "soundEffectsEnabled": soundEffectsEnabled,
-            "ambientSoundsEnabled": ambientSoundsEnabled,
             "platform": currentPlatform(),
             "accelerometerSupported": isAccelerometerSupported,
             "wallsSupported": areWallsSupported,
@@ -736,7 +708,7 @@ final class GameSettings {
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
             Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled, Keys.ambientSoundsEnabled
+            Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         return allKeys.contains { defaults.object(forKey: $0) != nil }
@@ -751,7 +723,7 @@ final class GameSettings {
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
             Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled, Keys.ambientSoundsEnabled
+            Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         return allKeys.contains { cloudStore.object(forKey: $0) != nil }

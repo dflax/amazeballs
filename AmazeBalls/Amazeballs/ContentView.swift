@@ -174,7 +174,8 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            WelcomeView(gameSettings: gameSettings)
+            // Show game view by default instead of welcome screen
+            EmbeddedGameView(gameSettings: gameSettings)
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView()
@@ -294,7 +295,7 @@ private struct WelcomeView: View {
         }
         .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(white: 0.95))
+        .background(Color(.systemBackground))
     }
 }
 
@@ -333,10 +334,7 @@ private struct EmbeddedGameView: View {
                 Spacer()
             }
         }
-        .navigationTitle("Play Amazeballs")
-        #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
+        .navigationBarHidden(true)
         .sheet(isPresented: $showingSettings) {
             SettingsView()
         }

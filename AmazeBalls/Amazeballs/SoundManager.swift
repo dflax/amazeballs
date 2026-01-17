@@ -12,9 +12,8 @@ import Observation
 /// Manages sound effects for the Amazeballs game with efficient audio playback
 /// and volume control based on game settings.
 ///
-/// This class provides high-performance audio playback suitable for physics
-/// simulations with frequent sound events. It uses AVAudioEngine for low-latency
-/// playback and manages audio session configuration across platforms.
+/// This class provides a simple audio playback system for ball bounce sounds.
+/// Different ball types play different sounds based on their physical properties.
 @Observable
 final class SoundManager {
     
@@ -25,18 +24,15 @@ final class SoundManager {
     
     // MARK: - Audio Players Pool
     
-    /// Pool of audio players for efficient sound playback without interruption
-    private var ballCollisionPlayers: [AVAudioPlayerNode] = []
-    private var wallBouncePlayers: [AVAudioPlayerNode] = []
-    private var ballDropPlayers: [AVAudioPlayerNode] = []
-    private var ambientPlayer: AVAudioPlayerNode?
+    /// Pool of audio players for bounce sounds
+    private var bouncePlayers: [AVAudioPlayerNode] = []
     
     // MARK: - Audio Buffers
     
-    private var ballCollisionBuffer: AVAudioPCMBuffer?
-    private var wallBounceBuffer: AVAudioPCMBuffer?
-    private var ballDropBuffer: AVAudioPCMBuffer?
-    private var ambientBuffer: AVAudioPCMBuffer?
+    private var boingBuffer: AVAudioPCMBuffer?
+    private var rubberBallBuffer: AVAudioPCMBuffer?
+    private var sportsBallBuffer: AVAudioPCMBuffer?
+    private var pingPongBallBuffer: AVAudioPCMBuffer?
     
     // MARK: - Settings Reference
     
@@ -74,14 +70,13 @@ final class SoundManager {
         #if os(iOS) || os(iPadOS)
         do {
             let audioSession = AVAudioSession.sharedInstance()
-            // On iOS/iPadOS, configure for ambient audio that mixes with other apps
-            try audioSession.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
+            // Use .playback category so sounds play even when device is on silent
+            // This is appropriate for games where sound is an important part of the experience
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true)
         } catch {
             print("⚠️ SoundManager: Failed to configure audio session: \(error)")
         }
-        #elseif os(macOS)
-        // On macOS, we don't need to configure the audio session
-        // The system handles audio routing automatically
         #endif
     }
     
@@ -91,7 +86,6 @@ final class SoundManager {
         
         do {
             try audioEngine.start()
-            print("🔊 SoundManager: Audio engine started successfully")
         } catch {
             print("⚠️ SoundManager: Failed to start audio engine: \(error)")
         }
@@ -101,10 +95,10 @@ final class SoundManager {
     
     /// Loads all audio files into memory for fast playback
     private func loadAudioFiles() {
-        ballCollisionBuffer = loadAudioFile(named: "ball-collision")
-        wallBounceBuffer = loadAudioFile(named: "wall-bounce")
-        ballDropBuffer = loadAudioFile(named: "ball-drop")
-        ambientBuffer = loadAudioFile(named: "ambient-physics", shouldLoop: true)
+        boingBuffer = loadAudioFile(named: "boing")
+        rubberBallBuffer = loadAudioFile(named: "rubber-ball")
+        sportsBallBuffer = loadAudioFile(named: "sports-ball")
+        pingPongBallBuffer = loadAudioFile(named: "ping-pong-ball")
     }
     
     /// Loads a single audio file into an AVAudioPCMBuffer
@@ -116,23 +110,57 @@ final class SoundManager {
         // Try multiple audio formats
         let extensions = ["wav", "m4a", "mp3", "aiff"]
         
+        // Common format for all players (44.1kHz stereo)
+        guard let commonFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2) else {
+            print("⚠️ SoundManager: Could not create common audio format")
+            return nil
+        }
+        
         for ext in extensions {
             if let url = Bundle.main.url(forResource: name, withExtension: ext) {
                 do {
                     let audioFile = try AVAudioFile(forReading: url)
+                    let sourceFormat = audioFile.processingFormat
                     
-                    // Create buffer with the audio file's processing format
-                    guard let buffer = AVAudioPCMBuffer(
-                        pcmFormat: audioFile.processingFormat,
-                        frameCapacity: AVAudioFrameCount(audioFile.length)
-                    ) else {
-                        print("⚠️ SoundManager: Could not create buffer for \(name)")
+                    // Create converter if formats don't match
+                    guard let converter = AVAudioConverter(from: sourceFormat, to: commonFormat) else {
+                        print("⚠️ SoundManager: Could not create converter for \(name)")
                         continue
                     }
                     
-                    try audioFile.read(into: buffer)
+                    // Calculate the capacity needed for the converted buffer
+                    let capacity = AVAudioFrameCount(Double(audioFile.length) * commonFormat.sampleRate / sourceFormat.sampleRate)
+                    
+                    guard let convertedBuffer = AVAudioPCMBuffer(pcmFormat: commonFormat, frameCapacity: capacity) else {
+                        print("⚠️ SoundManager: Could not create converted buffer for \(name)")
+                        continue
+                    }
+                    
+                    // Read source buffer
+                    guard let sourceBuffer = AVAudioPCMBuffer(pcmFormat: sourceFormat, frameCapacity: AVAudioFrameCount(audioFile.length)) else {
+                        print("⚠️ SoundManager: Could not create source buffer for \(name)")
+                        continue
+                    }
+                    
+                    try audioFile.read(into: sourceBuffer)
+                    sourceBuffer.frameLength = AVAudioFrameCount(audioFile.length)
+                    
+                    // Convert the audio
+                    var error: NSError?
+                    let inputBlock: AVAudioConverterInputBlock = { inNumPackets, outStatus in
+                        outStatus.pointee = .haveData
+                        return sourceBuffer
+                    }
+                    
+                    converter.convert(to: convertedBuffer, error: &error, withInputFrom: inputBlock)
+                    
+                    if let error = error {
+                        print("⚠️ SoundManager: Conversion error for \(name): \(error)")
+                        continue
+                    }
+                    
                     print("✅ SoundManager: Loaded audio file \(name).\(ext)")
-                    return buffer
+                    return convertedBuffer
                     
                 } catch {
                     print("⚠️ SoundManager: Error loading \(name).\(ext): \(error)")
@@ -148,15 +176,8 @@ final class SoundManager {
     
     /// Creates a pool of audio players for efficient sound playback
     private func setupPlayersPool() {
-        // Create multiple players for collision sounds to handle rapid-fire events
-        ballCollisionPlayers = createPlayerPool(size: 8)
-        wallBouncePlayers = createPlayerPool(size: 4)
-        ballDropPlayers = createPlayerPool(size: 3)
-        
-        // Create ambient player
-        if ambientBuffer != nil {
-            ambientPlayer = createAudioPlayer()
-        }
+        // Create multiple players for bounce sounds (to handle multiple simultaneous bounces)
+        bouncePlayers = createPlayerPool(size: 10)
     }
     
     /// Creates a pool of audio players
@@ -177,71 +198,52 @@ final class SoundManager {
     private func createAudioPlayer() -> AVAudioPlayerNode {
         let player = AVAudioPlayerNode()
         audioEngine.attach(player)
-        audioEngine.connect(player, to: mixer, format: nil)
+        
+        // Use a common format that all audio files should match
+        // Standard format: 44.1kHz, stereo (or we can convert)
+        let commonFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 2)
+        audioEngine.connect(player, to: mixer, format: commonFormat)
+        
         return player
     }
     
     // MARK: - Sound Playback Methods
     
-    /// Plays a ball collision sound with volume based on collision intensity
-    /// - Parameter intensity: Collision intensity (0.0 to 1.0) affects volume and pitch
-    func playBallCollision(intensity: Double = 1.0) {
-        guard gameSettings.soundEffectsEnabled,
-              gameSettings.masterVolume > 0.0,
-              let buffer = ballCollisionBuffer else { return }
-        
-        let player = getAvailablePlayer(from: ballCollisionPlayers)
-        playSound(player: player, buffer: buffer, volume: Float(intensity * gameSettings.masterVolume))
-    }
-    
-    /// Plays a wall bounce sound based on bounce intensity and material
+    /// Plays a bounce sound based on ball type with intensity-based volume
     /// - Parameters:
-    ///   - intensity: Bounce intensity (0.0 to 1.0)
-    ///   - material: Type of surface the ball bounced off (future enhancement)
-    func playWallBounce(intensity: Double = 1.0, material: String = "default") {
+    ///   - soundName: The sound identifier ("boing", "rubber-ball", "sports-ball", "ping-pong-ball")
+    ///   - intensity: Impact intensity (0.0 to 1.0) affects volume
+    func playBounceSound(soundName: String, intensity: Double = 1.0) {
         guard gameSettings.soundEffectsEnabled,
-              gameSettings.masterVolume > 0.0,
-              let buffer = wallBounceBuffer else { return }
-        
-        let player = getAvailablePlayer(from: wallBouncePlayers)
-        playSound(player: player, buffer: buffer, volume: Float(intensity * gameSettings.masterVolume))
-    }
-    
-    /// Plays a ball drop/spawn sound
-    /// - Parameter ballSize: Size multiplier of the ball being dropped (if nil, uses current game setting)
-    func playBallDrop(ballSize: Double? = nil) {
-        guard gameSettings.soundEffectsEnabled,
-              gameSettings.masterVolume > 0.0,
-              let buffer = ballDropBuffer else { return }
-        
-        let player = getAvailablePlayer(from: ballDropPlayers)
-        
-        // Use provided size or get effective size from game settings
-        let effectiveSize = ballSize ?? gameSettings.effectiveBallSize()
-        
-        // Adjust pitch based on ball size (larger balls = lower pitch)
-        let pitchAdjustment = Float(1.0 / effectiveSize)
-        playSound(player: player, buffer: buffer, volume: Float(gameSettings.masterVolume), pitch: pitchAdjustment)
-    }
-    
-    /// Starts or stops ambient physics sounds
-    /// - Parameter shouldPlay: Whether to start (true) or stop (false) ambient sounds
-    func setAmbientSounds(enabled: Bool) {
-        guard let player = ambientPlayer,
-              let buffer = ambientBuffer else { return }
-        
-        if enabled && gameSettings.ambientSoundsEnabled && gameSettings.masterVolume > 0.0 {
-            if !player.isPlaying {
-                // Schedule buffer for looping
-                player.scheduleBuffer(buffer, at: nil, options: .loops)
-                player.volume = Float(gameSettings.masterVolume * 0.3) // Ambient sounds are quieter
-                player.play()
-            }
-        } else {
-            if player.isPlaying {
-                player.stop()
-            }
+              gameSettings.masterVolume > 0.0 else {
+            return
         }
+        
+        // Get the appropriate buffer for this sound
+        let buffer: AVAudioPCMBuffer?
+        switch soundName {
+        case "boing":
+            buffer = boingBuffer
+        case "rubber-ball":
+            buffer = rubberBallBuffer
+        case "sports-ball":
+            buffer = sportsBallBuffer
+        case "ping-pong-ball":
+            buffer = pingPongBallBuffer
+        default:
+            buffer = nil
+        }
+        
+        guard let audioBuffer = buffer else { return }
+        
+        let player = getAvailablePlayer(from: bouncePlayers)
+        
+        // Calculate volume based on intensity and master volume
+        // Use a minimum volume of 0.3 so even soft bounces are audible
+        let minVolume: Float = 0.3
+        let volume = Float(gameSettings.masterVolume) * (minVolume + Float(intensity) * (1.0 - minVolume))
+        
+        playSound(player: player, buffer: audioBuffer, volume: volume)
     }
     
     // MARK: - Helper Methods
@@ -268,6 +270,11 @@ final class SoundManager {
     ///   - volume: Volume level (0.0 to 1.0)
     ///   - pitch: Pitch adjustment (1.0 is normal pitch)
     private func playSound(player: AVAudioPlayerNode, buffer: AVAudioPCMBuffer, volume: Float, pitch: Float = 1.0) {
+        // Make sure audio engine is running
+        if !audioEngine.isRunning {
+            startAudioEngine()
+        }
+        
         // Stop any currently playing sound on this player
         if player.isPlaying {
             player.stop()
@@ -275,12 +282,6 @@ final class SoundManager {
         
         // Set volume
         player.volume = volume
-        
-        // Apply pitch adjustment if needed
-        if pitch != 1.0 {
-            // Note: For advanced pitch shifting, you'd need AVAudioUnitTimePitch
-            // For now, we'll keep it simple and just adjust playback rate slightly
-        }
         
         // Schedule and play the buffer
         player.scheduleBuffer(buffer, at: nil, options: [])
@@ -291,24 +292,16 @@ final class SoundManager {
     
     /// Updates all audio based on current game settings
     func updateAudioSettings() {
-        // Update ambient sound state
-        setAmbientSounds(enabled: gameSettings.ambientSoundsEnabled)
-        
-        // Update ambient volume if it's playing
-        if let ambientPlayer = ambientPlayer, ambientPlayer.isPlaying {
-            ambientPlayer.volume = Float(gameSettings.masterVolume * 0.3)
-        }
+        // Audio settings are checked on each playback, so no action needed here
     }
     
     /// Stops all currently playing sounds
     func stopAllSounds() {
-        for player in ballCollisionPlayers + wallBouncePlayers + ballDropPlayers {
+        for player in bouncePlayers {
             if player.isPlaying {
                 player.stop()
             }
         }
-        
-        ambientPlayer?.stop()
     }
     
     // MARK: - Audio Engine Management
@@ -332,24 +325,13 @@ final class SoundManager {
     }
 }
 
-// MARK: - Convenience Methods
+// MARK: - Preview Support
 
+#if DEBUG
 extension SoundManager {
-    /// Plays appropriate collision sound based on game physics
-    /// - Parameters:
-    ///   - velocity: The velocity of the collision
-    ///   - bounciness: Current bounciness setting from game settings
-    func playCollisionSound(velocity: Double, bounciness: Double = GameSettings.shared.bounciness) {
-        // Calculate intensity based on velocity and bounciness
-        let intensity = min(1.0, velocity * bounciness)
-        playBallCollision(intensity: intensity)
-    }
-    
-    /// Plays wall bounce with intensity calculated from physics
-    /// - Parameter velocity: The velocity of the wall collision
-    func playWallCollisionSound(velocity: Double) {
-        // Wall collisions are typically more intense
-        let intensity = min(1.0, velocity * 1.2)
-        playWallBounce(intensity: intensity)
+    /// Plays a test sound for debugging
+    func playTestSound() {
+        playBounceSound(soundName: "boing", intensity: 1.0)
     }
 }
+#endif

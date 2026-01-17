@@ -181,7 +181,6 @@ struct SettingsView: View {
         Section {
             masterVolumeSliderRow
             soundEffectsToggleRow
-            ambientSoundsToggleRow
         } header: {
             sectionHeader("Audio", systemImage: "speaker.wave.2")
         } footer: {
@@ -311,7 +310,6 @@ struct SettingsView: View {
         Section("Audio") {
             macOSMasterVolumeRow
             macOSSoundEffectsRow
-            macOSAmbientSoundsRow
         }
     }
     
@@ -547,7 +545,6 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             }
             .tint(.blue)
-            .disabled(!settings.soundEffectsEnabled && !settings.ambientSoundsEnabled)
             .accessibilityLabel("Master volume slider")
             .accessibilityValue("\(Int(settings.masterVolumePercentage)) percent")
             .accessibilityHint("Adjust overall game audio volume")
@@ -584,37 +581,8 @@ struct SettingsView: View {
             
             // Play a test sound when enabling
             if newValue && settings.masterVolume > 0.0 {
-                SoundManager.shared.playBallDrop()
+                SoundManager.shared.playBounceSound(soundName: "boing", intensity: 1.0)
             }
-        }
-    }
-    
-    /**
-     * Ambient sounds toggle control
-     */
-    private var ambientSoundsToggleRow: some View {
-        Toggle(isOn: $settings.ambientSoundsEnabled.animation(reduceMotion ? nil : .easeInOut(duration: 0.2))) {
-            Label {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Ambient Sounds")
-                        .font(.body)
-                    
-                    Text("Background physics atmosphere")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            } icon: {
-                Image(systemName: "music.note")
-                    .foregroundStyle(.purple)
-            }
-        }
-        .tint(.purple)
-        .accessibilityLabel("Ambient sounds")
-        .accessibilityValue(settings.ambientSoundsEnabled ? "Enabled" : "Disabled")
-        .accessibilityHint("Toggle background atmospheric audio")
-        .onChange(of: settings.ambientSoundsEnabled) { _, newValue in
-            // Update ambient sounds immediately
-            SoundManager.shared.setAmbientSounds(enabled: newValue)
         }
     }
     
@@ -917,26 +885,8 @@ struct SettingsView: View {
             
             // Play a test sound when enabling
             if newValue && settings.masterVolume > 0.0 {
-                SoundManager.shared.playBallDrop()
+                SoundManager.shared.playBounceSound(soundName: "boing", intensity: 1.0)
             }
-        }
-    }
-    
-    /**
-     * macOS-style ambient sounds toggle
-     */
-    private var macOSAmbientSoundsRow: some View {
-        Toggle(isOn: $settings.ambientSoundsEnabled) {
-            Label("Ambient Sounds", systemImage: "music.note")
-                .foregroundStyle(.purple)
-        }
-        .tint(.purple)
-        .accessibilityLabel("Ambient sounds")
-        .accessibilityValue(settings.ambientSoundsEnabled ? "Enabled" : "Disabled")
-        .help("Enable background atmospheric audio")
-        .onChange(of: settings.ambientSoundsEnabled) { _, newValue in
-            // Update ambient sounds immediately
-            SoundManager.shared.setAmbientSounds(enabled: newValue)
         }
     }
     
@@ -1093,10 +1043,10 @@ struct SettingsView: View {
     private var audioSectionFooterText: String {
         if settings.masterVolume == 0.0 {
             return "All sounds are muted"
-        } else if !settings.soundEffectsEnabled && !settings.ambientSoundsEnabled {
-            return "All sound types are disabled"
+        } else if !settings.soundEffectsEnabled {
+            return "Sound effects are disabled"
         } else {
-            return "Configure game audio and sound effects"
+            return "A subtle sound plays when you drop a ball"
         }
     }
     
@@ -1116,16 +1066,16 @@ struct SettingsView: View {
      */
     private func testSoundEffects() {
         Task {
-            // Test collision sound
-            SoundManager.shared.playBallCollision(intensity: 1.0)
+            // Test bounce sounds with different intensities
+            SoundManager.shared.playBounceSound(soundName: "boing", intensity: 1.0)
             
-            // Wait a bit, then test wall bounce
-            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
-            SoundManager.shared.playWallBounce(intensity: 0.8)
+            // Wait a bit, then test with a different sound
+            try? await Task.sleep(nanoseconds: 400_000_000) // 0.4 seconds
+            SoundManager.shared.playBounceSound(soundName: "sports-ball", intensity: 0.8)
             
-            // Wait a bit, then test ball drop
-            try? await Task.sleep(nanoseconds: 300_000_000) // 0.3 seconds
-            SoundManager.shared.playBallDrop()
+            // Wait a bit, then test with another sound
+            try? await Task.sleep(nanoseconds: 400_000_000) // 0.4 seconds
+            SoundManager.shared.playBounceSound(soundName: "rubber-ball", intensity: 0.6)
         }
     }
     

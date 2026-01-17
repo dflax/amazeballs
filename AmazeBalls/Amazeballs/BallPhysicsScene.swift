@@ -360,6 +360,12 @@ class BallPhysicsScene: SKScene {
         // Configure physics based on settings
         configureBallPhysics(ballSprite, settings: settings)
         
+        // Mark that this ball hasn't played its bounce sound yet
+        if ballSprite.userData == nil {
+            ballSprite.userData = NSMutableDictionary()
+        }
+        ballSprite.userData?["hasPlayedBounceSound"] = false
+        
         // Add to scene and track
         addChild(ballSprite)
         activeBalls.append(ballSprite)
@@ -425,8 +431,15 @@ class BallPhysicsScene: SKScene {
         sprite.physicsBody?.isDynamic = true
         sprite.physicsBody?.affectedByGravity = true
 
+        // Mark that this ball hasn't played its bounce sound yet
+        if sprite.userData == nil {
+            sprite.userData = NSMutableDictionary()
+        }
+        sprite.userData?["hasPlayedBounceSound"] = false
+        
         // Track as an active ball and clear preview state
         activeBalls.append(sprite)
+        
         previewBall = nil
         previewBallType = nil
         previewStartTime = nil
@@ -659,15 +672,109 @@ class BallPhysicsScene: SKScene {
     
     /**
      * Updates gravity based on accelerometer data
+     * 
+     * Transforms accelerometer data from device coordinates to scene coordinates
+     * based on the current interface orientation. This ensures gravity always
+     * points in the correct direction relative to the screen, not the physical device.
      */
     #if !os(macOS)
     private func updateGravityWithAccelerometer(data: CMAccelerometerData) {
+        // Get the current interface orientation
+        let orientation = getCurrentInterfaceOrientation()
+        
         // Convert accelerometer data to gravity vector
         // The accelerometer reports the direction opposite to gravity, so we use the values directly
-        let gravityX = data.acceleration.x * 9.8 * currentGravityStrength
-        let gravityY = data.acceleration.y * 9.8 * currentGravityStrength
+        let deviceX = data.acceleration.x
+        let deviceY = data.acceleration.y
+        
+        // Transform from device coordinates to scene coordinates based on orientation
+        // Device coordinates: X points toward right edge (when in portrait), Y points toward top
+        // Scene coordinates: X points right on screen, Y points up on screen
+        let (sceneX, sceneY) = transformAccelerometerToScene(deviceX: deviceX, deviceY: deviceY, orientation: orientation)
+        
+        // Apply gravity strength multiplier
+        let gravityX = sceneX * 9.8 * currentGravityStrength
+        let gravityY = sceneY * 9.8 * currentGravityStrength
         
         physicsWorld.gravity = CGVector(dx: gravityX, dy: gravityY)
+        
+        #if DEBUG
+        // Uncomment for debugging gravity vectors
+        // print("BallPhysicsScene: Accel(\(deviceX), \(deviceY)) -> Scene(\(sceneX), \(sceneY)) -> Gravity(\(gravityX), \(gravityY))")
+        #endif
+    }
+    
+    /**
+     * Gets the current interface orientation from the scene's view
+     * 
+     * - Returns: The current UIInterfaceOrientation, or .landscapeLeft as fallback
+     */
+    private func getCurrentInterfaceOrientation() -> UIInterfaceOrientation {
+        #if os(iOS)
+        // Try to get orientation from the window scene's effective geometry
+        if let windowScene = view?.window?.windowScene {
+                return windowScene.effectiveGeometry.interfaceOrientation
+        }
+        #endif
+        
+        // Fallback to landscape left (the locked orientation for this app)
+        return .landscapeLeft
+    }
+    
+    /**
+     * Transforms accelerometer coordinates from device space to scene space
+     * 
+     * Device coordinates are fixed relative to the physical device:
+     * - X axis points toward the right edge when device is in portrait
+     * - Y axis points toward the top edge when device is in portrait
+     * - Z axis points out of the screen
+     * 
+     * Scene coordinates are relative to the current screen orientation:
+     * - X axis points to the right of the screen (as currently oriented)
+     * - Y axis points to the top of the screen (as currently oriented)
+     * 
+     * - Parameters:
+     *   - deviceX: X component from accelerometer (device coordinates)
+     *   - deviceY: Y component from accelerometer (device coordinates)
+     *   - orientation: The current interface orientation
+     * - Returns: A tuple (sceneX, sceneY) in scene coordinates
+     */
+    private func transformAccelerometerToScene(deviceX: Double, deviceY: Double, orientation: UIInterfaceOrientation) -> (Double, Double) {
+        switch orientation {
+        case .landscapeLeft:
+            // Landscape Left: Home button (or charging port) on RIGHT
+            // Device right edge (deviceX+) -> Screen bottom (sceneY-)
+            // Device top edge (deviceY+) -> Screen right (sceneX+)
+            // Therefore: sceneX = deviceY, sceneY = -deviceX
+            return (deviceY, -deviceX)
+            
+        case .landscapeRight:
+            // Landscape Right: Home button (or charging port) on LEFT
+            // Device right edge (deviceX+) -> Screen top (sceneY+)
+            // Device top edge (deviceY+) -> Screen left (sceneX-)
+            // Therefore: sceneX = -deviceY, sceneY = deviceX
+            return (-deviceY, deviceX)
+            
+        case .portrait:
+            // Portrait: Home button at BOTTOM
+            // Device right edge (deviceX+) -> Screen right (sceneX+)
+            // Device top edge (deviceY+) -> Screen top (sceneY+)
+            // Therefore: sceneX = deviceX, sceneY = deviceY
+            return (deviceX, deviceY)
+            
+        case .portraitUpsideDown:
+            // Portrait Upside Down: Home button at TOP
+            // Device right edge (deviceX+) -> Screen left (sceneX-)
+            // Device top edge (deviceY+) -> Screen bottom (sceneY-)
+            // Therefore: sceneX = -deviceX, sceneY = -deviceY
+            return (-deviceX, -deviceY)
+            
+        case .unknown:
+            fallthrough
+        @unknown default:
+            // Fallback to landscape left (the app's locked orientation)
+            return (deviceY, -deviceX)
+        }
     }
     #endif
     
@@ -687,6 +794,46 @@ class BallPhysicsScene: SKScene {
      */
     var activeBallCount: Int {
         return activeBalls.count
+    }
+    
+    /**
+     * Determines which sound should play for a given ball type
+     * 
+     * - Parameter ballType: The ball type identifier (e.g., "ball-basketball1")
+     * - Returns: The sound identifier to play ("boing", "rubber-ball", "sports-ball", or "ping-pong-ball")
+     */
+    private func soundForBallType(_ ballType: String) -> String {
+        switch ballType {
+        case "ball-amazeball":
+            return "boing"
+            
+        case "ball-apple1", "ball-banana1", "ball-banana2", "ball-banana3",
+             "ball-cherries1", "ball-cherries2", "ball-egg1", "ball-olive1",
+             "ball-peace1", "ball-peace2", "ball-pumpkin1":
+            return "rubber-ball"
+            
+        case "ball-baseball1", "ball-baseball2", "ball-baseball3",
+             "ball-basketball1", "ball-basketball2", "ball-basketball3",
+             "ball-football1", "ball-football2", "ball-football3", "ball-football4",
+             "ball-hockeypuck1",
+             "ball-soccer1", "ball-soccer2", "ball-soccer3", "ball-soccer4", "ball-soccer5", "ball-soccer6",
+             "ball-tennis1", "ball-tennis2", "ball-tennis3", "ball-tennis4", "ball-tennis5",
+             "ball-volleyball1", "ball-volleyball2":
+            return "sports-ball"
+            
+        case "ball-bowling1", "ball-bowling2", "ball-bowling3", "ball-bowling4",
+             "ball-bowlingpin1", "ball-bowlingpins2",
+             "ball-christmasball1", "ball-cookie1",
+             "ball-discoball1", "ball-discoball2",
+             "ball-eightball1",
+             "ball-glassball1",
+             "ball-golf1", "ball-golf2", "ball-golf3":
+            return "ping-pong-ball"
+            
+        default:
+            // Fallback for any unknown ball types
+            return "rubber-ball"
+        }
     }
     
     /**
@@ -784,26 +931,62 @@ extension BallPhysicsScene: SKPhysicsContactDelegate {
      * Handles ball-floor collision
      */
     private func handleBallFloorContact(_ contact: SKPhysicsContact) {
-        // Add any special floor collision effects here
-        // For now, just rely on SpriteKit's built-in physics
+        // Determine which body is the ball
+        let ballNode = contact.bodyA.categoryBitMask == PhysicsCategory.ball ? contact.bodyA.node : contact.bodyB.node
         
-        #if DEBUG
-        // Uncomment for debugging floor collisions
-        // print("BallPhysicsScene: Ball hit floor")
-        #endif
+        guard let ballSprite = ballNode as? SKSpriteNode else { return }
+        
+        // Check if this ball has already played its bounce sound
+        guard let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool,
+              !hasPlayed else { return }
+        
+        // Mark as played
+        ballSprite.userData?["hasPlayedBounceSound"] = true
+        
+        // Extract ball type from sprite name (format: "ball-basketball1")
+        guard let ballName = ballSprite.name else { return }
+        
+        // Determine which sound to play
+        let soundName = soundForBallType(ballName)
+        
+        // Calculate impact velocity for volume adjustment
+        let velocity = ballSprite.physicsBody?.velocity ?? CGVector.zero
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        let intensity = min(1.0, Double(speed) / 500.0) // Normalize to 0.0-1.0
+        
+        // Play the bounce sound
+        SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
     }
     
     /**
      * Handles ball-wall collision
      */
     private func handleBallWallContact(_ contact: SKPhysicsContact) {
-        // Add any special wall collision effects here
-        // For now, just rely on SpriteKit's built-in physics
+        // Determine which body is the ball
+        let ballNode = contact.bodyA.categoryBitMask == PhysicsCategory.ball ? contact.bodyA.node : contact.bodyB.node
         
-        #if DEBUG
-        // Uncomment for debugging wall collisions
-        // print("BallPhysicsScene: Ball hit wall")
-        #endif
+        guard let ballSprite = ballNode as? SKSpriteNode else { return }
+        
+        // Check if this ball has already played its bounce sound
+        guard let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool,
+              !hasPlayed else { return }
+        
+        // Mark as played
+        ballSprite.userData?["hasPlayedBounceSound"] = true
+        
+        // Extract ball type from sprite name (format: "ball-basketball1")
+        guard let ballName = ballSprite.name else { return }
+        
+        // Determine which sound to play
+        let soundName = soundForBallType(ballName)
+        
+        // Calculate impact velocity for volume adjustment
+        let velocity = ballSprite.physicsBody?.velocity ?? CGVector.zero
+        let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
+        let intensity = min(1.0, Double(speed) / 500.0) // Normalize to 0.0-1.0
+        
+        // Play the bounce sound
+        SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
     }
     
     /**
