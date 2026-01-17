@@ -146,6 +146,15 @@ final class GameSettings {
         }
     }
     
+    /// Whether large balls should produce additional haptic feedback on subsequent bounces
+    /// - Available on: iOS, iPadOS
+    /// - Default: true (heavy balls feel more impactful)
+    var heavyBallHapticsEnabled: Bool = true {
+        didSet {
+            persistValue(key: Keys.heavyBallHapticsEnabled, value: heavyBallHapticsEnabled)
+        }
+    }
+    
     /// The specific ball type to spawn, or nil for random selection
     /// - nil: Random ball type each time
     /// - String: Specific ball type name (e.g., "basketball", "tennisball")
@@ -197,6 +206,7 @@ final class GameSettings {
         static let ballSizeMode = "amazeballs.settings.ballSizeMode"
         static let wallsEnabled = "amazeballs.settings.wallsEnabled"
         static let accelerometerEnabled = "amazeballs.settings.accelerometerEnabled"
+        static let heavyBallHapticsEnabled = "amazeballs.settings.heavyBallHapticsEnabled"
         static let selectedBallType = "amazeballs.settings.selectedBallType"
         static let masterVolume = "amazeballs.settings.masterVolume"
         static let soundEffectsEnabled = "amazeballs.settings.soundEffectsEnabled"
@@ -308,6 +318,11 @@ final class GameSettings {
             accelerometerEnabled = defaults.bool(forKey: Keys.accelerometerEnabled)
         }
         
+        // Load heavy ball haptics setting
+        if defaults.object(forKey: Keys.heavyBallHapticsEnabled) != nil {
+            heavyBallHapticsEnabled = defaults.bool(forKey: Keys.heavyBallHapticsEnabled)
+        }
+        
         // Ball type preference
         selectedBallType = defaults.string(forKey: Keys.selectedBallType)
         
@@ -389,6 +404,12 @@ final class GameSettings {
             let cloudValue = cloudStore.bool(forKey: Keys.accelerometerEnabled)
             accelerometerEnabled = cloudValue
             defaults.set(cloudValue, forKey: Keys.accelerometerEnabled)
+        }
+        
+        if let _ = cloudStore.object(forKey: Keys.heavyBallHapticsEnabled) {
+            let cloudValue = cloudStore.bool(forKey: Keys.heavyBallHapticsEnabled)
+            heavyBallHapticsEnabled = cloudValue
+            defaults.set(cloudValue, forKey: Keys.heavyBallHapticsEnabled)
         }
         
         if let cloudValue = cloudStore.string(forKey: Keys.selectedBallType) {
@@ -574,6 +595,13 @@ final class GameSettings {
                     }
                 }
                 
+            case Keys.heavyBallHapticsEnabled:
+                let newValue = cloudStore.bool(forKey: key)
+                if newValue != heavyBallHapticsEnabled {
+                    heavyBallHapticsEnabled = newValue
+                    defaults.set(newValue, forKey: key)
+                }
+                
             case Keys.selectedBallType:
                 let newValue = cloudStore.string(forKey: key)
                 if newValue != selectedBallType {
@@ -622,6 +650,7 @@ final class GameSettings {
         ballSizeMode = .fixed
         wallsEnabled = true
         accelerometerEnabled = false
+        heavyBallHapticsEnabled = true
         selectedBallType = nil
         masterVolume = 0.7
         soundEffectsEnabled = true
@@ -635,8 +664,8 @@ final class GameSettings {
         
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
-            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled
+            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.heavyBallHapticsEnabled,
+            Keys.selectedBallType, Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         // Always clear from UserDefaults
@@ -707,8 +736,8 @@ final class GameSettings {
         let defaults = UserDefaults.standard
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
-            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled
+            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.heavyBallHapticsEnabled,
+            Keys.selectedBallType, Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         return allKeys.contains { defaults.object(forKey: $0) != nil }
@@ -722,8 +751,8 @@ final class GameSettings {
         let cloudStore = NSUbiquitousKeyValueStore.default
         let allKeys = [
             Keys.gravity, Keys.bounciness, Keys.ballSize, Keys.randomBallSizeEnabled,
-            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.selectedBallType,
-            Keys.masterVolume, Keys.soundEffectsEnabled
+            Keys.ballSizeMode, Keys.wallsEnabled, Keys.accelerometerEnabled, Keys.heavyBallHapticsEnabled,
+            Keys.selectedBallType, Keys.masterVolume, Keys.soundEffectsEnabled
         ]
         
         return allKeys.contains { cloudStore.object(forKey: $0) != nil }

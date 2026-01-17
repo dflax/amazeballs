@@ -196,6 +196,7 @@ struct SettingsView: View {
         Section {
             wallsToggleRow
             accelerometerToggleRow
+            heavyBallHapticsToggleRow
             ballTypeSelectionRow
         } header: {
             sectionHeader("Gameplay", systemImage: "gamecontroller")
@@ -320,6 +321,7 @@ struct SettingsView: View {
         Section("Gameplay") {
             macOSWallsRow
             macOSAccelerometerRow
+            macOSHeavyBallHapticsRow
             macOSBallTypeRow
         }
     }
@@ -640,6 +642,31 @@ struct SettingsView: View {
     }
     
     /**
+     * Heavy ball haptics toggle control
+     */
+    private var heavyBallHapticsToggleRow: some View {
+        Toggle(isOn: $settings.heavyBallHapticsEnabled.animation(reduceMotion ? nil : .easeInOut(duration: 0.2))) {
+            Label {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Heavy Ball Haptics")
+                        .font(.body)
+                    
+                    Text("Large balls vibrate on multiple bounces")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            } icon: {
+                Image(systemName: "waveform")
+                    .foregroundStyle(.pink)
+            }
+        }
+        .tint(.pink)
+        .accessibilityLabel("Heavy ball haptics")
+        .accessibilityValue(settings.heavyBallHapticsEnabled ? "Enabled" : "Disabled")
+        .accessibilityHint("When enabled, maximum-size balls produce haptic feedback on multiple bounces")
+    }
+    
+    /**
      * Ball type selection row with sheet presentation
      */
     private var ballTypeSelectionRow: some View {
@@ -919,6 +946,20 @@ struct SettingsView: View {
         .help(settings.isAccelerometerSupported ? 
               "Use device tilting to control gravity" : 
               "Motion sensors not available on this device")
+    }
+    
+    /**
+     * macOS-style heavy ball haptics toggle
+     */
+    private var macOSHeavyBallHapticsRow: some View {
+        Toggle(isOn: $settings.heavyBallHapticsEnabled) {
+            Label("Heavy Ball Haptics", systemImage: "waveform")
+                .foregroundStyle(.pink)
+        }
+        .tint(.pink)
+        .accessibilityLabel("Heavy ball haptics")
+        .accessibilityValue(settings.heavyBallHapticsEnabled ? "Enabled" : "Disabled")
+        .help("When enabled, maximum-size balls produce haptic feedback on multiple bounces")
     }
     
     /**

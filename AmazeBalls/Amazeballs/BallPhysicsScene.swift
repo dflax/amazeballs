@@ -365,6 +365,8 @@ class BallPhysicsScene: SKScene {
             ballSprite.userData = NSMutableDictionary()
         }
         ballSprite.userData?["hasPlayedBounceSound"] = false
+        ballSprite.userData?["bounceCount"] = 0
+        ballSprite.userData?["ballSize"] = Double(sizeMultiplier)
         
         // Add to scene and track
         addChild(ballSprite)
@@ -436,6 +438,8 @@ class BallPhysicsScene: SKScene {
             sprite.userData = NSMutableDictionary()
         }
         sprite.userData?["hasPlayedBounceSound"] = false
+        sprite.userData?["bounceCount"] = 0
+        sprite.userData?["ballSize"] = Double(currentScale)
         
         // Track as an active ball and clear preview state
         activeBalls.append(sprite)
@@ -851,6 +855,65 @@ class BallPhysicsScene: SKScene {
             "sceneSize": size
         ]
     }
+    
+    /**
+     * Triggers haptic feedback based on impact intensity
+     * 
+     * - Parameter intensity: Impact intensity (0.0 to 1.0)
+     */
+    private func triggerHapticFeedback(intensity: Double) {
+        #if os(iOS)
+        // Choose haptic style based on intensity
+        let feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle
+        if intensity > 0.7 {
+            feedbackStyle = .heavy
+        } else if intensity > 0.4 {
+            feedbackStyle = .medium
+        } else {
+            feedbackStyle = .light
+        }
+        
+        let generator = UIImpactFeedbackGenerator(style: feedbackStyle)
+        generator.impactOccurred()
+        #endif
+    }
+    
+    /**
+     * Determines if haptic feedback should be triggered for this bounce
+     * 
+     * - Parameters:
+     *   - ballSprite: The ball sprite that bounced
+     *   - bounceCount: The current bounce count for this ball
+     * - Returns: True if haptic should be triggered
+     */
+    private func shouldTriggerHaptic(for ballSprite: SKSpriteNode, bounceCount: Int) -> Bool {
+        // First bounce always triggers haptic
+        if bounceCount == 1 {
+            return true
+        }
+        
+        // Check if heavy ball haptics are enabled
+        guard GameSettings.shared.heavyBallHapticsEnabled else {
+            return false
+        }
+        
+        // Check if this is a max-size ball (scale >= 4.0)
+        guard let ballSize = ballSprite.userData?["ballSize"] as? Double,
+              ballSize >= 4.0 else {
+            return false
+        }
+        
+        // Determine probability based on bounce count
+        let randomValue = Double.random(in: 0...1)
+        switch bounceCount {
+        case 2:
+            return randomValue < 0.5 // 50% chance
+        case 3:
+            return randomValue < 0.3 // 30% chance
+        default:
+            return randomValue < 0.1 // 10% chance
+        }
+    }
 
     // MARK: - Size Change Handling
 
@@ -936,26 +999,36 @@ extension BallPhysicsScene: SKPhysicsContactDelegate {
         
         guard let ballSprite = ballNode as? SKSpriteNode else { return }
         
-        // Check if this ball has already played its bounce sound
-        guard let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool,
-              !hasPlayed else { return }
+        // Increment bounce count
+        let bounceCount = (ballSprite.userData?["bounceCount"] as? Int ?? 0) + 1
+        ballSprite.userData?["bounceCount"] = bounceCount
         
-        // Mark as played
-        ballSprite.userData?["hasPlayedBounceSound"] = true
-        
-        // Extract ball type from sprite name (format: "ball-basketball1")
-        guard let ballName = ballSprite.name else { return }
-        
-        // Determine which sound to play
-        let soundName = soundForBallType(ballName)
-        
-        // Calculate impact velocity for volume adjustment
+        // Calculate impact velocity for volume/haptic intensity
         let velocity = ballSprite.physicsBody?.velocity ?? CGVector.zero
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         let intensity = min(1.0, Double(speed) / 500.0) // Normalize to 0.0-1.0
         
-        // Play the bounce sound
-        SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
+        // Check if this ball has already played its bounce sound
+        let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool ?? false
+        
+        if !hasPlayed {
+            // Mark as played
+            ballSprite.userData?["hasPlayedBounceSound"] = true
+            
+            // Extract ball type from sprite name (format: "ball-basketball1")
+            guard let ballName = ballSprite.name else { return }
+            
+            // Determine which sound to play
+            let soundName = soundForBallType(ballName)
+            
+            // Play the bounce sound
+            SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
+        }
+        
+        // Trigger haptic feedback if appropriate
+        if shouldTriggerHaptic(for: ballSprite, bounceCount: bounceCount) {
+            triggerHapticFeedback(intensity: intensity)
+        }
     }
     
     /**
@@ -967,26 +1040,36 @@ extension BallPhysicsScene: SKPhysicsContactDelegate {
         
         guard let ballSprite = ballNode as? SKSpriteNode else { return }
         
-        // Check if this ball has already played its bounce sound
-        guard let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool,
-              !hasPlayed else { return }
+        // Increment bounce count
+        let bounceCount = (ballSprite.userData?["bounceCount"] as? Int ?? 0) + 1
+        ballSprite.userData?["bounceCount"] = bounceCount
         
-        // Mark as played
-        ballSprite.userData?["hasPlayedBounceSound"] = true
-        
-        // Extract ball type from sprite name (format: "ball-basketball1")
-        guard let ballName = ballSprite.name else { return }
-        
-        // Determine which sound to play
-        let soundName = soundForBallType(ballName)
-        
-        // Calculate impact velocity for volume adjustment
+        // Calculate impact velocity for volume/haptic intensity
         let velocity = ballSprite.physicsBody?.velocity ?? CGVector.zero
         let speed = sqrt(velocity.dx * velocity.dx + velocity.dy * velocity.dy)
         let intensity = min(1.0, Double(speed) / 500.0) // Normalize to 0.0-1.0
         
-        // Play the bounce sound
-        SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
+        // Check if this ball has already played its bounce sound
+        let hasPlayed = ballSprite.userData?["hasPlayedBounceSound"] as? Bool ?? false
+        
+        if !hasPlayed {
+            // Mark as played
+            ballSprite.userData?["hasPlayedBounceSound"] = true
+            
+            // Extract ball type from sprite name (format: "ball-basketball1")
+            guard let ballName = ballSprite.name else { return }
+            
+            // Determine which sound to play
+            let soundName = soundForBallType(ballName)
+            
+            // Play the bounce sound
+            SoundManager.shared.playBounceSound(soundName: soundName, intensity: intensity)
+        }
+        
+        // Trigger haptic feedback if appropriate
+        if shouldTriggerHaptic(for: ballSprite, bounceCount: bounceCount) {
+            triggerHapticFeedback(intensity: intensity)
+        }
     }
     
     /**
