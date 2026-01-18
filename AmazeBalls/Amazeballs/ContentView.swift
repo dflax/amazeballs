@@ -118,7 +118,7 @@ struct ContentView: View {
      * Navigation-based interface for iPad
      */
     private var navigationSplitViewInterface: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             List {
                 // Game Section
                 Section("Game") {
@@ -166,19 +166,9 @@ struct ContentView: View {
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             #endif
             .navigationTitle("Amazeballs")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: { showingSettings = true }) {
-                        Label("Settings", systemImage: "gearshape")
-                    }
-                }
-            }
         } detail: {
             // Show game view by default instead of welcome screen
             EmbeddedGameView(gameSettings: gameSettings)
-        }
-        .sheet(isPresented: $showingSettings) {
-            SettingsView()
         }
     }
 }
@@ -295,7 +285,11 @@ private struct WelcomeView: View {
         }
         .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.systemBackground))
+        #if os(macOS)
+        .background(Color(nsColor: .windowBackgroundColor))
+        #else
+        .background(Color(uiColor: .systemBackground))
+        #endif
     }
 }
 
@@ -306,38 +300,11 @@ private struct WelcomeView: View {
  */
 private struct EmbeddedGameView: View {
     @Bindable var gameSettings: GameSettings
-    @State private var showingSettings = false
     
     var body: some View {
-        ZStack {
-            // Physics scene
-            SpriteKitSceneView(settings: gameSettings)
-                .ignoresSafeArea()
-            
-            // Toolbar overlay
-            VStack {
-                HStack {
-                    Spacer()
-                    
-                    Button(action: { showingSettings = true }) {
-                        Image(systemName: "gearshape.fill")
-                            .font(.title3)
-                            .foregroundStyle(.primary)
-                            .frame(width: 44, height: 44)
-                            .background(.regularMaterial, in: Circle())
-                            .contentShape(Circle())
-                    }
-                    .accessibilityLabel("Settings")
-                }
-                .padding()
-                
-                Spacer()
-            }
-        }
-        .navigationBarHidden(true)
-        .sheet(isPresented: $showingSettings) {
-            SettingsView()
-        }
+        // Physics scene (full screen, no overlays or toolbar buttons)
+        SpriteKitSceneView(settings: gameSettings)
+            .ignoresSafeArea()
     }
 }
 

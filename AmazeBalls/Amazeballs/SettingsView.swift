@@ -883,7 +883,7 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             }
             .tint(.blue)
-            .disabled(!settings.soundEffectsEnabled && !settings.ambientSoundsEnabled)
+            .disabled(!settings.soundEffectsEnabled)
             
             Text("\(Int(settings.masterVolumePercentage))%")
                 .font(.body)

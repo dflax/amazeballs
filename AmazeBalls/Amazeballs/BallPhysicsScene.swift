@@ -34,6 +34,9 @@ import Foundation
  */
 class BallPhysicsScene: SKScene {
     
+    /// Unique identifier for logging
+    private let sceneID = ObjectIdentifier(BallPhysicsScene.self)
+    
     // MARK: - Physics Categories
     
     /// Physics collision categories for different objects
@@ -112,14 +115,37 @@ class BallPhysicsScene: SKScene {
         setupBackground()
         setupFloor()
         setupWalls()
+        
+        // Re-sync wall state with latest settings at mount time to handle re-created scenes (e.g., iPad containers)
+        let latestWalls = GameSettings.shared.wallsEnabled
+        if latestWalls != wallsEnabled {
+            #if DEBUG
+            print("BallPhysicsScene[\(sceneID)]: didMove re-sync wallsEnabled from \(wallsEnabled) -> \(latestWalls)")
+            #endif
+            wallsEnabled = latestWalls
+        }
+        updateWalls(enabled: wallsEnabled)
+        
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: didMove(to:) size=\(size) wallsEnabled=\(wallsEnabled)")
+        #endif
     }
     
     override func willMove(from view: SKView) {
         super.willMove(from: view)
+        
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: willMove(from:)")
+        #endif
+        
         cleanupMotionManager()
     }
     
     deinit {
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: deinit")
+        #endif
+        
         cleanupMotionManager()
         activeBalls.removeAll()
     }
@@ -261,6 +287,10 @@ class BallPhysicsScene: SKScene {
         // Initially set wall visibility based on default settings
         updateWallsGeometry()
         updateWalls(enabled: wallsEnabled)
+        
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: setupWalls complete (wallsEnabled=\(wallsEnabled))")
+        #endif
     }
     
     /**
@@ -287,6 +317,10 @@ class BallPhysicsScene: SKScene {
      * Updates walls geometry and physics
      */
     private func updateWallsGeometry() {
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: updateWallsGeometry() size=\(size) wallsEnabled=\(wallsEnabled)")
+        #endif
+        
         let wallThickness: CGFloat = 10
 
         // Left wall
@@ -554,6 +588,10 @@ class BallPhysicsScene: SKScene {
      * - Parameter settings: Updated game settings
      */
     func updatePhysics(with settings: GameSettings) {
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: updatePhysics called with gravity=\(settings.gravity), bounciness=\(settings.bounciness), walls=\(settings.wallsEnabled)")
+        #endif
+        
         // Cache settings for efficiency
         currentGravityStrength = CGFloat(settings.gravity)
         currentBounciness = CGFloat(settings.bounciness)
@@ -579,14 +617,34 @@ class BallPhysicsScene: SKScene {
      * Updates wall visibility and physics
      */
     private func updateWalls(enabled: Bool) {
+        #if DEBUG
+        print("BallPhysicsScene[\(sceneID)]: updateWalls(enabled: \(enabled))")
+        #endif
+        
         leftWallSprite?.isHidden = !enabled
         rightWallSprite?.isHidden = !enabled
         topWallSprite?.isHidden = !enabled
         
-        // Disable physics when hidden
-        leftWallSprite?.physicsBody?.categoryBitMask = enabled ? PhysicsCategory.wall : 0
-        rightWallSprite?.physicsBody?.categoryBitMask = enabled ? PhysicsCategory.wall : 0
-        topWallSprite?.physicsBody?.categoryBitMask = enabled ? PhysicsCategory.wall : 0
+        // Disable physics when hidden - MUST disable collisionBitMask too!
+        if enabled {
+            leftWallSprite?.physicsBody?.categoryBitMask = PhysicsCategory.wall
+            leftWallSprite?.physicsBody?.collisionBitMask = PhysicsCategory.ball
+            
+            rightWallSprite?.physicsBody?.categoryBitMask = PhysicsCategory.wall
+            rightWallSprite?.physicsBody?.collisionBitMask = PhysicsCategory.ball
+            
+            topWallSprite?.physicsBody?.categoryBitMask = PhysicsCategory.wall
+            topWallSprite?.physicsBody?.collisionBitMask = PhysicsCategory.ball
+        } else {
+            leftWallSprite?.physicsBody?.categoryBitMask = 0
+            leftWallSprite?.physicsBody?.collisionBitMask = 0
+            
+            rightWallSprite?.physicsBody?.categoryBitMask = 0
+            rightWallSprite?.physicsBody?.collisionBitMask = 0
+            
+            topWallSprite?.physicsBody?.categoryBitMask = 0
+            topWallSprite?.physicsBody?.collisionBitMask = 0
+        }
     }
     
     /**
@@ -651,7 +709,7 @@ class BallPhysicsScene: SKScene {
         isAccelerometerEnabled = true
         
         #if DEBUG
-        print("BallPhysicsScene: Accelerometer enabled")
+        print("BallPhysicsScene[\(sceneID)]: Accelerometer enabled")
         #endif
         #endif
     }
@@ -670,7 +728,7 @@ class BallPhysicsScene: SKScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8 * currentGravityStrength)
         
         #if DEBUG
-        print("BallPhysicsScene: Accelerometer disabled")
+        print("BallPhysicsScene[\(sceneID)]: Accelerometer disabled")
         #endif
     }
     
@@ -947,6 +1005,16 @@ class BallPhysicsScene: SKScene {
 
         // Update walls geometry and physics
         updateWallsGeometry()
+        
+        // Ensure wall visibility matches latest settings even if cached value is stale
+        let latestWallsEnabled = GameSettings.shared.wallsEnabled
+        if latestWallsEnabled != wallsEnabled {
+            #if DEBUG
+            print("BallPhysicsScene[\(sceneID)]: didChangeSize detected wallsEnabled drift (cached=\(wallsEnabled) latest=\(latestWallsEnabled)). Re-applying.")
+            #endif
+            wallsEnabled = latestWallsEnabled
+        }
+        updateWalls(enabled: wallsEnabled)
     }
 
     // MARK: - Frame Update
@@ -961,6 +1029,17 @@ class BallPhysicsScene: SKScene {
             let scale = previewBaseScale + (previewTargetScale - previewBaseScale) * CGFloat(progress)
             sprite.setScale(scale)
         }
+        
+        #if DEBUG
+        // Debug-only: detect if visible state of one wall drifts from cached wallsEnabled and re-apply
+        if let leftWall = leftWallSprite {
+            let isPhysicallyEnabled = (leftWall.physicsBody?.categoryBitMask ?? 0) != 0 && !leftWall.isHidden
+            if isPhysicallyEnabled != wallsEnabled {
+                print("BallPhysicsScene[\(sceneID)]: Detected wall state drift during update() (cached=\(wallsEnabled) visible=\(isPhysicallyEnabled)). Re-applying updateWalls().")
+                updateWalls(enabled: wallsEnabled)
+            }
+        }
+        #endif
     }
 }
 

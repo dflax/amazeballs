@@ -39,184 +39,61 @@ struct WatchContentView: View {
     @State private var debugLines: [String] = []
     @State private var ballsCount: Int = 0
     
-    // Digital Crown tracking
-    @State private var crownValue: Double = 0.0
-    @State private var isAdjustingWithCrown = false
+    @GestureState private var isPressing: Bool = false
     
-    // Animation states
-    @State private var showingWallToggle = false
-    @State private var showingCrownIndicator = false
+    @State private var previewTimer: Timer? = nil
+    @State private var previewStartDate: Date? = nil
     
     // MARK: - Body
     
     var body: some View {
         ZStack {
-            // Main physics simulation (placeholder for now)
-            ZStack {
-                physicsSimulationView
-                // Debug overlay (visible in DEBUG builds)
-                #if DEBUG
-                VStack { Spacer() }
-                    .overlay(alignment: .bottomLeading) {
-                        WatchDebugOverlay(lines: debugLines, tapCount: tapCount, ballsCount: ballsCount)
-                            .padding(6)
-                    }
-                #endif
-            }
+            // Main physics simulation (WatchSpriteKitSceneView)
+            physicsSimulationView
             
-            // Overlay indicators
-            overlayIndicators
-            
-            // Quick settings sheet
-            .sheet(isPresented: $showingQuickSettings) {
-                WatchQuickSettingsView(crownControlsGravity: $crownControlsGravity)
-                    .environment(gameSettings)
-            }
+            // Debug overlay (visible in DEBUG builds)
+            #if DEBUG
+            VStack { Spacer() }
+                .overlay(alignment: .bottomLeading) {
+                    WatchDebugOverlay(lines: debugLines, tapCount: tapCount, ballsCount: ballsCount)
+                        .padding(6)
+                }
+            #endif
         }
-        .focusable(true)
-        .digitalCrownRotation(
-            $crownValue,
-            from: crownControlsGravity ? 0.0 : 0.0,
-            through: crownControlsGravity ? 4.0 : 1.3,
-            by: 0.05,
-            sensitivity: .medium,
-            isContinuous: false,
-            isHapticFeedbackEnabled: true
-        )
-        .onTapGesture(count: 1) {
-            handleSingleTap()
-        }
-        .onLongPressGesture(minimumDuration: 1.0) {
-            showingQuickSettings = true
-        }
-        .onChange(of: crownValue) { _, newValue in
-            handleCrownValueChange(newValue)
-        }
-        .onAppear {
-            initializeCrownValue()
+        .sheet(isPresented: $showingQuickSettings) {
+            WatchQuickSettingsView(crownControlsGravity: $crownControlsGravity)
+                .environment(gameSettings)
         }
     }
     
     // MARK: - Physics Simulation View
     
-    /**
-     * Placeholder for the physics simulation
-     * In a full implementation, this would contain SpriteKit or similar
-     */
     private var physicsSimulationView: some View {
-        Rectangle()
-            .fill(.black)
-            .overlay {
-                // Simple visual feedback for demo purposes
-                VStack {
-                    Text("🏀")
-                        .font(.system(size: 40))
-                        .scaleEffect(gameSettings.ballSize)
-                    
-                    Spacer()
-                    
-                    Text("Tap to drop balls")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
-            }
-    }
-    
-    // MARK: - Overlay Indicators
-    
-    /**
-     * Status indicators overlaid on the physics simulation
-     */
-    private var overlayIndicators: some View {
-        VStack {
-            HStack {
-                // Crown control indicator
-                crownControlIndicator
-                
-                Spacer()
-                
-                // Walls status indicator
-                wallsStatusIndicator
-            }
-            .padding(.horizontal, 8)
-            .padding(.top, 4)
-            
-            Spacer()
-            
-            // Bottom status bar
-            bottomStatusBar
-        }
-    }
-    
-    /**
-     * Shows what the Digital Crown currently controls
-     */
-    private var crownControlIndicator: some View {
-        HStack(spacing: 2) {
-            Image(systemName: "crown.fill")
-                .font(.caption2)
-                .foregroundStyle(.orange)
-            
-            Text(crownControlsGravity ? "G" : "B")
-                .font(.caption2)
-                .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-        }
-        .padding(.horizontal, 6)
-        .padding(.vertical, 2)
-        .background(.regularMaterial, in: Capsule())
-        .opacity(showingCrownIndicator ? 1.0 : 0.3)
-        .scaleEffect(showingCrownIndicator ? 1.1 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: showingCrownIndicator)
-    }
-    
-    /**
-     * Shows current walls status
-     */
-    private var wallsStatusIndicator: some View {
-        HStack(spacing: 2) {
-            Image(systemName: gameSettings.wallsEnabled ? "rectangle" : "rectangle.dashed")
-                .font(.caption2)
-                .foregroundStyle(gameSettings.wallsEnabled ? .green : .gray)
-        }
-        .padding(.horizontal, 6)
-        .padding(.vertical, 2)
-        .background(.regularMaterial, in: Capsule())
-        .opacity(showingWallToggle ? 1.0 : 0.3)
-        .scaleEffect(showingWallToggle ? 1.1 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: showingWallToggle)
-    }
-    
-    /**
-     * Bottom status bar with current values
-     */
-    private var bottomStatusBar: some View {
-        HStack {
-            // Gravity indicator
-            HStack(spacing: 2) {
-                Image(systemName: "arrow.down")
-                    .font(.caption2)
-                Text(String(format: "%.1f", gameSettings.gravity))
-                    .font(.caption2)
-                    .fontWeight(.medium)
-            }
-            .foregroundStyle(crownControlsGravity ? .orange : .secondary)
-            
-            Spacer()
-            
-            // Bounciness indicator
-            HStack(spacing: 2) {
-                Image(systemName: "arrow.up.bounce")
-                    .font(.caption2)
-                Text(String(format: "%.1f", gameSettings.bounciness))
-                    .font(.caption2)
-                    .fontWeight(.medium)
-            }
-            .foregroundStyle(!crownControlsGravity ? .orange : .secondary)
-        }
-        .padding(.horizontal, 8)
-        .padding(.bottom, 4)
-        .background(.regularMaterial.opacity(0.8))
+        WatchSpriteKitSceneView() // wallsEnabled binding removed to match initializer; use environment or supported API
+            .gesture(
+                LongPressGesture(minimumDuration: 0.25, maximumDistance: 5)
+                    .updating($isPressing) { value, state, _ in
+                        state = value
+                    }
+                    .onChanged { _ in
+                        // Begin preview at center
+                        let center = CGPoint(x: WKInterfaceDevice.current().screenBounds.midX, y: WKInterfaceDevice.current().screenBounds.midY)
+                        NotificationCenter.default.post(name: .watchBeginPreview, object: center)
+                        // Start growth loop
+                        startPreviewGrowthTimer()
+                        #if DEBUG
+                        print("WatchContentView: Long press began -> beginPreview + start timer")
+                        #endif
+                    }
+                    .onEnded { _ in
+                        stopPreviewGrowthTimer()
+                        NotificationCenter.default.post(name: .watchCommitPreview, object: nil)
+                        WKInterfaceDevice.current().play(.click)
+                        #if DEBUG
+                        print("WatchContentView: Long press ended -> commitPreview + stop timer")
+                        #endif
+                    }
+            )
     }
     
     // MARK: - Interaction Handlers
@@ -251,10 +128,7 @@ struct WatchContentView: View {
         log("Double-tap: Walls -> \(gameSettings.wallsEnabled ? "ON" : "OFF")")
         
         // Show visual feedback
-        showingWallToggle = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            showingWallToggle = false
-        }
+        // NOTE: Showing wall toggle overlay removed per instructions
         
         // Haptic feedback
         WKInterfaceDevice.current().play(.click)
@@ -279,39 +153,6 @@ struct WatchContentView: View {
     }
     
     /**
-     * Handles Digital Crown value changes
-     */
-    private func handleCrownValueChange(_ newValue: Double) {
-        isAdjustingWithCrown = true
-        
-        if crownControlsGravity {
-            gameSettings.gravity = newValue
-        } else {
-            gameSettings.bounciness = newValue
-        }
-        
-        // Show crown indicator
-        showingCrownIndicator = true
-        
-        // Hide indicator after a delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            showingCrownIndicator = false
-            isAdjustingWithCrown = false
-        }
-    }
-    
-    /**
-     * Initializes the Digital Crown value based on current settings
-     */
-    private func initializeCrownValue() {
-        if crownControlsGravity {
-            crownValue = gameSettings.gravity
-        } else {
-            crownValue = gameSettings.bounciness
-        }
-    }
-    
-    /**
      * Appends a debug line to the in-app overlay (ring buffer)
      */
     private func log(_ message: String) {
@@ -320,6 +161,28 @@ struct WatchContentView: View {
         if debugLines.count > 40 {
             debugLines.removeFirst(debugLines.count - 40)
         }
+    }
+    
+    private func startPreviewGrowthTimer() {
+        previewStartDate = Date()
+        stopPreviewGrowthTimer()
+        previewTimer = Timer.scheduledTimer(withTimeInterval: 1.0/60.0, repeats: true) { _ in
+            guard let start = previewStartDate else { return }
+            let elapsed = Date().timeIntervalSince(start)
+            let duration: TimeInterval = 2.0 // match phone growth duration
+            let progress = max(0.0, min(1.0, elapsed / duration))
+            NotificationCenter.default.post(name: .watchUpdatePreview, object: CGFloat(progress))
+            if progress >= 1.0 {
+                stopPreviewGrowthTimer()
+            }
+        }
+        RunLoop.main.add(previewTimer!, forMode: .common)
+    }
+
+    private func stopPreviewGrowthTimer() {
+        previewTimer?.invalidate()
+        previewTimer = nil
+        previewStartDate = nil
     }
 }
 
@@ -348,6 +211,14 @@ private struct WatchDebugOverlay: View {
         .padding(4)
         .background(.black.opacity(0.25), in: RoundedRectangle(cornerRadius: 8))
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    static let watchBeginPreview = Notification.Name("watchBeginPreview")
+    static let watchUpdatePreview = Notification.Name("watchUpdatePreview")
+    static let watchCommitPreview = Notification.Name("watchCommitPreview")
 }
 
 // MARK: - Preview
