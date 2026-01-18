@@ -59,23 +59,28 @@ class WatchBallPhysicsScene: SKScene, SKPhysicsContactDelegate {
         wallsEnabled = true
         updateWalls(enabled: true)
 
-        // Fixed gravity downwards (no rotation / accelerometer)
-        physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+        // Start with zero gravity - only accelerometer will drive gravity
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         if motionManager.isAccelerometerAvailable {
             motionManager.accelerometerUpdateInterval = 1.0 / 30.0
             motionManager.startAccelerometerUpdates(to: .main) { [weak self] data, _ in
                 guard let self = self, let a = data?.acceleration else { return }
                 // On watchOS: a.x increases toward the digital crown when crown-up.
-                // We want crown-up to push balls DOWN (negative y), so invert x for dx.
+                // a.y increases toward the top of the watch face.
+                // Map accelerometer directly to gravity with no bias.
                 let rawX = CGFloat(a.x)
                 let rawY = CGFloat(a.y)
-                // Reverse lateral influence so crown-up tilts balls downward across screen.
-                let dx = -rawX * 3.0
-                // Reduce downward bias so tilt can overcome it when bottom is up.
-                let dyBias: CGFloat = -6.0
-                // Increase Y tilt scaling so strong bottom-up rotation yields positive (upward) gravity.
-                let dyTilt = -rawY * 6.0
-                self.physicsWorld.gravity = CGVector(dx: dx, dy: dyBias + dyTilt)
+                
+                // Scale factor for gravity strength (adjust to taste)
+                let gravityScale: CGFloat = 9.8
+                
+                // Map device acceleration to scene gravity
+                // Reverse X so crown-up tilts balls toward bottom edge
+                let dx = -rawX * gravityScale
+                // Reverse Y so tilting watch back pulls balls down
+                let dy = -rawY * gravityScale
+                
+                self.physicsWorld.gravity = CGVector(dx: dx, dy: dy)
             }
         }
         #if DEBUG
@@ -264,7 +269,7 @@ class WatchBallPhysicsScene: SKScene, SKPhysicsContactDelegate {
         node.fillColor = palette.randomElement() ?? .orange
         node.strokeColor = .black
         node.lineWidth = 1
-        node.zPosition = 1
+        node.zPosition = 20  // Above floor (10) and walls (5)
         node.name = "ball"
         return node
     }
@@ -285,10 +290,10 @@ class WatchBallPhysicsScene: SKScene, SKPhysicsContactDelegate {
 
     // MARK: - Public API for SwiftUI wrapper
 
-    func beginPreview(at point: CGPoint) {
-        // Immediate drop with random size/color at center
+    func dropBall(at point: CGPoint) {
+        // Immediate drop with random size/color at the specified point
         let shape = createBallNode(radius: previewTargetRadius)
-        shape.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        shape.position = point
         configureBallPhysics(shape)
         shape.physicsBody?.isDynamic = true
         shape.physicsBody?.affectedByGravity = true
@@ -298,14 +303,14 @@ class WatchBallPhysicsScene: SKScene, SKPhysicsContactDelegate {
         }
         addChild(shape)
         activeBalls.append(shape)
+        
+        // Notify with current ball count
+        NotificationCenter.default.post(name: .watchBallDropped, object: activeBalls.count)
+        
         #if DEBUG
-        print("WatchBallPhysicsScene: immediate drop (activeBalls=\(activeBalls.count))")
+        print("WatchBallPhysicsScene: dropped ball at \(point) (activeBalls=\(activeBalls.count))")
         #endif
     }
-
-    func updatePreview(progress: CGFloat) { /* no-op for watch immediate drop */ }
-
-    func commitPreview() { /* no-op for watch immediate drop */ }
 
     // MARK: - SKPhysicsContactDelegate (haptics only)
 
@@ -315,5 +320,32 @@ class WatchBallPhysicsScene: SKScene, SKPhysicsContactDelegate {
             WKInterfaceDevice.current().play(.click)
         }
     }
-}
 
+    #if DEBUG
+    /// Dumps a summary of scene children to help diagnose unknown visual artifacts
+    func dumpSceneChildren(tag: String = "") {
+        print("\n[WatchBallPhysicsScene] Dump Children \(tag.isEmpty ? "" : "(\(tag))"):")
+        print("  scene size=\(size), gravity=\(physicsWorld.gravity)")
+        let cats: (UInt32) -> String = { mask in
+            var parts: [String] = []
+            if (mask & PhysicsCategory.ball) != 0 { parts.append("ball") }
+            if (mask & PhysicsCategory.floor) != 0 { parts.append("floor") }
+            if (mask & PhysicsCategory.wall) != 0 { parts.append("wall") }
+            return parts.isEmpty ? "none" : parts.joined(separator: "|")
+        }
+        for (idx, node) in children.enumerated() {
+            let name = node.name ?? "(nil)"
+            let typeName = String(describing: type(of: node))
+            let frame = node.calculateAccumulatedFrame()
+            let alpha = node.alpha
+            let z = node.zPosition
+            var phys = ""
+            if let body = node.physicsBody {
+                phys = " phys(cat: \(cats(body.categoryBitMask)), col: \(cats(body.collisionBitMask)))"
+            }
+            print("  [\(idx)] name='\(name)' type=\(typeName) frame=\(Int(frame.width))x\(Int(frame.height))@\(Int(frame.origin.x)),\(Int(frame.origin.y)) alpha=\(String(format: "%.2f", alpha)) z=\(z)\(phys)")
+        }
+        print("-- end dump --\n")
+    }
+    #endif
+}
