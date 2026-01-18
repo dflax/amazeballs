@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		FE0101FC2ED79CEF00649D3C /* Amazeballs Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FE6064D02ECC0C260098A82F /* Amazeballs Watch App.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FEB640A12ECD67B8009D77F4 /* Amazeballs Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FE6064D02ECC0C260098A82F /* Amazeballs Watch App.app */; platformFilter = ios; };
+		FE131C952F1D649B009A14D7 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE131C942F1D649B009A14D7 /* WidgetKit.framework */; };
+		FE131C972F1D649B009A14D7 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE131C962F1D649B009A14D7 /* SwiftUI.framework */; };
+		FE131CA22F1D649C009A14D7 /* AmazeballsWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FE131C932F1D649B009A14D7 /* AmazeballsWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = FE6064CF2ECC0C260098A82F;
 			remoteInfo = "Amazeballs Watch App";
+		};
+		FE131CA02F1D649C009A14D7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FED4B1342EC9178500F55FAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FE131C922F1D649B009A14D7;
+			remoteInfo = AmazeballsWatchWidgetExtension;
 		};
 		FE6064EE2ECC0C270098A82F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -47,25 +56,35 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FE6064F42ECC0C270098A82F /* Embed Watch Content */ = {
+		FE131CA32F1D649C009A14D7 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Amazeballs Watch App";
-			dstSubfolderSpec = 16;
+			dstPath = "";
+			dstSubfolderSpec = 13;
 			files = (
-				FEB640A12ECD67B8009D77F4 /* Amazeballs Watch App.app in Embed Watch Content */,
+				FE131CA22F1D649C009A14D7 /* AmazeballsWatchWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed Watch Content";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FE131C932F1D649B009A14D7 /* AmazeballsWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AmazeballsWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE131C942F1D649B009A14D7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FE131C962F1D649B009A14D7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		FE6064D02ECC0C260098A82F /* Amazeballs Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Amazeballs Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FED4B13C2EC9178500F55FAE /* Amazeballs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Amazeballs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FE131CA72F1D649C009A14D7 /* Exceptions for "AmazeballsWatchWidget" folder in "AmazeballsWatchWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FE131C922F1D649B009A14D7 /* AmazeballsWatchWidgetExtension */;
+		};
 		FE6065612ECC0C9C0098A82F /* Exceptions for "Amazeballs" folder in "Amazeballs Watch App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -93,6 +112,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		FE131C982F1D649B009A14D7 /* AmazeballsWatchWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FE131CA72F1D649C009A14D7 /* Exceptions for "AmazeballsWatchWidget" folder in "AmazeballsWatchWidgetExtension" target */,
+			);
+			path = AmazeballsWatchWidget;
+			sourceTree = "<group>";
+		};
 		FE6064D12ECC0C260098A82F /* Amazeballs Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -113,6 +140,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		FE131C902F1D649B009A14D7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE131C972F1D649B009A14D7 /* SwiftUI.framework in Frameworks */,
+				FE131C952F1D649B009A14D7 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE6064CD2ECC0C260098A82F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,6 +169,8 @@
 		FE0101FB2ED79CEF00649D3C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FE131C942F1D649B009A14D7 /* WidgetKit.framework */,
+				FE131C962F1D649B009A14D7 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -142,6 +180,7 @@
 			children = (
 				FED4B13E2EC9178500F55FAE /* Amazeballs */,
 				FE6064D12ECC0C260098A82F /* Amazeballs Watch App */,
+				FE131C982F1D649B009A14D7 /* AmazeballsWatchWidget */,
 				FE0101FB2ED79CEF00649D3C /* Frameworks */,
 				FED4B13D2EC9178500F55FAE /* Products */,
 			);
@@ -152,6 +191,7 @@
 			children = (
 				FED4B13C2EC9178500F55FAE /* Amazeballs.app */,
 				FE6064D02ECC0C260098A82F /* Amazeballs Watch App.app */,
+				FE131C932F1D649B009A14D7 /* AmazeballsWatchWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,6 +199,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		FE131C922F1D649B009A14D7 /* AmazeballsWatchWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FE131CA62F1D649C009A14D7 /* Build configuration list for PBXNativeTarget "AmazeballsWatchWidgetExtension" */;
+			buildPhases = (
+				FE131C8F2F1D649B009A14D7 /* Sources */,
+				FE131C902F1D649B009A14D7 /* Frameworks */,
+				FE131C912F1D649B009A14D7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FE131C982F1D649B009A14D7 /* AmazeballsWatchWidget */,
+			);
+			name = AmazeballsWatchWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = AmazeballsWatchWidgetExtension;
+			productReference = FE131C932F1D649B009A14D7 /* AmazeballsWatchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FE6064CF2ECC0C260098A82F /* Amazeballs Watch App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE6064F12ECC0C270098A82F /* Build configuration list for PBXNativeTarget "Amazeballs Watch App" */;
@@ -166,10 +228,12 @@
 				FE6064CC2ECC0C260098A82F /* Sources */,
 				FE6064CD2ECC0C260098A82F /* Frameworks */,
 				FE6064CE2ECC0C260098A82F /* Resources */,
+				FE131CA32F1D649C009A14D7 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FE131CA12F1D649C009A14D7 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				FE6064D12ECC0C260098A82F /* Amazeballs Watch App */,
@@ -188,7 +252,6 @@
 				FED4B1382EC9178500F55FAE /* Sources */,
 				FED4B1392EC9178500F55FAE /* Frameworks */,
 				FED4B13A2EC9178500F55FAE /* Resources */,
-				FE6064F42ECC0C270098A82F /* Embed Watch Content */,
 				FE0101FF2ED79CEF00649D3C /* Embed Watch Content */,
 			);
 			buildRules = (
@@ -215,9 +278,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2600;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					FE131C922F1D649B009A14D7 = {
+						CreatedOnToolsVersion = 26.2;
+					};
 					FE6064CF2ECC0C260098A82F = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
@@ -242,11 +308,19 @@
 			targets = (
 				FED4B13B2EC9178500F55FAE /* Amazeballs */,
 				FE6064CF2ECC0C260098A82F /* Amazeballs Watch App */,
+				FE131C922F1D649B009A14D7 /* AmazeballsWatchWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		FE131C912F1D649B009A14D7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE6064CE2ECC0C260098A82F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -264,6 +338,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		FE131C8F2F1D649B009A14D7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FE6064CC2ECC0C260098A82F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -291,6 +372,11 @@
 			target = FE6064CF2ECC0C260098A82F /* Amazeballs Watch App */;
 			targetProxy = FE0102002ED79CFC00649D3C /* PBXContainerItemProxy */;
 		};
+		FE131CA12F1D649C009A14D7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FE131C922F1D649B009A14D7 /* AmazeballsWatchWidgetExtension */;
+			targetProxy = FE131CA02F1D649C009A14D7 /* PBXContainerItemProxy */;
+		};
 		FE6064EF2ECC0C270098A82F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -300,6 +386,73 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		FE131CA42F1D649C009A14D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9N4HA7TLU8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AmazeballsWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AmazeballsWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 26;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs.watchkitapp.AmazeballsWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		FE131CA52F1D649C009A14D7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9N4HA7TLU8;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AmazeballsWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = AmazeballsWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 26;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs.watchkitapp.AmazeballsWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
 		FE6064F22ECC0C270098A82F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -315,13 +468,15 @@
 				INFOPLIST_FILE = "Amazeballs Watch App/WatchInfo.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Amazeballs;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = nyc.flax.Amazeballs;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.pieceofcakenyc.amazeballs;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKWatchOnly = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 26;
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.flax.Amazeballs.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -351,13 +506,15 @@
 				INFOPLIST_FILE = "Amazeballs Watch App/WatchInfo.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Amazeballs;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = nyc.flax.Amazeballs;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.pieceofcakenyc.amazeballs;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				INFOPLIST_KEY_WKWatchOnly = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 26;
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.flax.Amazeballs.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -402,13 +559,13 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 26;
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.flax.Amazeballs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -454,13 +611,13 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 26;
-				PRODUCT_BUNDLE_IDENTIFIER = nyc.flax.Amazeballs;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pieceofcakenyc.amazeballs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -600,6 +757,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		FE131CA62F1D649C009A14D7 /* Build configuration list for PBXNativeTarget "AmazeballsWatchWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE131CA42F1D649C009A14D7 /* Debug */,
+				FE131CA52F1D649C009A14D7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FE6064F12ECC0C270098A82F /* Build configuration list for PBXNativeTarget "Amazeballs Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
