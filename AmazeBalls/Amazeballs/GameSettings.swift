@@ -239,6 +239,12 @@ final class GameSettings {
     /// Refreshes the CloudKit availability status (can be called publicly)
     @MainActor
     func refreshCloudKitStatus() async {
+        #if os(watchOS)
+        // The watch app has no CloudKit entitlement, and CKContainer.default()
+        // raises an uncatchable exception without one, so never touch it here.
+        self._isCloudKitAvailable = false
+        print("⚠️ GameSettings: CloudKit not supported on watchOS - using UserDefaults only")
+        #else
         do {
             let container = CKContainer.default()
             let status = try await container.accountStatus()
@@ -276,6 +282,7 @@ final class GameSettings {
             self._isCloudKitAvailable = false
             print("❌ GameSettings: CloudKit error - \(error.localizedDescription)")
         }
+        #endif
     }
     
     /// Loads settings from local storage (UserDefaults) first, then tries CloudKit if available
